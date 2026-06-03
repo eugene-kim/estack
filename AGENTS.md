@@ -38,6 +38,7 @@ This repo is the source of truth. When a skill (or a meta-skill like `reflect` /
 commit there, not a loose `~/.agents/skills` copy or the installed plugin cache.
 Locate the clone by resolving a skill's real path and
 `git rev-parse --show-toplevel`; skills live under `plugins/estack/skills/`.
-A marketplace install is a copy, so after pushing run `codex plugin marketplace
-upgrade estack` to pull the update (or use the symlink script for live edits).
-See `UPDATING.md` for the full workflow.
+A marketplace install is a copy, so after pushing, update in two steps —
+`codex plugin marketplace upgrade estack` then `codex plugin add estack@estack`
+(or use the symlink script for live edits). See `UPDATING.md` for the full
+command reference (install, update, uninstall, remove) and workflow.

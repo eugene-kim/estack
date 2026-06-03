@@ -53,10 +53,12 @@ Either way, invoke the orchestrator with `/euge-mode` (Claude Code) or `use euge
 
 This repo is the single source of truth; both tools install the same `plugins/estack/`. Two ways to consume updates:
 
-- **Released:** push, then re-pull the marketplace — `/plugin marketplace update estack` (Claude Code) or `codex plugin marketplace upgrade estack` (Codex). A marketplace install is a copy, so it updates on upgrade, not automatically.
+- **Released:** push, then upgrade. A marketplace install is a copy, so it updates on an explicit upgrade (two steps), not automatically:
+  - Claude Code: `claude plugin marketplace update estack` then `claude plugin update estack` (restart to apply).
+  - Codex: `codex plugin marketplace upgrade estack` then `codex plugin add estack@estack`.
 - **Live dev:** run Claude Code with `--plugin-dir ./plugins/estack`, and Codex via `scripts/install-codex.sh` (symlinks). Edits and `git pull` are reflected on reload, no re-install.
 
-The meta-skills follow this: `/reflect`, `/automate-me`, and the authoring-a-skill playbook edit files in the clone (`plugins/estack/skills/`) and commit, so their output flows downstream like any other change. The loop is **edit in the clone → validate → commit → push**. Full details and the snippet for locating the clone from inside a skill are in [`UPDATING.md`](UPDATING.md).
+The meta-skills follow this: `/reflect`, `/automate-me`, and the authoring-a-skill playbook edit files in the clone (`plugins/estack/skills/`) and commit, so their output flows downstream like any other change. The loop is **edit in the clone → validate → commit → push**. The full command reference (install, update, uninstall, remove) and the snippet for locating the clone from inside a skill are in [`UPDATING.md`](UPDATING.md).
 
 ## make it yours
 
