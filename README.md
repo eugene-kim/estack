@@ -44,6 +44,15 @@ Either way, `euge-mode` and the other skills load automatically.
 
 Then invoke the orchestrator, e.g. `use euge-mode: <your task>`. See `AGENTS.md` for Codex-specific notes (subagents, model selection).
 
+## keeping it in sync
+
+This repo is the single source of truth. Both installs read from the same local clone, so edit the repo and both tools pick it up:
+
+- **Codex** reads symlinks into `skills/`, so a commit or `git pull` is live immediately.
+- **Claude Code** (run via `--plugin-dir` against the clone) reloads the change on the next session.
+
+The meta-skills follow this: `/reflect`, `/automate-me`, and the authoring-a-skill playbook edit files in the clone and commit, so their output flows downstream like any other change. The loop is **edit in the clone → validate → commit → push**; other machines `git pull`. Full details and the snippet for locating the clone from inside a skill are in [`UPDATING.md`](UPDATING.md).
+
 ## make it yours
 
 `euge-mode` is one style. you may not want exactly that.

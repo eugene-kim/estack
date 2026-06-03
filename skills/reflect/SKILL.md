@@ -58,12 +58,14 @@ Before applying any Accepted edit, present the synthesizer's full Accepted/Rejec
 
 Backlog items file to whatever devex / backlog tracker your team uses automatically. Those are tracker submissions, not skill edits. Only the Accepted list waits for approval.
 
+All skill edits land in the estack clone (the repo that contains these skills), never a loose `~/.claude/skills` or `~/.agents/skills` copy. Locate it by resolving a skill's real path and `git rev-parse --show-toplevel` (see `UPDATING.md`). After applying the approved subset, commit and push from that clone so both Claude Code and Codex pick up the change.
+
 For each approved Accepted item, follow the Routing field exactly:
 
-- Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): parent does directly.
-- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to your platform's skill-authoring flow and run its draft / test / iterate loop.
-- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to your platform's skill-authoring flow and run its description-optimization loop.
-- `new skill: <kebab-name>`: hand creation to your platform's skill-authoring flow. Do not invent the shape ad hoc.
+- Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): parent edits the file in the estack clone directly.
+- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): follow the authoring-a-skill playbook at `<repo>/skills/euge-mode/playbooks/authoring-a-skill.md` (or your platform's skill-authoring flow), and run its draft / test / iterate loop.
+- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): edit the skill's description in the estack clone; run a description-optimization loop if your platform has one.
+- `new skill: <kebab-name>`: create it under `<repo>/skills/<kebab-name>/` in the estack clone. Do not invent the shape ad hoc; follow the authoring-a-skill playbook at `<repo>/skills/euge-mode/playbooks/authoring-a-skill.md`.
 
 For each Backlog item, file to whatever devex / backlog tracker your team uses.
 
