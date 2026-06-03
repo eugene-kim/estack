@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Reflect
 
-Mine the current conversation for durable learnings, then route them into skill edits. Three reviewers read the transcript through different lenses. An Opus synthesizer applies named criteria. The parent presents the synthesizer's output to the user, then applies the approved subset.
+Mine the current conversation for durable learnings, then route them into skill edits. Three reviewers read the transcript through different lenses. A synthesizer on a strong reasoning model applies named criteria. The parent presents the synthesizer's output to the user, then applies the approved subset.
 
 ## When to invoke
 
@@ -61,9 +61,9 @@ Backlog items file to whatever devex / backlog tracker your team uses automatica
 For each approved Accepted item, follow the Routing field exactly:
 
 - Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): parent does directly.
-- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to the **authoring-a-skill** playbook (or your platform's skill-authoring flow) and run its draft / test / iterate loop.
-- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to the **authoring-a-skill** playbook (or your platform's skill-authoring flow) and run its description-optimization loop.
-- `new skill: <kebab-name>`: hand creation to the **authoring-a-skill** playbook (or your platform's skill-authoring flow). Do not invent the shape ad hoc.
+- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to your platform's skill-authoring flow and run its draft / test / iterate loop.
+- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to your platform's skill-authoring flow and run its description-optimization loop.
+- `new skill: <kebab-name>`: hand creation to your platform's skill-authoring flow. Do not invent the shape ad hoc.
 
 For each Backlog item, file to whatever devex / backlog tracker your team uses.
 

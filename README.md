@@ -21,7 +21,20 @@ fork it. improve it. make it yours.
 
 estack is a directory of skills (plus one subagent). the `SKILL.md` format works in both Claude Code and Codex.
 
-**Claude Code.** This repo is a Claude Code plugin (see `.claude-plugin/plugin.json`). Add it as a plugin / via a local marketplace pointed at this repo, then `euge-mode` and the other skills load automatically.
+**Claude Code.** This repo is a Claude Code plugin (see `.claude-plugin/plugin.json`) and ships its own one-plugin marketplace (`.claude-plugin/marketplace.json`). Install it with:
+
+```bash
+/plugin marketplace add eugene-kim/estack
+/plugin install estack@estack
+```
+
+For local development against a checkout, skip the marketplace and point Claude Code straight at the directory:
+
+```bash
+claude --plugin-dir ./estack
+```
+
+Either way, `euge-mode` and the other skills load automatically.
 
 **Codex.** Run the install script to symlink every skill into `~/.agents/skills`:
 
@@ -157,4 +170,4 @@ both Claude Code and Codex have plan modes that work well alongside estack. the 
 
 ## license
 
-MIT. See [LICENSE](LICENSE) — original copyright Lauren Tan (pstack), modifications Eugene Kim (estack).
+MIT. See [LICENSE](LICENSE). Original copyright Lauren Tan (pstack), modifications Eugene Kim (estack).

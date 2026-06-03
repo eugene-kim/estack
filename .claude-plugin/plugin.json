@@ -18,13 +18,6 @@
 		"subagents",
 		"unslop"
 	],
-	"category": "developer-tools",
-	"tags": [
-		"workflow",
-		"principles",
-		"review",
-		"planning"
-	],
 	"skills": "./skills/",
 	"agents": "./agents/"
 }

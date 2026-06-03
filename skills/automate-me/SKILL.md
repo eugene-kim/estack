@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 A guided flow for turning the user's working conventions into a skill agents will follow. The output is one `-mode` skill tailored to them (e.g. `jay-mode`, `priya-mode`).
 
-This skill orchestrates three others: an inline mining pass (see step 1), the **authoring-a-skill** playbook (or your platform's skill-authoring flow), and the **unslop** skill (prose discipline). It sequences them; it doesn't replace them.
+This skill orchestrates three others: an inline mining pass (see step 1), your platform's skill-authoring flow, and the **unslop** skill (prose discipline). It sequences them; it doesn't replace them.
 
 ## Flow
 
@@ -64,17 +64,17 @@ The **euge-mode** skill shows the shape. Read it for granularity. Don't copy its
 
 ### 4. Draft the skill
 
-Use the **authoring-a-skill** playbook (or your platform's skill-authoring flow) to author the skill. Placement:
+Use your platform's skill-authoring flow to author the skill. Placement:
 
 - Path: `<your-skills-dir>/<handle>-mode/SKILL.md` (project-level, e.g. `.agents/skills/`), or a user-level skills directory if the user prefers a personal skill.
 - Handle: the user's first name or chosen identifier.
 - Frontmatter `description`: trigger on their name + `/<handle>-mode` + "work in their style", not on generic keywords like "write code" or "review PR".
-- Frontmatter formatting: follow the **authoring-a-skill** playbook (or your platform's skill-authoring flow)'s YAML rules. Keep `description` as one YAML scalar; quote it or use `description: >-` with indented continuation lines when punctuation or wrapping requires it.
+- Frontmatter formatting: follow your platform's skill-authoring YAML conventions. Keep `description` as one YAML scalar; quote it or use `description: >-` with indented continuation lines when punctuation or wrapping requires it.
 - Frontmatter `disable-model-invocation: true` by default. Mode skills are heavy and opinionated; they should only apply when the user explicitly invokes them (by name or slash command), not auto-trigger on description matching. Opt out only if the user explicitly wants their mode to apply on every turn.
 
 ### 5. Iterate on prose
 
-Apply the **unslop** skill and the **authoring-a-skill** playbook (or your platform's skill-authoring flow)'s writing guidelines to every line. Both apply to any agent-read prose, not just skills.
+Apply the **unslop** skill's writing guidelines to every line. They apply to any agent-read prose, not just skills.
 
 Show the draft to the user and take feedback. Expect multiple iterations. Cut ruthlessly; a mode skill is not a manual.
 
@@ -93,17 +93,17 @@ Work in a worktree off main. Commit and open a PR so the user can review it. Don
 
 ## Evaluation
 
-A `-mode` skill is subjective output. A test/iterate benchmark loop in the style of the **authoring-a-skill** playbook (or your platform's skill-authoring flow) isn't useful here. Vibe-check with the user: does it read like them? Did it miss anything? Then ship.
+A `-mode` skill is subjective output. A test/iterate benchmark loop in the style of your platform's skill-authoring flow isn't useful here. Vibe-check with the user: does it read like them? Did it miss anything? Then ship.
 
 Run a description-optimization loop only if the skill's trigger accuracy turns out to be a problem in practice.
 
 ## When not to use
 
-- User wants a task-specific skill (not working conventions): the **authoring-a-skill** playbook (or your platform's skill-authoring flow) alone, no mining required.
+- User wants a task-specific skill (not working conventions): your platform's skill-authoring flow alone, no mining required.
 - User wants to capture one narrow workflow (e.g. "how I write commit messages"): that's a regular skill, not a mode skill.
 
 ## Reference files
 
 - The **euge-mode** skill: example of the output shape.
 - The **unslop** skill: prose discipline for every line.
-- The **authoring-a-skill** playbook (or your platform's skill-authoring flow): skill authoring process and writing guidelines.
+- Your platform's skill-authoring flow: the authoring process and writing guidelines (in Claude Code or Codex, the native skill-authoring approach; this plugin's own `euge-mode` Authoring-a-skill playbook is the in-repo reference if you have euge-mode loaded).

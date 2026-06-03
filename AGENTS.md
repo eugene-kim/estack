@@ -1,4 +1,4 @@
-# estack — agent guidance
+# estack agent guidance
 
 estack is a set of rigorous agent workflow skills. The entry point is the
 **euge-mode** skill: at the start of any non-trivial task, read it, let it match

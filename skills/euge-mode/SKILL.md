@@ -15,7 +15,7 @@ The remaining triggers live only here:
 - Nontrivial change, architecture decision, or "are we sure?" → the **how** skill.
 - Any code → name the data shape first.
 - Code change crossing a function boundary → the **architect** skill for parallel design exploration before implementing.
-- Contested design → the **interrogate** skill (four-model adversarial) before shipping.
+- Contested design → the **interrogate** skill (multi-model adversarial review) before shipping.
 - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
 - Any prose surface → the **unslop** skill. Your reply to the user is a prose surface; write it per **Writing the reply**. Agent-facing prose also follows the **authoring-a-skill** playbook (or your platform's skill-authoring flow) for writing SKILL.md files.
 - Before commit → clean the prose with the bundled **unslop** skill.
