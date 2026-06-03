@@ -1,0 +1,30 @@
+{
+	"name": "estack",
+	"version": "0.1.0",
+	"description": "if you want to go fast, go deep first. estack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence.",
+	"author": {
+		"name": "Eugene Kim",
+		"url": "https://github.com/eugene-kim"
+	},
+	"homepage": "https://github.com/eugene-kim/estack",
+	"repository": "https://github.com/eugene-kim/estack",
+	"license": "MIT",
+	"keywords": [
+		"estack",
+		"euge-mode",
+		"workflow",
+		"principles",
+		"agent-style",
+		"subagents",
+		"unslop"
+	],
+	"skills": "./skills/",
+	"interface": {
+		"displayName": "estack",
+		"shortDescription": "Rigorous, model-agnostic agent workflows you can parallelize with confidence.",
+		"longDescription": "estack is a set of rigorous agent workflow skills built around euge-mode: it matches a task to a playbook, routes to focused skills (how, why, architect, interrogate, arena, reflect, tdd, unslop), and grounds every decision in a small set of one-principle skills. The goal is to write less, but higher quality code. Model-agnostic: skills describe roles, not specific model names.",
+		"developerName": "Eugene Kim",
+		"category": "Developer Tools",
+		"capabilities": ["Interactive", "Read", "Write"]
+	}
+}

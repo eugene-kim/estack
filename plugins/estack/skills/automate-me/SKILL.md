@@ -14,7 +14,7 @@ This skill orchestrates three others: an inline mining pass (see step 1), your p
 
 ### 0. Check for an existing skill
 
-Look for `*-mode/SKILL.md` matching the user's handle under the estack clone's `skills/` (locate the clone by resolving this skill's real path and `git rev-parse --show-toplevel`; see `UPDATING.md`). If one exists, confirm intent by asking the user (unless they already said "update my skill" or similar):
+Look for `*-mode/SKILL.md` matching the user's handle under the estack clone's `plugins/estack/skills/` (locate the clone by resolving this skill's real path and `git rev-parse --show-toplevel`; see `UPDATING.md`). If one exists, confirm intent by asking the user (unless they already said "update my skill" or similar):
 
 - Update the existing skill (default for repeat runs)
 - Start fresh (rare; ask why before doing it)
@@ -66,7 +66,7 @@ The **euge-mode** skill shows the shape. Read it for granularity. Don't copy its
 
 Use your platform's skill-authoring flow to author the skill. Placement:
 
-- Path: `<estack-repo>/skills/<handle>-mode/SKILL.md` in the estack clone (see `UPDATING.md` to find it), so the skill syncs to both Claude Code and Codex. Use a loose user-level skills dir only if the user deliberately wants it un-synced.
+- Path: `<estack-repo>/plugins/estack/skills/<handle>-mode/SKILL.md` in the estack clone (see `UPDATING.md` to find it), so the skill syncs to both Claude Code and Codex. Use a loose user-level skills dir only if the user deliberately wants it un-synced.
 - Handle: the user's first name or chosen identifier.
 - Frontmatter `description`: trigger on their name + `/<handle>-mode` + "work in their style", not on generic keywords like "write code" or "review PR".
 - Frontmatter formatting: follow your platform's skill-authoring YAML conventions. Keep `description` as one YAML scalar; quote it or use `description: >-` with indented continuation lines when punctuation or wrapping requires it.

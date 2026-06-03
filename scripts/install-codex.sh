@@ -12,7 +12,7 @@ set -euo pipefail
 shopt -s nullglob   # an empty/missing skills/ yields zero iterations, not a literal "*"
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SRC="$REPO_DIR/skills"
+SRC="$REPO_DIR/plugins/estack/skills"
 DST="${CODEX_SKILLS_DIR:-$HOME/.agents/skills}"
 
 if [ -e "$DST" ] && [ ! -d "$DST" ]; then

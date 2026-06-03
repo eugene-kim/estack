@@ -19,39 +19,44 @@ fork it. improve it. make it yours.
 
 ## install
 
-estack is a directory of skills (plus one subagent). the `SKILL.md` format works in both Claude Code and Codex.
+estack is a plugin for **both** Claude Code and Codex. The repo is a marketplace; the plugin itself lives in `plugins/estack/` (Codex marketplaces can't point at a repo root, so the plugin sits in a subdir, and Claude Code reads it the same way). The `SKILL.md` skills are shared by both.
 
-**Claude Code.** This repo is a Claude Code plugin (see `.claude-plugin/plugin.json`) and ships its own one-plugin marketplace (`.claude-plugin/marketplace.json`). Install it with:
+**Claude Code.** Install from the bundled marketplace (`.claude-plugin/marketplace.json`):
 
 ```bash
 /plugin marketplace add eugene-kim/estack
 /plugin install estack@estack
 ```
 
-For local development against a checkout, skip the marketplace and point Claude Code straight at the directory:
+For live local development against a checkout, point Claude Code at the plugin dir instead:
 
 ```bash
-claude --plugin-dir ./estack
+claude --plugin-dir ./plugins/estack
 ```
 
-Either way, `euge-mode` and the other skills load automatically.
+**Codex.** Install from the bundled marketplace (`.agents/plugins/marketplace.json`):
 
-**Codex.** Run the install script to symlink every skill into `~/.agents/skills`:
+```bash
+codex plugin marketplace add eugene-kim/estack
+codex plugin add estack@estack
+```
+
+For live local development, use the symlink script instead — it links every skill into `~/.agents/skills` so edits are reflected without re-installing:
 
 ```bash
 ./scripts/install-codex.sh
 ```
 
-Then invoke the orchestrator, e.g. `use euge-mode: <your task>`. See `AGENTS.md` for Codex-specific notes (subagents, model selection).
+Either way, invoke the orchestrator with `/euge-mode` (Claude Code) or `use euge-mode: <your task>` (Codex). See `AGENTS.md` for Codex-specific notes.
 
 ## keeping it in sync
 
-This repo is the single source of truth. Both installs read from the same local clone, so edit the repo and both tools pick it up:
+This repo is the single source of truth; both tools install the same `plugins/estack/`. Two ways to consume updates:
 
-- **Codex** reads symlinks into `skills/`, so a commit or `git pull` is live immediately.
-- **Claude Code** (run via `--plugin-dir` against the clone) reloads the change on the next session.
+- **Released:** push, then re-pull the marketplace — `/plugin marketplace update estack` (Claude Code) or `codex plugin marketplace upgrade estack` (Codex). A marketplace install is a copy, so it updates on upgrade, not automatically.
+- **Live dev:** run Claude Code with `--plugin-dir ./plugins/estack`, and Codex via `scripts/install-codex.sh` (symlinks). Edits and `git pull` are reflected on reload, no re-install.
 
-The meta-skills follow this: `/reflect`, `/automate-me`, and the authoring-a-skill playbook edit files in the clone and commit, so their output flows downstream like any other change. The loop is **edit in the clone → validate → commit → push**; other machines `git pull`. Full details and the snippet for locating the clone from inside a skill are in [`UPDATING.md`](UPDATING.md).
+The meta-skills follow this: `/reflect`, `/automate-me`, and the authoring-a-skill playbook edit files in the clone (`plugins/estack/skills/`) and commit, so their output flows downstream like any other change. The loop is **edit in the clone → validate → commit → push**. Full details and the snippet for locating the clone from inside a skill are in [`UPDATING.md`](UPDATING.md).
 
 ## make it yours
 
@@ -91,7 +96,7 @@ when invoked it:
 3. routes to the other skills as the steps fire.
 4. writes unslopped replies.
 
-the full rules and playbooks live in `skills/euge-mode/SKILL.md`.
+the full rules and playbooks live in `plugins/estack/skills/euge-mode/SKILL.md`.
 
 `/euge-mode` works extremely well with a loop command (for example, Claude Code's `/loop`). you can drive an agent for hours without sacrificing rigor.
 
@@ -153,7 +158,7 @@ automate-me:       /automate-me
 
 estack also ships a subagent that runs this style end to end. on Claude Code, spawn it from a parent agent via `subagent_type: "euge-agent"`. it reads `euge-mode` in full, including its inline principles index, before doing any work. substituting a plain general-purpose subagent skips that read and drifts.
 
-`/euge-mode` and `subagent_type: "euge-agent"` route through the same wrapper. on Codex (no plugin subagent), use a general-purpose subagent and have it read `skills/euge-mode/SKILL.md` first.
+`/euge-mode` and `subagent_type: "euge-agent"` route through the same wrapper. on Codex (no plugin subagent), use a general-purpose subagent and have it read `plugins/estack/skills/euge-mode/SKILL.md` first.
 
 ## principles
 

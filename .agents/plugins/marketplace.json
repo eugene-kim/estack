@@ -1,0 +1,20 @@
+{
+	"name": "estack",
+	"interface": {
+		"displayName": "estack"
+	},
+	"plugins": [
+		{
+			"name": "estack",
+			"source": {
+				"source": "local",
+				"path": "./plugins/estack"
+			},
+			"policy": {
+				"installation": "AVAILABLE",
+				"authentication": "ON_INSTALL"
+			},
+			"category": "Developer Tools"
+		}
+	]
+}
