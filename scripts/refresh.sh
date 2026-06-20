@@ -35,6 +35,10 @@ if [ -d "$CODEX_SKILLS_DIR" ]; then
 fi
 "$REPO_DIR/scripts/install-codex.sh"
 
+# --- Home instructions: per-app override files (live symlink / generated) ---
+echo
+"$REPO_DIR/scripts/install-home-instructions.sh"
+
 # --- Claude Code: reinstall the cached snapshot ---
 echo
 if command -v claude >/dev/null 2>&1; then
