@@ -4,13 +4,13 @@
 		"name": "Eugene Kim"
 	},
 	"metadata": {
-		"description": "estack: rigorous, model-agnostic agent workflow skills built around euge-mode."
+		"description": "estack — personal Claude Code + Codex plugin."
 	},
 	"plugins": [
 		{
 			"name": "estack",
 			"source": "./plugins/estack",
-			"description": "if you want to go fast, go deep first. estack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence."
+			"description": "estack — personal Claude Code + Codex plugin."
 		}
 	]
 }
