@@ -99,6 +99,8 @@ when invoked it:
 4. writes unslopped replies.
 
 the full rules and playbooks live in `plugins/estack/skills/euge-mode/SKILL.md`.
+the entry-point architecture is diagrammed in
+[`docs/skill-architecture.md`](docs/skill-architecture.md).
 
 `/euge-mode` works extremely well with a loop command (for example, Claude Code's `/loop`). you can drive an agent for hours without sacrificing rigor.
 
