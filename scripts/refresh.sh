@@ -29,7 +29,7 @@ echo
 echo
 if command -v claude >/dev/null 2>&1; then
   claude plugin uninstall "$PLUGIN@$MARKETPLACE" || true
-  claude plugin marketplace update "$MARKETPLACE"
+  claude plugin marketplace update "$MARKETPLACE" || claude plugin marketplace add "$REPO_DIR"
   claude plugin install "$PLUGIN@$MARKETPLACE"
   echo
   echo "Claude Code: reinstalled $PLUGIN@$MARKETPLACE — restart Claude Code to apply."
