@@ -22,15 +22,14 @@ Skip when the conversation is trivial, off-topic, or already covered by an exist
 
 ### 1. Locate the active transcript
 
-The parent finds its own transcript file before fanning out. The system prompt names the active workspace's `agent-transcripts/` directory; use that path. Do not glob across other projects' transcript directories. That crosses workspace boundaries and reads private chats from unrelated projects.
+Find the transcript for the current conversation before fanning out. Stay inside
+the active workspace or transcript location provided by the environment. Do not
+search across unrelated project transcript locations; that crosses workspace
+boundaries and may read private chats from other projects.
 
-```bash
-ls -t <agent-transcripts>/*.jsonl <agent-transcripts>/*/*.jsonl <agent-transcripts>/*/subagents/*.jsonl 2>/dev/null | head -10
-```
-
-Three transcript layouts to handle: legacy flat (`<id>.jsonl`), current nested (`<id>/<id>.jsonl`), and subagent (`<parent>/subagents/<child>.jsonl`).
-
-For each candidate, read the first JSONL line and check that `message.content[0].text` contains the conversation's opening user prompt. Take the matching path. If no path resolves, write a tight digest of the session and pass that instead.
+Prefer the real transcript path when you can identify it with high confidence.
+If you cannot, write a tight digest of the current session and pass that to the
+reviewers instead.
 
 ### 2. Spawn three reviewers in parallel
 
