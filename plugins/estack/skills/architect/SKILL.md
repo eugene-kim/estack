@@ -34,6 +34,8 @@ Use a diverse panel of independent models for the Phase B runners: pick the stro
 
 This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.
 
+The winning sketch must stay closed over observed requirements. Do not add APIs, fallback paths, options, compatibility layers, validators, parsers, guards, or extension points for cases the task or Phase A evidence did not surface. Apply the **subtract-before-you-add** principle skill for observed usage over speculative edge cases, and the **laziness-protocol** principle skill for the smallest shape that solves the problem without extra abstraction or signal-threading.
+
 Arena returns one synthesized design package. The synthesis decision populates the rationale's "Synthesis decision" section.
 
 ## Phase C: Agree (opt-in)

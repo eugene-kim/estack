@@ -14,5 +14,6 @@ Apply the following discipline. The orchestrator compares candidates on these ax
 - Single source of truth per invariant. Derive instead of sync.
 - Idempotent state transitions where applicable, per the **make-operations-idempotent** principle skill. Ask what happens if the operation runs twice or crashes halfway.
 - Short call chains. If tracing the flow needs more than three files, flatten the hierarchy, per the **laziness-protocol** principle skill and the **minimize-reader-load** principle skill.
+- No speculative APIs or fallbacks. Do not add options, compatibility layers, validators, parsers, guards, or extension points for cases the task or grounding evidence did not surface. Design for observed usage, per the **subtract-before-you-add** principle skill; keep the smallest shape that solves the problem, per the **laziness-protocol** principle skill.
 
 You are one of several runners, each on a different model where the platform offers one. Produce the best design your model can make; don't hedge against the others. Differences between candidates are the signal used to pick a base and graft. Converging on a safe-looking middle defeats the exploration.
