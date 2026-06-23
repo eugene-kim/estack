@@ -8,10 +8,9 @@ for Codex).
 
 ## How updates reach each tool
 
-A marketplace install is a **copy**, so it updates on an explicit upgrade. A
-live-dev install reads the clone in place, so it updates on reload. The loop is
-**edit in the clone → validate → commit → push**; other machines `git pull`,
-then upgrade (released) or just reload (live dev). Never edit a loose
+A marketplace install is a **copy**, so it updates on an explicit refresh. The
+default loop is **edit in the clone → validate → commit → push →
+`scripts/refresh.sh`**. Never edit a loose
 `~/.claude/skills` / `~/.agents/skills` copy or the installed plugin cache — that
 change is invisible to the other tool and an upgrade overwrites it. Always edit
 the repo.
@@ -30,11 +29,13 @@ the `/plugins` TUI is the interactive equivalent.
 | Update (released) — two steps | `claude plugin marketplace update estack` then `claude plugin update estack` (restart to apply) | `codex plugin marketplace upgrade estack` then `codex plugin add estack@estack` |
 | Uninstall the plugin | `claude plugin uninstall estack` | `codex plugin remove estack@estack` |
 | Remove the marketplace | `claude plugin marketplace remove estack` | `codex plugin marketplace remove estack` |
-| Live dev (no reinstall) | `claude --plugin-dir ./plugins/estack` | `./scripts/install-codex.sh` (symlinks into `~/.agents/skills`) |
+| Local refresh | `./scripts/refresh.sh` (reinstalls cached plugin; restart Claude Code) | `./scripts/refresh.sh` (plugin install flow; Force Reload Skills or start a new thread) |
 
 Released update is **two steps**: refresh the marketplace from GitHub, then
-update/re-add the installed plugin. Live dev needs neither — the clone is read in
-place, so a `git pull` (or local edit) shows up on the next session.
+update/re-add the installed plugin. `scripts/refresh.sh` handles the local
+machine refresh for both tools. For Codex marketplaces backed by a local path,
+there is no Git snapshot to upgrade, so the script skips marketplace upgrade and
+re-adds the plugin from the local marketplace.
 
 ## Finding the clone from inside a skill
 

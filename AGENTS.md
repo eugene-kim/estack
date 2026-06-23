@@ -41,9 +41,8 @@ codex plugin add estack@estack
 ```
 
 Then invoke the orchestrator with something like: `use euge-mode: <your task>`.
-For live local development (edits reflected without re-installing), use the
-symlink script instead: `scripts/install-codex.sh` links every skill into
-`~/.agents/skills`.
+For local development, commit your edits, run `scripts/refresh.sh`, then use
+Codex's **Force Reload Skills** command or start a new thread.
 
 ## Updating skills
 
@@ -54,5 +53,6 @@ Locate the clone by resolving a skill's real path and
 `git rev-parse --show-toplevel`; skills live under `plugins/estack/skills/`.
 A marketplace install is a copy, so after pushing, update in two steps —
 `codex plugin marketplace upgrade estack` then `codex plugin add estack@estack`
-(or use the symlink script for live edits). See `UPDATING.md` for the full
+for Git marketplaces, or just `codex plugin add estack@estack` for a local
+marketplace. `scripts/refresh.sh` handles both. See `UPDATING.md` for the full
 command reference (install, update, uninstall, remove) and workflow.

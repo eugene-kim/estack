@@ -41,10 +41,11 @@ codex plugin marketplace add eugene-kim/estack
 codex plugin add estack@estack
 ```
 
-For live local development, use the symlink script instead — it links every skill into `~/.agents/skills` so edits are reflected without re-installing:
+For local development, commit your edits, run the refresh script, then use
+**Force Reload Skills** from Codex's command menu or start a new thread:
 
 ```bash
-./scripts/install-codex.sh
+./scripts/refresh.sh
 ```
 
 Either way, invoke the orchestrator with `/euge-mode` (Claude Code) or `use euge-mode: <your task>` (Codex). See `AGENTS.md` for Codex-specific notes.
@@ -56,7 +57,7 @@ This repo is the single source of truth; both tools install the same `plugins/es
 - **Released:** push, then upgrade. A marketplace install is a copy, so it updates on an explicit upgrade (two steps), not automatically:
   - Claude Code: `claude plugin marketplace update estack` then `claude plugin update estack` (restart to apply).
   - Codex: `codex plugin marketplace upgrade estack` then `codex plugin add estack@estack`.
-- **Live dev:** run Claude Code with `--plugin-dir ./plugins/estack`, and Codex via `scripts/install-codex.sh` (symlinks). Edits and `git pull` are reflected on reload, no re-install.
+- **Local refresh:** run Claude Code with `--plugin-dir ./plugins/estack` when you want a live plugin dir, and use `scripts/refresh.sh` for Codex's plugin install flow. In an open Codex app session, run **Force Reload Skills** from the command menu; if the update still does not appear, start a new thread.
 
 The meta-skills follow this: `/reflect`, `/automate-me`, and the authoring-a-skill playbook edit files in the clone (`plugins/estack/skills/`) and commit, so their output flows downstream like any other change. The loop is **edit in the clone → validate → commit → push**. The full command reference (install, update, uninstall, remove) and the snippet for locating the clone from inside a skill are in [`UPDATING.md`](UPDATING.md).
 

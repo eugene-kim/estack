@@ -1,39 +1,47 @@
 #!/usr/bin/env bash
-# Refresh estack in both tools so Claude Code and Codex pick up local repo edits.
+# Refresh estack in both tools so Claude Code and Codex pick up the latest
+# committed plugin version.
 #
 # Claude Code installs estack as a cached snapshot, so it needs an explicit
 # reinstall to see changes — and a restart afterward to apply them (Claude Code
 # loads plugins at startup; `claude plugin install` only refreshes the cache).
 #
-# Codex reads skills live through the symlinks created by install-codex.sh, so
-# edits to existing skills need nothing. This script still (re)links so newly
-# added skills appear, and prunes symlinks for skills you've deleted.
+# Codex installs estack through its plugin marketplace. If the marketplace is a
+# Git source, this script upgrades the marketplace snapshot before installing.
+# If the marketplace is local, there is no snapshot to upgrade, so install is
+# enough. In an open Codex app session, use Cmd+K / Ctrl+K -> Force Reload
+# Skills; if the update still doesn't appear, start a new thread or restart
+# Codex.
 set -euo pipefail
-shopt -s nullglob
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PLUGIN="estack"
 MARKETPLACE="estack"
 
-# --- Codex: prune symlinks for deleted skills, then (re)link current ones ---
-SKILLS_SRC="$REPO_DIR/plugins/estack/skills"
-CODEX_SKILLS_DIR="${CODEX_SKILLS_DIR:-$HOME/.agents/skills}"
-if [ -d "$CODEX_SKILLS_DIR" ]; then
-  for link in "$CODEX_SKILLS_DIR"/*; do
-    [ -L "$link" ] || continue
-    # Only touch symlinks we own (pointing into this repo's skills/) that are
-    # now dangling because the skill was deleted.
-    case "$(readlink "$link")" in
-      "$SKILLS_SRC"/*)
-        if [ ! -e "$link" ]; then
-          rm "$link"
-          echo "codex: pruned deleted skill $(basename "$link")"
-        fi
-        ;;
-    esac
-  done
+# --- Codex: upgrade marketplace snapshot, then install/update the plugin ---
+if command -v codex >/dev/null 2>&1; then
+  marketplace_type="$(
+    codex plugin marketplace list --json \
+      | python3 -c 'import json, sys
+name = sys.argv[1]
+for marketplace in json.load(sys.stdin).get("marketplaces", []):
+    if marketplace.get("name") == name:
+        print(marketplace.get("marketplaceSource", {}).get("sourceType", "unknown"))
+        break
+' "$MARKETPLACE"
+  )"
+  if [ "$marketplace_type" = "git" ]; then
+    codex plugin marketplace upgrade "$MARKETPLACE"
+  else
+    echo "Codex: marketplace '$MARKETPLACE' is $marketplace_type; skipping Git-only marketplace upgrade."
+  fi
+  codex plugin add "$PLUGIN@$MARKETPLACE"
+  echo
+  echo "Codex: installed/refreshed $PLUGIN@$MARKETPLACE."
+  echo "Codex app: use Cmd+K / Ctrl+K -> Force Reload Skills, or start a new thread."
+else
+  echo "Codex: 'codex' not on PATH; skipped."
 fi
-"$REPO_DIR/scripts/install-codex.sh"
 
 # --- Home instructions: per-app override files (live symlink / generated) ---
 echo
