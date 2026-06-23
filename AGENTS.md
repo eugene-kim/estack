@@ -26,10 +26,11 @@ the task to a playbook, and follow that playbook's steps.
   model", "a fast, lower-cost code model", or "a diverse panel of independent
   models", pick the strongest and fastest models your platform offers for each
   role. Don't expect any specific model name.
-- Subagents: where a skill says `subagent_type: "euge-agent"`, that's a
-  Claude Code plugin subagent. On Codex (no equivalent), use a general-purpose
-  subagent and have it read `plugins/estack/skills/euge-mode/SKILL.md` in full first, including
-  its inline Principles index.
+- Delegated agents: when the platform has an estack or euge-mode agent profile,
+  use it for direct playbook delegates. On platforms without named agent
+  profiles, use a general-purpose agent and have it read
+  `plugins/estack/skills/euge-mode/SKILL.md` in full first, including its inline
+  Principles index. Run delegates concurrently when the platform supports it.
 
 ## Install (Codex)
 
@@ -56,3 +57,10 @@ A marketplace install is a copy, so after pushing, update in two steps —
 for Git marketplaces, or just `codex plugin add estack@estack` for a local
 marketplace. `scripts/refresh.sh` handles both. See `UPDATING.md` for the full
 command reference (install, update, uninstall, remove) and workflow.
+
+## Default landing flow
+
+This repo is managed by one person. When the user asks for a change and is happy
+with the result, commit it, run `scripts/refresh.sh`, and push `main` by default.
+Skip that only when the user explicitly asks to hold the diff locally, use a
+branch or PR, or avoid refreshing.

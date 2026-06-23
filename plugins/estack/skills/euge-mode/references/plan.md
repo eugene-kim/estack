@@ -24,7 +24,7 @@ Resolve what is in scope vs explicitly out, technical or platform constraints, p
 
 Delegate codebase exploration (the **guard-the-context-window** principle skill).
 
-- Prefer `subagent_type: "euge-agent"`. A general-purpose subagent is the fallback (have it read `euge-mode` first). Never use a built-in `plan` subagent type; it ignores this skill.
+- Prefer the platform's estack or euge-mode agent profile when one exists. Otherwise use a general-purpose agent and have it read `euge-mode` first. Avoid platform planner agents that ignore this skill.
 - Pick the model by role: a fast, lower-cost code model for code reads, a strong reasoning model for judgment. Don't hardcode model names.
 
 Each explorer returns file pointers, conventions, dependencies, test infrastructure, and entry points. No inlined dumps.

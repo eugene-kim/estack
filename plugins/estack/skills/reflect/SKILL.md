@@ -33,7 +33,7 @@ reviewers instead.
 
 ### 2. Spawn three reviewers in parallel
 
-One message, three subagent calls, general-purpose subagents, an explicit model role on each, with tool/MCP access (not a read-only sandbox). Reviewers need MCP access for context lookups (tickets, chat threads, observability traces referenced in the transcript); a read-only sandbox strips MCPs and defeats that. The prompt forbids file writes; the parent applies edits.
+Launch three independent reviewer agents concurrently when the platform supports parallel agent runs. Assign an explicit model role to each and give reviewers the tool or MCP access needed for context lookups, such as tickets, chat threads, or observability traces referenced in the transcript. The prompt forbids file writes; the parent applies edits.
 
 | Lens | Model role | Prompt template |
 |---|---|---|
@@ -45,7 +45,7 @@ Pass each template verbatim, substituting the transcript path or digest where ma
 
 ### 3. Synthesize
 
-One subagent call, a general-purpose subagent, a strong reasoning model, with tool/MCP access (not a read-only sandbox). The synthesizer's quality check includes spot-verifying citations, which can require MCP access; a read-only sandbox strips MCPs and defeats that. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
+Launch one independent synthesizer agent on a strong reasoning model. Give it the tool or MCP access needed to spot-verify citations. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
 
 ### 4. Structural enforcement check
 

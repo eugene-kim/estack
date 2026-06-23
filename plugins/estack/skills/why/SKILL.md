@@ -113,12 +113,12 @@ Source control history is always available through git and `gh`. For the other s
 
 The goal is a complete **coverage map**, not a minimal one. An investigator that searches and finds nothing is not wasted work. A null result from an issue tracker is evidence the decision was not ticketed, which is itself a useful fact about how the decision was made. Document the null, don't skip the search.
 
-Launch all matching investigators in a single message so they run concurrently. The one-investigator-per-category pattern exists so each agent can specialize in one tool's query vocabulary and result shape. Don't ask one agent to cover multiple MCPs.
+Launch all matching investigators concurrently when the platform supports parallel agent runs. The one-investigator-per-category pattern exists so each agent can specialize in one tool's query vocabulary and result shape. Don't ask one agent to cover multiple MCPs.
 
-Subagent config (for each):
-- a general-purpose subagent
+Agent config (for each):
+- an independent investigator agent
 - model: a fast, lower-cost code model
-- give the subagent tool/MCP access (not a read-only sandbox). A read-only sandbox strips MCP access, which disables MCP-backed investigators entirely. The source control investigator would technically be safe read-only, but keep modes uniform for consistency. Investigators still shouldn't write anything. That's a posture, not a sandbox.
+- give the investigator the tool or MCP access needed for its assigned source. Investigators still shouldn't write anything. That's a posture, not a sandbox.
 
 Each investigator gets:
 1. The base prompt from `references/investigator-prompt.md`
@@ -129,7 +129,7 @@ Each investigator gets:
 
 ### Investigator roster. One per available evidence category
 
-Spawn one investigator per category that has a matching MCP. Each investigator owns exactly one tool or MCP.
+Launch one investigator per category that has a matching MCP. Each investigator owns exactly one tool or MCP.
 
 Each entry below lists what the category physically contains and the shape of "why" the category is uniquely positioned to surface. Use it to know what to expect back from each investigator, how to name a gap when a category returns empty, and only in the rare provably irrelevant case, to justify a skip. Every category overlaps in coverage, but each one owns a kind of evidence the others cannot recover. That's why the default is still all seven categories with available MCPs.
 
@@ -160,11 +160,11 @@ If your scope assessment suggests a single-commit trivial target where the PR de
 
 ## Step 4. Synthesize
 
-Spawn one synthesizer subagent:
+Launch one synthesizer agent:
 
-- a general-purpose subagent
+- an independent synthesizer agent
 - model: a strong reasoning model
-- give the subagent tool/MCP access (not a read-only sandbox). The synthesizer's quality check includes spot-verifying citations, which can require MCP access. A read-only sandbox strips MCPs and defeats that.
+- give the synthesizer the tool or MCP access needed to spot-verify citations.
 
 The synthesizer gets:
 1. The investigator findings, including any null results and any categories skipped with justification

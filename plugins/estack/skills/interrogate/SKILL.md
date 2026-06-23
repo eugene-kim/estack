@@ -33,9 +33,9 @@ Write one clear paragraph. This is critical: reviewers challenge whether the wor
 
 ## Step 3, Spawn Reviewers
 
-Spawn all four in a single message, each on a different model. Use a diverse panel of independent models so their blind spots don't line up. All four get the same prompt built from the template in `references/reviewer-prompt.md`.
+Launch all four reviewers concurrently when the platform supports parallel agent runs. Use a diverse panel of independent models so their blind spots don't line up. All four get the same prompt built from the template in `references/reviewer-prompt.md`.
 
-| Subagent | Model |
+| Agent | Model |
 |----------|-------|
 | Reviewer A | strongest available |
 | Reviewer B | a different model |
@@ -45,11 +45,11 @@ Spawn all four in a single message, each on a different model. Use a diverse pan
 Pick the strongest model your platform offers plus at least one different or faster one, so the perspectives stay independent. If only one provider is available, vary the model tier and give each reviewer a different prompt/lens so they still disagree usefully.
 
 For each reviewer:
-- a general-purpose subagent
+- an independent reviewer agent
 - model: the model from the table
-- give the subagent tool/MCP access (not a read-only sandbox); it should still not write anything
+- give the reviewer the tool or MCP access needed to inspect context; it should still not write anything
 
-If a model you select is rejected as unresolvable when you try to spawn the subagent, check the current list of valid models your platform exposes, pick the closest equivalent (prefer the highest-reasoning tier of the same family), and spawn with that. Do not block the review on the model issue.
+If a model you select is rejected as unresolvable when you try to launch the agent, check the current list of valid models your platform exposes, pick the closest equivalent (prefer the highest-reasoning tier of the same family), and launch with that. Do not block the review on the model issue.
 
 Read `references/reviewer-prompt.md` and fill in the template with:
 1. The stated intent

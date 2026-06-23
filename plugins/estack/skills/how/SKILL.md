@@ -42,11 +42,11 @@ Decompose the question into 2-4 parallel exploration angles. Each angle should c
 
 The right decomposition depends on the question. Use your judgment. For narrow questions, 2 explorers is fine. For broad subsystems, use up to 4.
 
-Spawn all explorers in a single message:
+Launch all explorers concurrently when the platform supports parallel agent runs:
 
-- a general-purpose subagent
+- an independent explorer agent
 - model: a fast, lower-cost code model
-- give the subagent tool/MCP access (not a read-only sandbox); it should still not write anything
+- give the explorer the tool or MCP access needed to inspect context; it should still not write anything
 
 Each explorer gets the same base prompt from `references/explorer-prompt.md`, plus a specific exploration angle telling it which slice to focus on. Each explorer should:
 - Start broad: Glob for relevant directories, Grep for key types/interfaces/class names
@@ -61,11 +61,11 @@ Then proceed to Step 3.
 
 ### Step 2b. Direct Explain (simple questions)
 
-Spawn a single subagent that explores and explains in one pass:
+Launch a single agent that explores and explains in one pass:
 
-- a general-purpose subagent
+- an independent explainer agent
 - model: a strong reasoning model
-- give the subagent tool/MCP access (not a read-only sandbox); it should still not write anything
+- give the explainer the tool or MCP access needed to inspect context; it should still not write anything
 
 This agent does its own exploration (Glob, Grep, Read) and writes the explanation directly. Read `references/explainer-prompt.md` for the communication style and output format. The agent follows the same structure, it just doesn't have explorer findings as input.
 
@@ -73,11 +73,11 @@ Proceed to Step 4.
 
 ### Step 3. Synthesize (complex questions only)
 
-Once all explorers have returned, spawn a single subagent to synthesize their findings into one coherent explanation:
+Once all explorers have returned, launch a single agent to synthesize their findings into one coherent explanation:
 
-- a general-purpose subagent
+- an independent explainer agent
 - model: a strong reasoning model
-- give the subagent tool/MCP access (not a read-only sandbox); it should still not write anything
+- give the explainer the tool or MCP access needed to inspect context; it should still not write anything
 
 The explainer gets all explorers' findings and writes the human-facing explanation (see output format below). Read `references/explainer-prompt.md` for the full prompt template. The explainer reconciles overlapping findings, resolves contradictions, and weaves the separate slices into a unified picture.
 
@@ -109,9 +109,9 @@ Run the full explain flow above (Steps 1-4). You need to understand the architec
 
 ### Step 2. Spawn Critics
 
-After the explanation is complete, spawn architectural critics. Launch all in a single message. Use a diverse panel of independent models so their blind spots don't line up:
+After the explanation is complete, launch architectural critics concurrently when the platform supports parallel agent runs. Use a diverse panel of independent models so their blind spots don't line up:
 
-| Subagent | Model |
+| Agent | Model |
 |----------|-------|
 | Critic A | strongest available |
 | Critic B | a different model |
@@ -120,9 +120,9 @@ After the explanation is complete, spawn architectural critics. Launch all in a 
 Pick the strongest model your platform offers plus at least one different or faster one, so the perspectives stay independent. If only one provider is available, vary the model tier and give each critic a different prompt/lens so they still disagree usefully.
 
 For each critic:
-- a general-purpose subagent
+- an independent critic agent
 - model: the model from the table. These are minimum reasoning levels. The lead should escalate any model when the architecture warrants deeper analysis.
-- give the subagent tool/MCP access (not a read-only sandbox); it should still not write anything
+- give the critic the tool or MCP access needed to inspect context; it should still not write anything
 
 Read `references/critic-prompt.md` for the prompt template. Each critic gets:
 1. The explanation from Step 1 (so they don't waste time re-exploring)

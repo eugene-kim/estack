@@ -74,9 +74,9 @@ Read the leaf skill in full for any principle you apply.
 
 ## Subagents
 
-**Use `subagent_type: "euge-agent"` for any subagent you spawn directly inside a playbook step** (code-writing delegates, ad-hoc helpers). `/euge-mode` and `subagent_type: "euge-agent"` route through the same wrapper. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`) configure their own subagent and model mix for diverse-model review and exploration; respect what the skill prescribes rather than overriding it to `euge-agent`. (On a platform without custom subagent types, use a general-purpose subagent and have it read the `euge-mode` skill first.)
+When the platform supports a dedicated estack or euge-mode agent profile, use it for direct playbook delegates such as code-writing helpers. On platforms without named agent profiles, use a general-purpose agent and have it read the `euge-mode` skill first. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`) configure their own agent mix for diverse-model review and exploration; respect what the skill prescribes rather than forcing a single agent profile.
 
-**Defaults for every subagent call.** Run it in the background, give it tool/MCP access (not a read-only sandbox), pass file pointers rather than inlined context, and pick the model by role: a fast, lower-cost code model for mechanical code work, and a strong reasoning model for prose and judgment. Don't hardcode model names; choose the strongest and the fastest your platform offers for each role.
+**Defaults for every delegated agent call.** Run delegates concurrently when the platform supports it. Give them the tool or MCP access their task requires, pass file pointers rather than inlined context, and pick the model by role: a fast, lower-cost code model for mechanical code work, and a strong reasoning model for prose and judgment. Don't hardcode model names; choose the strongest and the fastest your platform offers for each role.
 
 You own every subagent's work. Review the diff and write your own summary; don't pass through what it said. Interrupt-chained resumes silently drop directives, so fire a fresh subagent with consolidated scope rather than trusting a "done" summary. A second opinion is the same prompt against a different model; agreement is high-signal.
 

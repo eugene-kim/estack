@@ -159,11 +159,11 @@ show-me-your-work: /show-me-your-work keep a decision trail i can review when i'
 automate-me:       /automate-me
 ```
 
-## the `euge-agent` subagent
+## delegated agents
 
-estack also ships a subagent that runs this style end to end. on Claude Code, spawn it from a parent agent via `subagent_type: "euge-agent"`. it reads `euge-mode` in full, including its inline principles index, before doing any work. substituting a plain general-purpose subagent skips that read and drifts.
+estack can use a dedicated estack or euge-mode agent profile when the platform supports named agent profiles. That profile reads `euge-mode` in full, including its inline principles index, before doing any work. If the platform has no named profiles, use a general-purpose agent and have it read `plugins/estack/skills/euge-mode/SKILL.md` first.
 
-`/euge-mode` and `subagent_type: "euge-agent"` route through the same wrapper. on Codex (no plugin subagent), use a general-purpose subagent and have it read `plugins/estack/skills/euge-mode/SKILL.md` first.
+Run delegated agents concurrently when the platform supports parallel agent runs. Otherwise, start each delegate before judging any output so the work stays independent.
 
 ## principles
 
