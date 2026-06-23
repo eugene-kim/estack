@@ -18,30 +18,8 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PLUGIN="estack"
 MARKETPLACE="estack"
 
-# --- Codex: upgrade marketplace snapshot, then install/update the plugin ---
-if command -v codex >/dev/null 2>&1; then
-  marketplace_type="$(
-    codex plugin marketplace list --json \
-      | python3 -c 'import json, sys
-name = sys.argv[1]
-for marketplace in json.load(sys.stdin).get("marketplaces", []):
-    if marketplace.get("name") == name:
-        print(marketplace.get("marketplaceSource", {}).get("sourceType", "unknown"))
-        break
-' "$MARKETPLACE"
-  )"
-  if [ "$marketplace_type" = "git" ]; then
-    codex plugin marketplace upgrade "$MARKETPLACE"
-  else
-    echo "Codex: marketplace '$MARKETPLACE' is $marketplace_type; skipping Git-only marketplace upgrade."
-  fi
-  codex plugin add "$PLUGIN@$MARKETPLACE"
-  echo
-  echo "Codex: installed/refreshed $PLUGIN@$MARKETPLACE."
-  echo "Codex app: use Cmd+K / Ctrl+K -> Force Reload Skills, or start a new thread."
-else
-  echo "Codex: 'codex' not on PATH; skipped."
-fi
+# --- Codex: remove legacy skill symlinks, then install/update the plugin ---
+"$REPO_DIR/scripts/install-codex.sh"
 
 # --- Home instructions: per-app override files (live symlink / generated) ---
 echo

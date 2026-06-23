@@ -88,7 +88,7 @@ Show the draft to the user and take feedback. Expect multiple iterations. Cut ru
 
 ### 6. Land it
 
-Work in a worktree off main in the estack clone. Commit and open a PR so the user can review it, then push. Once it lands, both Claude Code and Codex pick up the new `<handle>-mode` skill (Codex live via the symlinks, Claude Code on reload). Don't push to main directly.
+Work in a worktree off main in the estack clone. Commit and open a PR so the user can review it, then push. Once it lands, run `scripts/refresh.sh` so Codex and Claude Code refresh the plugin. Don't push to main directly.
 
 ## Guardrails
 

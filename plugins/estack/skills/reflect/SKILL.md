@@ -57,7 +57,7 @@ Before applying any Accepted edit, present the synthesizer's full Accepted/Rejec
 
 Backlog items file to whatever devex / backlog tracker your team uses automatically. Those are tracker submissions, not skill edits. Only the Accepted list waits for approval.
 
-All skill edits land in the estack clone (the repo that contains these skills), never a loose `~/.claude/skills` or `~/.agents/skills` copy. Locate it by resolving a skill's real path and `git rev-parse --show-toplevel` (see `UPDATING.md`). After applying the approved subset, commit and push from that clone so both Claude Code and Codex pick up the change.
+For each approved skill edit, modify the source file under `<estack-repo>/plugins/estack/skills/...`. Do not edit the active copied skill under the Codex plugin cache, and do not edit a loose `~/.claude/skills` or `~/.agents/skills` copy. Locate the clone by resolving a skill's real path and `git rev-parse --show-toplevel` (see `UPDATING.md`). After the source edits are done, commit and push from that clone, then run `scripts/refresh.sh` so both tools pick up the plugin update.
 
 For each approved Accepted item, follow the Routing field exactly:
 

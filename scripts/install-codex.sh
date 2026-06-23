@@ -1,57 +1,89 @@
 #!/usr/bin/env bash
-# Install estack skills for OpenAI Codex.
+# Install estack for OpenAI Codex through the plugin marketplace.
 #
-# Codex discovers skills as directories containing a SKILL.md, under
-# ~/.agents/skills (personal) or .agents/skills (per-repo). This script
-# symlinks every skill in this repo's skills/ into your personal Codex
-# skills directory so `euge-mode` and the rest are available everywhere.
-#
-# Re-running is safe: estack-owned symlinks are refreshed, a foreign symlink
-# or a non-symlink directory/file with the same name is left untouched (it warns).
+# Older estack installs linked each skill into ~/.agents/skills. Codex now
+# loads estack as a plugin, so this script removes only the legacy symlinks it
+# owns and leaves unrelated personal skills untouched.
 set -euo pipefail
-shopt -s nullglob   # an empty/missing skills/ yields zero iterations, not a literal "*"
+shopt -s nullglob
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SRC="$REPO_DIR/plugins/estack/skills"
-DST="${CODEX_SKILLS_DIR:-$HOME/.agents/skills}"
+LEGACY_DST="${CODEX_SKILLS_DIR:-$HOME/.agents/skills}"
+PLUGIN="estack"
+MARKETPLACE="estack"
 
-if [ -e "$DST" ] && [ ! -d "$DST" ]; then
-  echo "error: destination '$DST' exists but is not a directory" >&2
-  exit 1
-fi
-mkdir -p "$DST"
-
-linked=0
-for skill in "$SRC"/*/; do
-  name="$(basename "$skill")"
-  target="$DST/$name"
-  src="${skill%/}"
-  if [ -L "$target" ]; then
-    # Only reclaim a symlink we own (points back into this repo's skills/).
-    if [ "$(readlink "$target")" != "$src" ]; then
-      echo "skip: $target is a symlink to somewhere else; leaving it alone"
-      continue
-    fi
-    rm "$target"
-  elif [ -e "$target" ]; then
-    echo "skip: $target exists and is not a symlink; leaving it alone"
-    continue
+cleanup_legacy_links() {
+  if [ ! -d "$LEGACY_DST" ]; then
+    return
   fi
-  ln -s "$src" "$target"
-  echo "linked: $name"
-  linked=$((linked + 1))
-done
 
-if [ "$linked" -eq 0 ] && [ ! -d "$SRC" ]; then
-  echo "error: no skills/ directory at '$SRC'; run this from inside the estack repo" >&2
+  removed=0
+  for skill in "$SRC"/*/; do
+    name="$(basename "$skill")"
+    target="$LEGACY_DST/$name"
+    src="${skill%/}"
+
+    if [ -L "$target" ] && [ "$(readlink "$target")" = "$src" ]; then
+      rm "$target"
+      echo "removed legacy link: $target"
+      removed=$((removed + 1))
+    fi
+  done
+
+  if [ "$removed" -eq 0 ]; then
+    echo "Codex: no legacy estack skill symlinks found in $LEGACY_DST."
+  else
+    echo "Codex: removed $removed legacy estack skill symlink(s) from $LEGACY_DST."
+  fi
+}
+
+ensure_marketplace() {
+  marketplace_type="$(
+    codex plugin marketplace list --json \
+      | python3 -c 'import json, sys
+name = sys.argv[1]
+for marketplace in json.load(sys.stdin).get("marketplaces", []):
+    if marketplace.get("name") == name:
+        print(marketplace.get("marketplaceSource", {}).get("sourceType", "unknown"))
+        break
+' "$MARKETPLACE"
+  )"
+
+  if [ -z "$marketplace_type" ]; then
+    codex plugin marketplace add "$REPO_DIR"
+    marketplace_type="$(
+      codex plugin marketplace list --json \
+        | python3 -c 'import json, sys
+name = sys.argv[1]
+for marketplace in json.load(sys.stdin).get("marketplaces", []):
+    if marketplace.get("name") == name:
+        print(marketplace.get("marketplaceSource", {}).get("sourceType", "unknown"))
+        break
+' "$MARKETPLACE"
+    )"
+  fi
+
+  if [ "$marketplace_type" = "git" ]; then
+    codex plugin marketplace upgrade "$MARKETPLACE"
+  else
+    echo "Codex: marketplace '$MARKETPLACE' is ${marketplace_type:-unknown}; skipping Git-only marketplace upgrade."
+  fi
+}
+
+if [ ! -d "$SRC" ]; then
+  echo "error: no skills directory at '$SRC'; run this from inside the estack repo" >&2
   exit 1
 fi
 
-echo
-echo "Done. estack skills are linked into $DST"
-echo "The orchestrating skill is 'euge-mode'. Ask Codex to use it, e.g.:"
-echo "  \"use euge-mode: <your task>\""
-echo
-echo "Note: Codex has no plugin 'subagent' concept like Claude Code's euge-agent."
-echo "Where a skill says subagent_type: \"euge-agent\", use a general-purpose"
-echo "subagent and have it read the euge-mode skill first."
+cleanup_legacy_links
+
+if command -v codex >/dev/null 2>&1; then
+  ensure_marketplace
+  codex plugin add "$PLUGIN@$MARKETPLACE"
+  echo
+  echo "Codex: installed/refreshed $PLUGIN@$MARKETPLACE."
+  echo "Codex app: use Cmd+K / Ctrl+K -> Force Reload Skills, or start a new thread."
+else
+  echo "Codex: 'codex' not on PATH; skipped plugin install."
+fi
