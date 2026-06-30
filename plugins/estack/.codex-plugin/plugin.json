@@ -22,7 +22,7 @@
 	"interface": {
 		"displayName": "estack",
 		"shortDescription": "Rigorous, model-agnostic agent workflows you can parallelize with confidence.",
-		"longDescription": "estack is a set of rigorous agent workflow skills built around euge-mode: it matches a task to a playbook, routes to focused skills (how, why, architect, interrogate, arena, reflect, tdd, unslop), and grounds every decision in a small set of one-principle skills. The goal is to write less, but higher quality code. Model-agnostic: skills describe roles, not specific model names.",
+		"longDescription": "estack is a set of rigorous agent workflow skills built around euge-mode: it matches a task to a playbook, routes to focused skills (how, why, architect, interrogate, arena, reflect, handoff, tdd, unslop), and grounds every decision in a small set of one-principle skills. The goal is to write less, but higher quality code. Model-agnostic: skills describe roles, not specific model names.",
 		"developerName": "Eugene Kim",
 		"category": "Developer Tools",
 		"capabilities": ["Interactive", "Read", "Write"]

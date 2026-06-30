@@ -20,8 +20,8 @@ the task to a playbook, and follow that playbook's steps.
 
 - The orchestrating skill lives in `plugins/estack/skills/euge-mode/SKILL.md`. It indexes a set
   of one-principle leaf skills (`plugins/estack/skills/principle-*`) and routes to focused
-  skills (`how`, `why`, `architect`, `interrogate`, `arena`, `reflect`, `tdd`,
-  `unslop`, and others).
+  skills (`how`, `why`, `architect`, `interrogate`, `arena`, `reflect`,
+  `handoff`, `tdd`, `unslop`, and others).
 - The skills are model-agnostic. Where a skill calls for "a strong reasoning
   model", "a fast, lower-cost code model", or "a diverse panel of independent
   models", pick the strongest and fastest models your platform offers for each

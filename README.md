@@ -117,6 +117,7 @@ the rest are useful when you want to specifically invoke them:
 | `/interrogate` | you have a diff and want several independent models to try to break it. |
 | `/automate-me` | you want your own `-mode` skill, drafted from how you've actually worked. |
 | `/reflect` | a long task landed and you want the recipe captured as a skill edit. |
+| `/handoff` | you want a compact handoff document for another agent to continue the conversation. |
 | `/tdd` | you're fixing a bug and there's a cheap local test path. write the failing test first, then the fix. |
 | `/typescript-best-practices` | you're reading or editing typescript. grounds the type-system-discipline principle in syntax. |
 | `/figure-it-out` | no bundled playbook fits. designs a rigorous, auditable playbook for the task. |
@@ -155,6 +156,7 @@ tdd:               /tdd implement
 unslop:            can we unslop and tighten the new changes?
 reflect:           /reflect that took too long. capture what we learned so the next run doesn't
                    repeat it.
+handoff:           /handoff next session should publish the branch and watch ci.
 show-me-your-work: /show-me-your-work keep a decision trail i can review when i'm back.
 automate-me:       /automate-me
 ```
