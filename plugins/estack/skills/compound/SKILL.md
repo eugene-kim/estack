@@ -1,29 +1,20 @@
 ---
 name: compound
-description: Use when the user wants to capture reusable lessons, improve docs, code, agent instructions, workflow guidance, or decide whether repeated work should become a skill.
+description: Use when the user wants to improve the system based on something learned, outdated, incorrect, repetitive, or friction-producing. This may involve docs, code, tests, scripts, AGENTS.md / CLAUDE.md, workflow guidance, or skills.
 ---
 
 # Compound
 
-Turn repeated experience into durable improvements.
+Improve the system from what just became clear.
 
 ## Approach
 
-- Look for patterns that actually occurred more than once or caused enough friction to justify capture.
-- Decide where the lesson belongs before editing. It may belong in documentation, code, tests, scripts, `AGENTS.md` / `CLAUDE.md`, another repo instruction file, or a skill.
-- Prefer the smallest durable change over creating a new skill.
-- Create or expand a skill only when it will prevent future re-explanation or repeated mistakes.
-- Do not encode one-off implementation details as permanent process.
-- Keep new guidance short, tool-agnostic, and tied to observed use.
+- Treat compounding broadly: make the relevant artifact better. That can mean fixing outdated documentation, correcting misleading instructions, improving code or tests, tightening a script, updating `AGENTS.md` / `CLAUDE.md`, or changing a skill.
+- Put the improvement where future work will naturally encounter it.
+- Prefer the smallest durable change that removes the confusion, error, repetition, or friction.
+- Avoid turning every lesson into a new process. Sometimes the right move is just to fix the stale sentence, bad default, missing test, or rough bit of code.
+- Keep the result short, practical, and tied to what was actually learned.
 
-## Output
+## Finish
 
-Produce one of:
-
-- a documentation update
-- a code, test, or script improvement
-- a proposed instruction change
-- a new or updated skill
-- a note that nothing should be captured yet
-
-When editing estack skills, update the source clone under `plugins/estack/skills/...`, then follow the repo refresh flow. When the right home is `AGENTS.md`, `CLAUDE.md`, docs, scripts, or code, edit that source file instead.
+End by saying what improved and where it changed. When editing estack skills, update the source clone under `plugins/estack/skills/...`, then follow the repo refresh flow.
