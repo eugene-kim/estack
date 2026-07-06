@@ -1,5 +1,5 @@
 ---
-name: implement
+name: ek-implement
 description: Use when the user wants an agent to implement an agreed software change from a PRD, implementation plan, issue, or explicit instructions.
 ---
 
@@ -24,4 +24,4 @@ Implement the requested software change with tight scope and clear verification.
 
 ## Handoff
 
-End with changed files, verification results, and the most useful next skill, usually `review`.
+End with changed files, verification results, and the most useful next skill, usually `ek-review`.

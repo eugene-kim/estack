@@ -1,5 +1,5 @@
 ---
-name: simplify
+name: ek-simplify
 description: Use when the user asks to simplify, refine, clean up, or improve recently modified code for clarity, consistency, and maintainability while preserving behavior.
 ---
 

@@ -18,7 +18,7 @@ when a real need appears, then installed through the same plugin refresh flow.
 
 ## Add a skill
 
-Create a folder under `plugins/estack/skills/<skill-name>/` with a `SKILL.md`.
+Create a folder under `plugins/estack/skills/ek-<skill-name>/` with a `SKILL.md`.
 Keep each skill focused and tied to a workflow that has actually come up.
 
 Write skills as lightweight judgment aids. Avoid over-prescribing outputs or
@@ -43,15 +43,16 @@ its refreshed plugin install to apply.
 
 ## Current skills
 
-- `explain-diff` creates a rich, printable HTML explanation of a code change.
-- `prd` turns a product idea or feature request into a concise PRD.
-- `implementation-plan` turns requirements into a grounded engineering plan.
-- `implement` implements an agreed change with tight scope and verification.
-- `review` checks a diff for correctness, regressions, and missing tests.
-- `simplify` refines recently modified code while preserving behavior.
-- `manage-pr` handles PR feedback, CI failures, notes, and readiness.
-- `compound` improves the relevant artifact based on what became clear.
-- `dev-cycle` runs the software development cycle across the phase skills.
+- `ek-explain-diff` creates a rich, printable HTML explanation of a code change.
+- `ek-prd` turns a product idea or feature request into a concise PRD.
+- `ek-implementation-plan` turns requirements into a grounded engineering plan.
+- `ek-implement` implements an agreed change with tight scope and verification.
+- `ek-simplify` refines recently modified code while preserving behavior.
+- `ek-review` checks a diff for correctness, regressions, and missing tests.
+- `ek-create-pr` creates a reviewer-friendly PR with a reading guide.
+- `ek-manage-pr` handles PR feedback, CI failures, notes, and readiness.
+- `ek-compound` improves the relevant artifact based on what became clear.
+- `ek-dev-cycle` runs the software development cycle across the phase skills.
 
 ## Install or refresh on another machine
 

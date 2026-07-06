@@ -1,5 +1,5 @@
 ---
-name: dev-cycle
+name: ek-dev-cycle
 description: Use when the user wants an autonomous software development cycle from requirements through plan, development, review, PR management, and reflection.
 ---
 
@@ -9,13 +9,14 @@ Run the software development cycle end to end, using the phase skills as the rai
 
 ## Phases
 
-1. `prd` - clarify the product need and create or identify the requirements artifact.
-2. `implementation-plan` - turn requirements into a grounded engineering plan.
-3. `implement` - implement the plan with narrow scope and verification.
-4. `simplify` - refine recently modified code for clarity while preserving behavior.
-5. `review` - review the resulting diff for correctness and missing tests.
-6. `manage-pr` - handle PR publication, feedback, CI, and merge readiness when a PR exists or is requested.
-7. `compound` - improve the relevant artifact when the work reveals a useful lesson, correction, or source of friction.
+1. `ek-prd` - clarify the product need and create or identify the requirements artifact.
+2. `ek-implementation-plan` - turn requirements into a grounded engineering plan.
+3. `ek-implement` - implement the plan with narrow scope and verification.
+4. `ek-simplify` - refine recently modified code for clarity while preserving behavior.
+5. `ek-review` - review the resulting diff for correctness and missing tests.
+6. `ek-create-pr` - create a reviewer-friendly PR with a clear description and reading guide when publication is requested.
+7. `ek-manage-pr` - handle PR feedback, CI, and merge readiness after a PR exists.
+8. `ek-compound` - improve the relevant artifact when the work reveals a useful lesson, correction, or source of friction.
 
 ## Operating rules
 
@@ -36,7 +37,8 @@ Maintain a short phase log in the conversation:
 - Implement: pending / done / skipped
 - Simplify: pending / done / skipped
 - Review: pending / done / skipped
-- PR: pending / done / skipped
+- Create PR: pending / done / skipped
+- Manage PR: pending / done / skipped
 - Compound: pending / done / skipped
 ```
 

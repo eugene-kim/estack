@@ -1,5 +1,5 @@
 ---
-name: compound
+name: ek-compound
 description: Use when the user wants to improve the system based on something learned, outdated, incorrect, repetitive, or friction-producing. This may involve docs, code, tests, scripts, AGENTS.md / CLAUDE.md, workflow guidance, or skills.
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: review
+name: ek-review
 description: Use when the user asks for a code review, pre-merge review, regression check, or critique of an implementation.
 ---
 

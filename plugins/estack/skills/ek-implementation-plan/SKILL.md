@@ -1,5 +1,5 @@
 ---
-name: implementation-plan
+name: ek-implementation-plan
 description: Use when the user wants an implementation plan for a PRD, issue, feature request, bug, or code change before development.
 ---
 
@@ -38,4 +38,4 @@ Use this structure:
 
 ## Handoff
 
-End with the plan location or summary, adversarial review status for non-trivial work, the verification step, and the most useful next skill, usually `implement`.
+End with the plan location or summary, adversarial review status for non-trivial work, the verification step, and the most useful next skill, usually `ek-implement`.

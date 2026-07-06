@@ -24,7 +24,9 @@ Keep plugin and refresh machinery working:
 
 ## Adding skills
 
-When asked to add a skill, create `plugins/estack/skills/<skill-name>/SKILL.md`.
+When asked to add a skill, create `plugins/estack/skills/ek-<skill-name>/SKILL.md`.
+Skill names and folders should use the `ek-` prefix so they remain distinct when
+many skills are installed.
 Keep the skill focused. Do not recreate the old bundled suite unless the user asks
 for a specific skill because the need has come up again.
 

@@ -8,7 +8,7 @@ The old bundled skill suite was removed. Add only the skill that is needed now.
 
 ## Add or change a skill
 
-1. Create or edit `plugins/estack/skills/<skill-name>/SKILL.md`.
+1. Create or edit `plugins/estack/skills/ek-<skill-name>/SKILL.md`.
 2. Validate the skill shape.
 3. Commit the source change.
 4. Run `scripts/refresh.sh`.

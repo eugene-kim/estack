@@ -1,5 +1,5 @@
 ---
-name: prd
+name: ek-prd
 description: Use when the user wants to turn a product idea, feature request, or vague software change into a concise PRD before implementation.
 ---
 
@@ -36,4 +36,4 @@ Use this structure:
 
 ## Handoff
 
-End with the PRD path and the most useful next skill, usually `implementation-plan`.
+End with the PRD path and the most useful next skill, usually `ek-implementation-plan`.

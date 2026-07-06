@@ -1,11 +1,11 @@
 ---
-name: manage-pr
-description: Use when the user wants an agent to manage a pull request after implementation, including review feedback, CI failures, PR notes, and merge readiness.
+name: ek-manage-pr
+description: Use when the user wants an agent to manage an existing pull request after implementation, including review feedback, CI failures, PR notes, and merge readiness.
 ---
 
 # Manage PR
 
-Move a pull request toward merge readiness.
+Move an existing pull request toward merge readiness.
 
 ## Approach
 
