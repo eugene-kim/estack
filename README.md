@@ -45,6 +45,7 @@ its refreshed plugin install to apply.
 - `implementation-plan` turns requirements into a grounded engineering plan.
 - `develop` implements an agreed change with tight scope and verification.
 - `review` checks a diff for correctness, regressions, and missing tests.
+- `simplify` refines recently modified code while preserving behavior.
 - `manage-pr` handles PR feedback, CI failures, notes, and readiness.
 - `compound` improves the relevant artifact based on what became clear.
 - `dev-cycle` runs the software development cycle across the phase skills.

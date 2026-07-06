@@ -12,9 +12,10 @@ Run the software development cycle end to end, using the phase skills as the rai
 1. `prd` - clarify the product need and create or identify the requirements artifact.
 2. `implementation-plan` - turn requirements into a grounded engineering plan.
 3. `develop` - implement the plan with narrow scope and verification.
-4. `review` - review the resulting diff for correctness and missing tests.
-5. `manage-pr` - handle PR publication, feedback, CI, and merge readiness when a PR exists or is requested.
-6. `compound` - capture reusable lessons only when the work revealed a repeatable pattern.
+4. `simplify` - refine recently modified code for clarity while preserving behavior.
+5. `review` - review the resulting diff for correctness and missing tests.
+6. `manage-pr` - handle PR publication, feedback, CI, and merge readiness when a PR exists or is requested.
+7. `compound` - improve the relevant artifact when the work reveals a useful lesson, correction, or source of friction.
 
 ## Operating rules
 
@@ -33,6 +34,7 @@ Maintain a short phase log in the conversation:
 - PRD: pending / done / skipped
 - Plan: pending / done / skipped
 - Develop: pending / done / skipped
+- Simplify: pending / done / skipped
 - Review: pending / done / skipped
 - PR: pending / done / skipped
 - Compound: pending / done / skipped

@@ -10,6 +10,7 @@ Review the actual diff for bugs, regressions, missing tests, and scope drift.
 ## Approach
 
 - Inspect the diff and the surrounding code needed to understand behavior.
+- When the platform supports delegated agents, ask a small team of independent agents to review the change, then synthesize their findings instead of treating any single pass as authoritative.
 - Prioritize correctness, data loss, security, concurrency, migration risk, user-visible regressions, and missing tests.
 - Check whether the implementation matches the PRD, plan, issue, or user request.
 - Avoid style-only comments unless they hide a real maintainability risk.
