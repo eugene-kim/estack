@@ -36,6 +36,8 @@ Write with the clarity and flow of Martin Kleppmann. Make it engaging and writte
 
 Do not duplicate content already captured in other artifacts. Reference PRDs, plans, ADRs, issues, commits, diffs, or pull requests by path or URL when they already contain the detail.
 
+If the diff is associated with a pull request, make every meaningful mention of that PR in the HTML a clickable link to the PR. Use the PR URL for labels such as `PR #123`, the PR title, and references in the table of contents, background, code walkthrough, quiz feedback, or final metadata when they point to that PR.
+
 ## Research
 
 Broadly explore the surrounding code before writing. Understand the existing system, the changed code, and the reason the change matters. If the user names a branch, PR, commit, or diff, inspect that artifact and enough surrounding code to explain it accurately.
