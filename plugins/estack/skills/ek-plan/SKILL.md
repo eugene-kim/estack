@@ -1,5 +1,5 @@
 ---
-name: ek-implementation-plan
+name: ek-plan
 description: Use when the user wants an implementation plan for a PRD, issue, feature request, bug, or code change before development.
 ---
 

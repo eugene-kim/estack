@@ -36,4 +36,4 @@ Use this structure:
 
 ## Handoff
 
-End with the PRD path and the most useful next skill, usually `ek-implementation-plan`.
+End with the PRD path and the most useful next skill, usually `ek-plan`.

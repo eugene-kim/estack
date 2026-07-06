@@ -10,7 +10,7 @@ Run the software development cycle end to end, using the phase skills as the rai
 ## Phases
 
 1. `ek-prd` - clarify the product need and create or identify the requirements artifact.
-2. `ek-implementation-plan` - turn requirements into a grounded engineering plan.
+2. `ek-plan` - turn requirements into a grounded engineering plan.
 3. `ek-implement` - implement the plan with narrow scope and verification.
 4. `ek-simplify` - refine recently modified code for clarity while preserving behavior.
 5. `ek-review` - review the resulting diff for correctness and missing tests.

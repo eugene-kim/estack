@@ -45,7 +45,7 @@ its refreshed plugin install to apply.
 
 - `ek-explain-diff` creates a rich, printable HTML explanation of a code change.
 - `ek-prd` turns a product idea or feature request into a concise PRD.
-- `ek-implementation-plan` turns requirements into a grounded engineering plan.
+- `ek-plan` turns requirements into a grounded engineering plan.
 - `ek-implement` implements an agreed change with tight scope and verification.
 - `ek-simplify` refines recently modified code while preserving behavior.
 - `ek-review` checks a diff for correctness, regressions, and missing tests.
