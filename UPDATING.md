@@ -4,8 +4,7 @@ estack is the source of truth for this personal plugin scaffold. The plugin
 content lives in `plugins/estack/`; skills belong under
 `plugins/estack/skills/`.
 
-The skills directory is intentionally empty until a real workflow need appears.
-Add only the skill that is needed now.
+The old bundled skill suite was removed. Add only the skill that is needed now.
 
 ## Add or change a skill
 

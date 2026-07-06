@@ -2,14 +2,14 @@
 
 estack is a personal Claude Code and Codex plugin scaffold.
 
-The previous bundled skill suite has been removed. New skills should be added
-only when a real need appears, then installed through the same plugin refresh
-flow.
+The previous bundled skill suite has been removed. New skills are added only
+when a real need appears, then installed through the same plugin refresh flow.
 
 ## Layout
 
 - `plugins/estack/` is the plugin root shared by Claude Code and Codex.
-- `plugins/estack/skills/` is intentionally empty except for `.gitkeep`.
+- `plugins/estack/skills/` contains the small skills that have been added back
+  as needs came up.
 - `scripts/refresh.sh` refreshes the plugin install for both tools.
 - `scripts/install-codex.sh` installs or refreshes the Codex plugin and cleans
   old estack-owned personal skill symlinks.
@@ -55,7 +55,8 @@ This repo is managed by one person. If the user asks for a change and is happy
 with it, commit it, run `scripts/refresh.sh`, and push `main` by default.
 
 The plugin should remain usable even with no skills installed. The empty
-`skills/` directory is tracked so future skills have a stable home.
+`skills/` directory is tracked with `.gitkeep` when no skills exist so future
+skills have a stable home.
 
 ## License
 

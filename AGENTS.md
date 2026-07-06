@@ -8,8 +8,9 @@ behavior.
 
 ## Current shape
 
-The skill set is intentionally empty. `plugins/estack/skills/` is kept with a
-`.gitkeep` so new skills can be added as real needs come up.
+The old bundled skill suite was removed. Skills now live under
+`plugins/estack/skills/` and should be added back one at a time as real needs
+come up.
 
 Keep plugin and refresh machinery working:
 
