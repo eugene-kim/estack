@@ -36,4 +36,4 @@ Use this structure:
 
 ## Handoff
 
-End with the plan path and the most useful next skill, usually `develop`.
+End with the plan path and the most useful next skill, usually `implement`.

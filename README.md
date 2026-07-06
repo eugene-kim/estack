@@ -46,7 +46,7 @@ its refreshed plugin install to apply.
 - `explain-diff` creates a rich, printable HTML explanation of a code change.
 - `prd` turns a product idea or feature request into a concise PRD.
 - `implementation-plan` turns requirements into a grounded engineering plan.
-- `develop` implements an agreed change with tight scope and verification.
+- `implement` implements an agreed change with tight scope and verification.
 - `review` checks a diff for correctness, regressions, and missing tests.
 - `simplify` refines recently modified code while preserving behavior.
 - `manage-pr` handles PR feedback, CI failures, notes, and readiness.

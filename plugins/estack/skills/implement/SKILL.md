@@ -1,9 +1,9 @@
 ---
-name: develop
+name: implement
 description: Use when the user wants an agent to implement an agreed software change from a PRD, implementation plan, issue, or explicit instructions.
 ---
 
-# Develop
+# Implement
 
 Implement the requested software change with tight scope and clear verification.
 
