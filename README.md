@@ -8,7 +8,7 @@ when a real need appears, then installed through the same plugin refresh flow.
 ## Layout
 
 - `plugins/estack/` is the plugin root shared by Claude Code and Codex.
-- `plugins/estack/skills/` contains the small skills that have been added back
+- `plugins/estack/skills/` contains the focused skills that have been added back
   as needs came up.
 - `scripts/refresh.sh` refreshes the plugin install for both tools.
 - `scripts/install-codex.sh` installs or refreshes the Codex plugin and cleans
@@ -19,12 +19,14 @@ when a real need appears, then installed through the same plugin refresh flow.
 ## Add a skill
 
 Create a folder under `plugins/estack/skills/<skill-name>/` with a `SKILL.md`.
-Keep each skill small and tied to a workflow that has actually come up.
+Keep each skill focused and tied to a workflow that has actually come up.
 
 Write skills as lightweight judgment aids. Avoid over-prescribing outputs or
 turning broad ideas into closed menus unless the workflow really is closed. A
 skill should usually help the agent decide where the improvement belongs: code,
-tests, scripts, docs, repo instructions, or another skill.
+tests, scripts, docs, repo instructions, or another skill. Do not hard-code
+scale, such as agent counts or numbers of approaches, unless the user or domain
+requires it.
 
 After editing:
 

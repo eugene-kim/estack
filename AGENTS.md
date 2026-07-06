@@ -25,7 +25,7 @@ Keep plugin and refresh machinery working:
 ## Adding skills
 
 When asked to add a skill, create `plugins/estack/skills/<skill-name>/SKILL.md`.
-Keep the skill small. Do not recreate the old bundled suite unless the user asks
+Keep the skill focused. Do not recreate the old bundled suite unless the user asks
 for a specific skill because the need has come up again.
 
 ## Skill writing style
@@ -37,6 +37,9 @@ for the work rather than exhaustive lists.
 - Prefer wording that leaves the agent room to improve the relevant artifact.
 - Avoid phrases like "produce one of" unless the skill truly has a closed set of
   valid outputs.
+- Do not hard-code scale unless the user or domain requires it. Let the agent
+  choose the number of approaches, agents, checks, examples, or artifacts based
+  on task size, complexity, uncertainty, and risk.
 - Do not require repetition before improvement. A stale doc, misleading
   instruction, missing test, rough script, or bad default can be enough.
 - Put guidance where future work will naturally encounter it: code, tests,

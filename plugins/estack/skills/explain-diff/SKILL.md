@@ -71,7 +71,7 @@ Present the questions as interactive multiple-choice questions. When the user cl
 
 ## Diagrams
 
-Use a small number of diagram families that can be reused throughout the explanation to explain different cases.
+Use a coherent set of diagram families that can be reused throughout the explanation to explain different cases.
 
 Useful diagram types include:
 

@@ -12,7 +12,7 @@ Turn agreed requirements into a concrete, testable engineering plan.
 - Read the PRD, issue, discussion, or code context that defines the work.
 - Do not invent product behavior. If a requirement is missing, either ask or mark it as an explicit open question.
 - Ground claims in repo evidence: cite files, APIs, tests, data paths, and constraints discovered while reading.
-- Prefer the smallest coherent change that satisfies the requirement.
+- Prefer a focused coherent change that satisfies the requirement.
 - Avoid speculative APIs, fallbacks, validators, parsers, abstractions, or compatibility layers unless the requirement or observed usage demands them.
 - Split the work into phases only when it reduces risk or enables review.
 

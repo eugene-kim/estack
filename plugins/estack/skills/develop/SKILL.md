@@ -18,7 +18,7 @@ Implement the requested software change with tight scope and clear verification.
 
 ## Verification
 
-- Run the narrowest meaningful checks first.
+- Run meaningful checks sized to the change.
 - Broaden tests when the change touches shared behavior or user-facing flows.
 - If a check cannot run, say exactly why and what risk remains.
 

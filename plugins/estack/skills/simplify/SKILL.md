@@ -24,8 +24,8 @@ Refine code without changing what it does.
 
 - Identify the changed code and its tests.
 - Inspect nearby project patterns before editing.
-- Apply small refinements that improve clarity or consistency.
-- Run the narrowest meaningful checks, broadening only when the simplification touches shared behavior.
+- Apply refinements whose scope matches the code and risk.
+- Run meaningful checks sized to the change, broadening when the simplification touches shared behavior.
 - If a possible simplification could change behavior or intent, leave it alone or call it out instead of guessing.
 
 ## Finish
