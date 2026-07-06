@@ -33,6 +33,17 @@ git push origin main
 In Codex, use Force Reload Skills or start a new thread. Restart Claude Code for
 its refreshed plugin install to apply.
 
+## Current skills
+
+- `explain-diff` creates a rich, printable HTML explanation of a code change.
+- `prd` turns a product idea or feature request into a concise PRD.
+- `implementation-plan` turns requirements into a grounded engineering plan.
+- `develop` implements an agreed change with tight scope and verification.
+- `review` checks a diff for correctness, regressions, and missing tests.
+- `manage-pr` handles PR feedback, CI failures, notes, and readiness.
+- `compound` captures reusable lessons when repeated workflow appears.
+- `dev-cycle` runs the software development cycle across the phase skills.
+
 ## Install or refresh on another machine
 
 ```bash
