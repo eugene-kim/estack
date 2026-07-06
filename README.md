@@ -26,7 +26,8 @@ turning broad ideas into closed menus unless the workflow really is closed. A
 skill should usually help the agent decide where the improvement belongs: code,
 tests, scripts, docs, repo instructions, or another skill. Do not hard-code
 scale, such as agent counts or numbers of approaches, unless the user or domain
-requires it.
+requires it. Prefer durable intent, constraints, and quality bars over guidance
+that bakes in assumptions about current model limitations.
 
 After editing:
 
