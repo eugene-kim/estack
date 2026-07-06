@@ -1,194 +1,62 @@
 # estack
 
-> **Credit.** estack is my personal fork of [`pstack`](https://github.com/poteto/plugins/tree/main/pstack)
-> by [Lauren Tan (poteto)](https://x.com/poteto), from the
-> [poteto/plugins](https://github.com/poteto/plugins) repo, used here under the MIT
-> license. pstack is the foundation; estack is my own copy that I'll keep modifying.
-> The biggest change so far: the orchestrating skill `poteto-mode` is now `euge-mode`,
-> and everything is de-Cursored and model-agnostic so it runs under Claude Code or Codex.
+estack is a personal Claude Code and Codex plugin scaffold.
 
-there's a growing sense that ai writes too much slop code. throughput without quality isn't the goal. if you want to go fast, go deep first.
+The previous bundled skill suite has been removed. New skills should be added
+only when a real need appears, then installed through the same plugin refresh
+flow.
 
-**estack is a set of rigorous agent workflows.** the goal is not to maximize loc, it's the opposite: write less, but higher quality code.
+## Layout
 
-**estack gives you fearless parallelism.** when you can go deep on one agent and trust it to write good, verifiable code, you can truly parallelize with confidence. start multiple agents up with `euge-mode` and trust that they'll apply rigorous engineering principles to their work.
+- `plugins/estack/` is the plugin root shared by Claude Code and Codex.
+- `plugins/estack/skills/` is intentionally empty except for `.gitkeep`.
+- `scripts/refresh.sh` refreshes the plugin install for both tools.
+- `scripts/install-codex.sh` installs or refreshes the Codex plugin and cleans
+  old estack-owned personal skill symlinks.
+- `scripts/install-home-instructions.sh` surfaces estack's global instructions
+  to Claude Code and Codex.
 
-**it's model-agnostic.** every frontier model has its strengths and weaknesses. the skills describe roles ("a strong reasoning model", "a fast, lower-cost code model", "a diverse panel of independent models") and let your platform pick the actual model. no hardcoded model names to maintain as new models ship.
+## Add a skill
 
-fork it. improve it. make it yours.
+Create a folder under `plugins/estack/skills/<skill-name>/` with a `SKILL.md`.
+Keep each skill small and tied to a workflow that has actually come up.
 
-## install
-
-estack is a plugin for **both** Claude Code and Codex. The repo is a marketplace; the plugin itself lives in `plugins/estack/` (Codex marketplaces can't point at a repo root, so the plugin sits in a subdir, and Claude Code reads it the same way). The `SKILL.md` skills are shared by both.
-
-**Claude Code.** Install from the bundled marketplace (`.claude-plugin/marketplace.json`):
+After editing:
 
 ```bash
-/plugin marketplace add eugene-kim/estack
-/plugin install estack@estack
+git add .
+git commit -m "Add <skill-name> skill"
+./scripts/refresh.sh
+git push origin main
 ```
 
-For live local development against a checkout, point Claude Code at the plugin dir instead:
+In Codex, use Force Reload Skills or start a new thread. Restart Claude Code for
+its refreshed plugin install to apply.
+
+## Install or refresh on another machine
 
 ```bash
-claude --plugin-dir ./plugins/estack
-```
-
-**Codex.** Install from the bundled marketplace (`.agents/plugins/marketplace.json`):
-
-```bash
-codex plugin marketplace add eugene-kim/estack
-codex plugin add estack@estack
-```
-
-For local development, commit your edits, run the refresh script, then use
-**Force Reload Skills** from Codex's command menu or start a new thread:
-
-```bash
+git clone https://github.com/eugene-kim/estack.git
+cd estack
 ./scripts/refresh.sh
 ```
 
-Either way, invoke the orchestrator with `/euge-mode` (Claude Code) or `use euge-mode: <your task>` (Codex). See `AGENTS.md` for Codex-specific notes.
+For an existing clone:
 
-## keeping it in sync
-
-This repo is the single source of truth; both tools install the same `plugins/estack/`. Two ways to consume updates:
-
-- **Released:** push, then upgrade. A marketplace install is a copy, so it updates on an explicit upgrade (two steps), not automatically:
-  - Claude Code: `claude plugin marketplace update estack` then `claude plugin update estack` (restart to apply).
-  - Codex: `codex plugin marketplace upgrade estack` then `codex plugin add estack@estack`.
-- **Local refresh:** run Claude Code with `--plugin-dir ./plugins/estack` when you want a live plugin dir, and use `scripts/refresh.sh` for Codex's plugin install flow. In an open Codex app session, run **Force Reload Skills** from the command menu; if the update still does not appear, start a new thread.
-
-The meta-skills follow this: `/reflect`, `/automate-me`, and the authoring-a-skill playbook edit files in the clone (`plugins/estack/skills/`) and commit, so their output flows downstream like any other change. The loop is **edit in the clone → validate → commit → push**. The full command reference (install, update, uninstall, remove) and the snippet for locating the clone from inside a skill are in [`UPDATING.md`](UPDATING.md).
-
-## make it yours
-
-`euge-mode` is one style. you may not want exactly that.
-
-use `/automate-me`. it mines your recent transcripts, drafts a `<your-name>-mode` skill from how you've actually worked, and routes through estack underneath. you keep estack as the base and end up with your own routing skill alongside `euge-mode`.
-
-## usage
-
-use `/euge-mode` at the start of a task. it reads your request, picks from a set of playbooks, and runs the other skills as the steps need them.
-
-### just use `/euge-mode`
-
-this is the main shortcut for any rigorous engineering work. it comes with fourteen playbooks:
-
-| playbook | for |
-|---|---|
-| investigation | a read-only question. how does x work, why was y built this way, are we sure. |
-| bug fix | reproduce a defect, root-cause it, and fix with runtime evidence. |
-| perf | trace a measured slowness and improve it against a baseline. |
-| runtime forensics | diagnose a live symptom (leak, idle-cpu spin, glitch) from instrumentation. |
-| trace forensics | diagnose a captured profiling artifact (cpuprofile, trace, spindump, heap snapshot). |
-| feature | new or changed behavior, built from a named data shape. |
-| refactoring | a behavior-preserving change to structure or shape. |
-| prototype | a throwaway sketch to make a design decision cheaply. |
-| visual parity | pixel-exact ui equivalence between two implementations. |
-| authoring a skill | writing or editing a SKILL.md. |
-| eval | test how a skill or prompt change affects agent behavior, blinded. |
-| autonomous run | drive a long task to completion without stopping. |
-| session pickup | resume or take over a prior agent's in-flight work. |
-| multi-phase plan | work that spans phases or stacked PRs. |
-
-when invoked it:
-
-1. opens a todo list. the first item is reading the inline principles index in the skill.
-2. matches your task to a playbook and copies the steps in verbatim.
-3. routes to the other skills as the steps fire.
-4. writes unslopped replies.
-
-the full rules and playbooks live in `plugins/estack/skills/euge-mode/SKILL.md`.
-the entry-point architecture is diagrammed in
-[`docs/skill-architecture.md`](docs/skill-architecture.md).
-
-`/euge-mode` works extremely well with a loop command (for example, Claude Code's `/loop`). you can drive an agent for hours without sacrificing rigor.
-
-the rest are useful when you want to specifically invoke them:
-
-| skill | use it when |
-|---|---|
-| `/euge-mode` | default entry point for any non-trivial task. |
-| `/how` | you want a walkthrough of how a subsystem works. |
-| `/why` | you want to know why something was built this way. discovers available MCPs at run time and queries each evidence category in parallel (source control, issue tracker, long-form docs, real-time chat, infra observability, error tracking, analytics warehouse). |
-| `/architect` | you're about to write code that crosses a function boundary and want the types and module shape settled first. |
-| `/arena` | you want N parallel attempts at the same thing, then to grab the best parts of each. |
-| `/interrogate` | you have a diff and want several independent models to try to break it. |
-| `/automate-me` | you want your own `-mode` skill, drafted from how you've actually worked. |
-| `/reflect` | a long task landed and you want the recipe captured as a skill edit. |
-| `/handoff` | you want a compact handoff document for another agent to continue the conversation. |
-| `/tdd` | you're fixing a bug and there's a cheap local test path. write the failing test first, then the fix. |
-| `/typescript-best-practices` | you're reading or editing typescript. grounds the type-system-discipline principle in syntax. |
-| `/figure-it-out` | no bundled playbook fits. designs a rigorous, auditable playbook for the task. |
-| `/show-me-your-work` | you want a reviewable decision trail. logs decisions to a tsv you can commit. |
-| `/unslop` | you're cleaning up writing. removes AI tells. |
-
-### examples
-
-mostly you type `/euge-mode` at the start of a task and let it route to a playbook. the other skills fire as the steps need them. a few you reach for directly.
-
-```
-bug fix:           /euge-mode this pr has a subtle bug where the scroll drifts every 750ms even
-                   when idle. repro first, then fix and verify.
-perf:              /euge-mode a big list takes a second or two to load even though we virtualize.
-                   run a cpu trace and tell me why.
-feature:           /euge-mode build a small feature behind a feature flag. verify it really works.
-prototype:         /euge-mode build two prototypes of the markdown renderer so we can compare.
-                   spawn an agent for each.
-multi-phase:       /euge-mode open source these skills as a plugin. nothing internal leaks, work
-                   in a temp dir, show me the dependency graph first.
-overnight run:     /euge-mode i'm going to bed. land the stack even if ci flakes. i want
-                   everything merged by morning.
-visual parity:     /euge-mode the row spacing is too tall when this flag is on. the second image
-                   is correct. repro and fix until it matches.
-figure it out:     /euge-mode i'm stepping away. migrate every caller from the synchronous store
-                   to the new async one, keeping behavior identical. i want to trust it was done
-                   right when i'm back.
-how:               /how do we cancel runs? do we have an n+1 when we look up every run to cancel?
-why:               /why is this feature flag not on yet?
-architect:         design this instrumentation to be high signal with no false positives. /architect
-                   this first.
-arena:             /arena take my prompt to the arena verbatim. i want to compare their proposals
-                   with yours.
-interrogate:       /interrogate review this pr.
-tdd:               /tdd implement
-unslop:            can we unslop and tighten the new changes?
-reflect:           /reflect that took too long. capture what we learned so the next run doesn't
-                   repeat it.
-handoff:           /handoff next session should publish the branch and watch ci.
-show-me-your-work: /show-me-your-work keep a decision trail i can review when i'm back.
-automate-me:       /automate-me
+```bash
+cd /path/to/estack
+git pull
+./scripts/refresh.sh
 ```
 
-## delegated agents
+## Notes
 
-estack can use a dedicated estack or euge-mode agent profile when the platform supports named agent profiles. That profile reads `euge-mode` in full, including its inline principles index, before doing any work. If the platform has no named profiles, use a general-purpose agent and have it read `plugins/estack/skills/euge-mode/SKILL.md` first.
+This repo is managed by one person. If the user asks for a change and is happy
+with it, commit it, run `scripts/refresh.sh`, and push `main` by default.
 
-Run delegated agents concurrently when the platform supports parallel agent runs. Otherwise, start each delegate before judging any output so the work stays independent.
+The plugin should remain usable even with no skills installed. The empty
+`skills/` directory is tracked so future skills have a stable home.
 
-## principles
+## License
 
-nineteen short skills, one principle each. `euge-mode` indexes them inline and reads that index at task start. the standalone files are there so other skills can reference a principle by name, and so the index can point at the full rule for each.
-
-- core: laziness-protocol, foundational-thinking, redesign-from-first-principles, subtract-before-you-add, minimize-reader-load, outcome-oriented-execution, experience-first, exhaust-the-design-space, build-the-lever.
-- architecture: boundary-discipline, type-system-discipline, make-operations-idempotent, migrate-callers-then-delete-legacy-apis, separate-before-serializing-shared-state.
-- verification: prove-it-works, fix-root-causes.
-- delegation: guard-the-context-window, never-block-on-the-human.
-- meta: encode-lessons-in-structure.
-
-## not bundled here
-
-a few things `euge-mode` references but doesn't ship:
-
-- a dedicated **prose-cleanup** step beyond the bundled `unslop` skill. `unslop` is here and covers it.
-- **control skills** for driving a live surface (a CLI/TUI control skill, or a browser/web UI control skill). estack doesn't bundle these; use your own if you have them, and the skills flag the gap when a surface has no control skill.
-- a **loop** command for long, unattended runs. that's a platform feature (for example, Claude Code's `/loop`), not a skill.
-
-## why are there no planning skills?
-
-both Claude Code and Codex have plan modes that work well alongside estack. the best spec is often the code itself. if you do want a plan, `/euge-mode` covers it, but it's not the default.
-
-## license
-
-MIT. See [LICENSE](LICENSE). Original copyright Lauren Tan (pstack), modifications Eugene Kim (estack).
+MIT. See [LICENSE](LICENSE).

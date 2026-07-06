@@ -2,7 +2,7 @@
 	"name": "estack",
 	"displayName": "estack",
 	"version": "0.1.0",
-	"description": "if you want to go fast, go deep first. estack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence.",
+	"description": "Personal plugin scaffold for adding Claude Code and Codex skills as needs come up.",
 	"author": {
 		"name": "Eugene Kim"
 	},
@@ -11,11 +11,8 @@
 	"license": "MIT",
 	"keywords": [
 		"estack",
-		"euge-mode",
-		"workflow",
-		"principles",
-		"agent-style",
-		"subagents",
-		"unslop"
+		"skills",
+		"plugin",
+		"scaffold"
 	]
 }
