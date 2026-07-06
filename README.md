@@ -21,6 +21,11 @@ when a real need appears, then installed through the same plugin refresh flow.
 Create a folder under `plugins/estack/skills/<skill-name>/` with a `SKILL.md`.
 Keep each skill small and tied to a workflow that has actually come up.
 
+Write skills as lightweight judgment aids. Avoid over-prescribing outputs or
+turning broad ideas into closed menus unless the workflow really is closed. A
+skill should usually help the agent decide where the improvement belongs: code,
+tests, scripts, docs, repo instructions, or another skill.
+
 After editing:
 
 ```bash
@@ -41,7 +46,7 @@ its refreshed plugin install to apply.
 - `develop` implements an agreed change with tight scope and verification.
 - `review` checks a diff for correctness, regressions, and missing tests.
 - `manage-pr` handles PR feedback, CI failures, notes, and readiness.
-- `compound` captures reusable lessons when repeated workflow appears.
+- `compound` improves the relevant artifact based on what became clear.
 - `dev-cycle` runs the software development cycle across the phase skills.
 
 ## Install or refresh on another machine

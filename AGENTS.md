@@ -28,6 +28,22 @@ When asked to add a skill, create `plugins/estack/skills/<skill-name>/SKILL.md`.
 Keep the skill small. Do not recreate the old bundled suite unless the user asks
 for a specific skill because the need has come up again.
 
+## Skill writing style
+
+Write skills as lightweight judgment aids, not rigid menus of allowed outputs.
+Default to broad principles, natural next steps, and examples of possible homes
+for the work rather than exhaustive lists.
+
+- Prefer wording that leaves the agent room to improve the relevant artifact.
+- Avoid phrases like "produce one of" unless the skill truly has a closed set of
+  valid outputs.
+- Do not require repetition before improvement. A stale doc, misleading
+  instruction, missing test, rough script, or bad default can be enough.
+- Put guidance where future work will naturally encounter it: code, tests,
+  scripts, docs, `AGENTS.md` / `CLAUDE.md`, or a skill.
+- Add strict steps only when the workflow is fragile, externally constrained, or
+  easy to corrupt without them.
+
 ## Default landing flow
 
 This repo is managed by one person. When the user asks for a change and is happy
