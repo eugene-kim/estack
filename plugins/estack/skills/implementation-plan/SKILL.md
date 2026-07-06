@@ -15,10 +15,12 @@ Turn agreed requirements into a concrete, testable engineering plan.
 - Prefer a focused coherent change that satisfies the requirement.
 - Avoid speculative APIs, fallbacks, validators, parsers, abstractions, or compatibility layers unless the requirement or observed usage demands them.
 - Split the work into phases only when it reduces risk or enables review.
+- Include a verification step in every plan. Say what checks, tests, inspections, or manual validation would give confidence that the change works.
+- For non-trivial tasks, have agent(s) adversarially review the plan before implementation. Choose review scope based on task risk, ask them to look for incorrect assumptions, missed requirements, overreach, sequencing problems, and missing verification, then iterate on the plan.
 
 ## Output
 
-Write or update a plan at `docs/plans/YYYY-MM-DD-<slug>.md` unless the user asks for another location.
+Create a plan artifact where it best fits the work. Keep it in the conversation, a temporary file, an issue, a PR description, or another workspace when it is mainly a working artifact. Save it in the repo only when future work should treat it as durable project knowledge.
 
 Use this structure:
 
@@ -36,4 +38,4 @@ Use this structure:
 
 ## Handoff
 
-End with the plan path and the most useful next skill, usually `implement`.
+End with the plan location or summary, adversarial review status for non-trivial work, the verification step, and the most useful next skill, usually `implement`.
