@@ -52,7 +52,7 @@ its refreshed plugin install to apply.
 - `ek-create-pr` creates a reviewer-friendly PR with a reading guide.
 - `ek-manage-pr` handles PR feedback, CI failures, notes, and readiness.
 - `ek-compound` improves the relevant artifact based on what became clear.
-- `ek-dev-cycle` runs the software development cycle across the phase skills.
+- `ek-dev` runs the software development cycle across the phase skills.
 
 ## Install or refresh on another machine
 

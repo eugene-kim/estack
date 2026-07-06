@@ -1,9 +1,10 @@
 ---
-name: ek-dev-cycle
+name: ek-dev
 description: Use when the user wants an autonomous software development cycle from requirements through plan, development, review, PR management, and reflection.
+disable-model-invocation: true
 ---
 
-# Dev Cycle
+# Dev
 
 Run the software development cycle end to end, using the phase skills as the rails.
 

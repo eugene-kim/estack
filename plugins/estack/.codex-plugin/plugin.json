@@ -1,27 +1,31 @@
 {
-	"name": "estack",
-	"version": "0.1.0",
-	"description": "Personal plugin scaffold for adding Claude Code and Codex skills as needs come up.",
-	"author": {
-		"name": "Eugene Kim",
-		"url": "https://github.com/eugene-kim"
-	},
-	"homepage": "https://github.com/eugene-kim/estack",
-	"repository": "https://github.com/eugene-kim/estack",
-	"license": "MIT",
-	"keywords": [
-		"estack",
-		"skills",
-		"plugin",
-		"scaffold"
-	],
-	"skills": "./skills/",
-	"interface": {
-		"displayName": "estack",
-		"shortDescription": "Personal plugin scaffold for adding skills as needs come up.",
-		"longDescription": "estack is a personal plugin scaffold shared by Claude Code and Codex. Add small skills under plugins/estack/skills only when a real workflow need appears, then refresh the plugin install with scripts/refresh.sh.",
-		"developerName": "Eugene Kim",
-		"category": "Developer Tools",
-		"capabilities": ["Interactive", "Read", "Write"]
-	}
+  "name": "estack",
+  "version": "0.1.0+codex.20260706155159",
+  "description": "Personal plugin scaffold for adding Claude Code and Codex skills as needs come up.",
+  "author": {
+    "name": "Eugene Kim",
+    "url": "https://github.com/eugene-kim"
+  },
+  "homepage": "https://github.com/eugene-kim/estack",
+  "repository": "https://github.com/eugene-kim/estack",
+  "license": "MIT",
+  "keywords": [
+    "estack",
+    "skills",
+    "plugin",
+    "scaffold"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "estack",
+    "shortDescription": "Personal plugin scaffold for adding skills as needs come up.",
+    "longDescription": "estack is a personal plugin scaffold shared by Claude Code and Codex. Add small skills under plugins/estack/skills only when a real workflow need appears, then refresh the plugin install with scripts/refresh.sh.",
+    "developerName": "Eugene Kim",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ]
+  }
 }
