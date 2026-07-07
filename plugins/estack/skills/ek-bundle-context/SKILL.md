@@ -24,17 +24,51 @@ Example:
 
 ## Contents
 
-Include what the recipient needs to answer the user's question without guessing:
+Create a `QUESTION.md` at the bundle root. Put the user-facing question and all bundle metadata there:
 
-- `QUESTION.md`: the exact question or task for the external model, including what kind of answer is wanted.
-- `README.md`: how to read the bundle, what is included, what is omitted, and any important assumptions.
-- `MANIFEST.md`: every included artifact with its source path, URL, command, or reason for inclusion.
-- Relevant repo instructions such as `AGENTS.md`, `CLAUDE.md`, local contributor docs, or narrower module guidance when they affect the answer.
-- Relevant source files, tests, schemas, migrations, configs, fixtures, generated examples, logs, issues, PR descriptions, review comments, commits, diffs, or command output.
-- A short reading order that starts with the files most important for framing the question.
-- Known constraints, open questions, and verification evidence.
+- the exact question or task for the external model, including what kind of answer is wanted
+- how to use the bundle
+- a reading order that starts with the files most important for framing the question
+- every included artifact with its source path, URL, command, or reason for inclusion
+- important assumptions, constraints, open questions, omitted context, redactions, and verification evidence
+
+Then add the artifacts needed to answer without guessing. This may include relevant repo instructions such as `AGENTS.md`, `CLAUDE.md`, local contributor docs, source files, tests, schemas, migrations, configs, fixtures, generated examples, logs, issues, PR descriptions, review comments, commits, diffs, or command output.
 
 Prefer exact copied files or faithful excerpts with source paths and line ranges. For large files, include the relevant excerpts plus enough surrounding context to make them understandable.
+
+## Zip option
+
+When the needed repository context is file-heavy, the simplest useful artifact is often a repo zip plus `QUESTION.md`. ChatGPT-style uploads may have size limits; keep the zip comfortably under the target limit when known, and narrow the file list or use excerpts when it is too large.
+
+Use a Git-aware file list as a starting point so `.gitignore` is respected:
+
+```bash
+repo="/path/to/repo"
+name="$(basename "$repo")"
+out="${TMPDIR:-/tmp}/$(date +%F)-context-bundle-$name"
+mkdir -p "$out"
+
+git -C "$repo" ls-files --cached --others --exclude-standard \
+  | sed "s#^#$name/#" \
+  | rg -v "^$name/(\\.git|\\.claude|\\.codex)(/|$)|(^|/)node_modules(/|$)|(^|/)\\.env(\\.|$)" \
+  > "$out/filelist.txt"
+
+(
+  cd "$(dirname "$repo")"
+  zip -q "$out/repo-context.zip" -@ < "$out/filelist.txt"
+)
+```
+
+Adjust exclusions for the repository. Common additions include local caches, virtual environments, build outputs, large generated artifacts, local databases, coverage reports, or any private files that are not needed for the question.
+
+Verify the archive before relying on it:
+
+```bash
+zipinfo -1 "$out/repo-context.zip" \
+  | rg '(^|/)\.git(/|$)|(^|/)\.claude(/|$)|(^|/)\.codex(/|$)|(^|/)node_modules(/|$)|(^|/)\.env(\.|$)'
+```
+
+No output means the baseline exclusions were not present in the archive.
 
 ## Redaction
 
