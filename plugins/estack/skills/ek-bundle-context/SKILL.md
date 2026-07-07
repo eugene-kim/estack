@@ -41,7 +41,13 @@ Redact secrets, credentials, API keys, tokens, private personal data, and irrele
 
 ## Validation
 
-Before finishing, inspect the bundle as if you were a fresh agent with no prior context:
+Before finishing, deploy a fresh agent to inspect the bundle. Give the agent essentially zero context beyond the bundle path and this task:
+
+```text
+Inspect the context bundle at <bundle-path>. Assume you have no access to the original repository, prior conversation, hidden agent context, GitHub, local files, or tool outputs except what is inside this bundle. Say whether the bundle is self-evident enough for an external model or fresh agent to answer the question. If it is not, list the missing or unclear context precisely.
+```
+
+The validation agent should judge:
 
 - Can the recipient understand the question?
 - Can they see the repo instructions that matter?
@@ -50,8 +56,8 @@ Before finishing, inspect the bundle as if you were a fresh agent with no prior 
 - Is the reading order enough to avoid wandering?
 - Are omissions and assumptions explicit?
 
-If the bundle would force the recipient to ask for obvious missing context, add that context or explain why it is unavailable.
+If the validation agent says the bundle is not clear, update the bundle and run another fresh-agent validation pass. Loop until the validation agent says the bundle is clear enough, or until the remaining gaps are impossible to fill and are explicitly documented in the bundle.
 
 ## Finish
 
-End with the absolute path to the bundle, a brief summary of what it contains, and any caveats about omitted or redacted material.
+End with the absolute path to the bundle, a brief summary of what it contains, the validation result, and any caveats about omitted or redacted material.
