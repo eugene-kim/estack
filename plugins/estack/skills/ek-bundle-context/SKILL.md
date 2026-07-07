@@ -1,6 +1,7 @@
 ---
 name: ek-bundle-context
-description: Use when the user wants to package all repository, code, diff, issue, PR, log, instruction, and question context needed for an external model, reviewer, or fresh agent that cannot access the repo or prior conversation.
+description: Do not invoke unless explicitly asked. Use when the user wants to package all repository, code, diff, issue, PR, log, instruction, and question context needed for an external model, reviewer, or fresh agent that cannot access the repo or prior conversation.
+disable-model-invocation: true
 ---
 
 # Bundle Context
