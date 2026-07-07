@@ -29,18 +29,20 @@ Create a `QUESTION.md` at the bundle root. Put the user-facing question and all 
 - the exact question or task for the external model, including what kind of answer is wanted
 - how to use the bundle
 - a reading order that starts with the files most important for framing the question
-- every included artifact with its source path, URL, command, or reason for inclusion
+- every included artifact in the zip with its source path, URL, command, or reason for inclusion
 - important assumptions, constraints, open questions, omitted context, redactions, and verification evidence
 
-Then add the artifacts needed to answer without guessing. This may include relevant repo instructions such as `AGENTS.md`, `CLAUDE.md`, local contributor docs, source files, tests, schemas, migrations, configs, fixtures, generated examples, logs, issues, PR descriptions, review comments, commits, diffs, or command output.
+Then create `repo-context.zip` containing the artifacts needed to answer without guessing. This may include relevant repo instructions such as `AGENTS.md`, `CLAUDE.md`, local contributor docs, source files, tests, schemas, migrations, configs, fixtures, generated examples, logs, issues, PR descriptions, review comments, commits, diffs, or command output.
 
 Prefer exact copied files or faithful excerpts with source paths and line ranges. For large files, include the relevant excerpts plus enough surrounding context to make them understandable.
 
-## Zip option
+## Zip
 
-When the needed repository context is file-heavy, the simplest useful artifact is often a repo zip plus `QUESTION.md`. ChatGPT-style uploads may have size limits; keep the zip comfortably under the target limit when known, and narrow the file list or use excerpts when it is too large.
+Always package repository context as a zip. The external recipient should get the bundle folder's `QUESTION.md` and `repo-context.zip`.
 
-Use a Git-aware file list as a starting point so `.gitignore` is respected:
+ChatGPT-style uploads may have a 512 MB file limit. Keep `repo-context.zip` under 512 MB. If the archive is too large, narrow what goes into the zip: remove irrelevant large files, add repository-specific exclusions, or replace whole files with faithful excerpts that preserve source paths and line ranges. Do not switch to loose files as the primary bundle format.
+
+Use a Git-aware file list as the default starting point so `.gitignore` is respected:
 
 ```bash
 repo="/path/to/repo"
@@ -60,6 +62,12 @@ git -C "$repo" ls-files --cached --others --exclude-standard \
 ```
 
 Adjust exclusions for the repository. Common additions include local caches, virtual environments, build outputs, large generated artifacts, local databases, coverage reports, or any private files that are not needed for the question.
+
+Check the archive size:
+
+```bash
+du -h "$out/repo-context.zip"
+```
 
 Verify the archive before relying on it:
 
@@ -86,7 +94,7 @@ The validation agent should judge:
 
 - Can the recipient understand the question?
 - Can they see the repo instructions that matter?
-- Can they inspect the important code or evidence directly?
+- Can they inspect `repo-context.zip` and find the important code or evidence directly?
 - Are file paths, URLs, branch names, commits, and commands clear?
 - Is the reading order enough to avoid wandering?
 - Are omissions and assumptions explicit?
@@ -95,4 +103,4 @@ If the validation agent says the bundle is not clear, update the bundle and run 
 
 ## Finish
 
-End with the absolute path to the bundle, a brief summary of what it contains, the validation result, and any caveats about omitted or redacted material.
+End with the absolute path to the bundle, the `repo-context.zip` size, a brief summary of what it contains, the validation result, and any caveats about omitted or redacted material.
