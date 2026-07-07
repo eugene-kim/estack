@@ -44,6 +44,7 @@ its refreshed plugin install to apply.
 ## Current skills
 
 - `ek-explain-diff` creates a rich, printable HTML explanation of a code change.
+- `ek-bundle-context` creates a self-contained temporary context bundle for an external model, reviewer, or fresh agent.
 - `ek-prd` turns a product idea or feature request into a concise PRD.
 - `ek-plan` turns requirements into a grounded engineering plan.
 - `ek-implement` implements an agreed change with tight scope and verification.
