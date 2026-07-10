@@ -63,6 +63,14 @@ Focus on the essence, not the full details. Use concrete examples with toy data.
 
 Do a high-level walkthrough of the changes to the code. Group and order the changes in an understandable way.
 
+### Explore
+
+When useful, give the reader a practical way to experience, exercise, or interrogate the change rather than only reading about it. Choose a form that fits the change and the available environment.
+
+This might be a runnable example, a before-and-after demonstration, a focused test or script, an interactive UI walkthrough, representative inputs and outputs, or another direct way to make the changed behavior observable. A test that fails before the change and passes after it can be useful, but do not require that technique when another demonstration communicates the behavior better.
+
+Include the commands, steps, controls, or embedded interaction needed to follow along. Explain what to notice and how the observation connects to the change. If direct exploration is impractical, provide the closest useful verification or inspection path. Omit this section when it would be artificial or add no value.
+
 ### Quiz
 
 Come up with five questions that test the reader's knowledge of this PR or change.
