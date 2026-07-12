@@ -71,6 +71,8 @@ This might be a runnable example, a before-and-after demonstration, a focused te
 
 Include the commands, steps, controls, or embedded interaction needed to follow along. Explain what to notice and how the observation connects to the change. If direct exploration is impractical, provide the closest useful verification or inspection path. Omit this section when it would be artificial or add no value.
 
+When the change has a visible surface — a UI, a rendered report, generated HTML — exploring it must include viewing that surface: give the commands to render or serve it and say what to look at. Demonstrating such a change only through CLI output or tests is incomplete.
+
 ### Quiz
 
 Come up with five questions that test the reader's knowledge of this PR or change.
