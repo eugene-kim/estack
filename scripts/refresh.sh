@@ -19,7 +19,15 @@ PLUGIN="estack"
 MARKETPLACE="estack"
 
 # --- Codex: remove legacy skill symlinks, then install/update the plugin ---
-"$REPO_DIR/scripts/install-codex.sh"
+# Skip the Codex step when its CLI is missing or not runnable (e.g. a stale
+# launcher pointing at a moved app bundle) so the Claude Code refresh below
+# still runs. command -v alone is not enough: a broken shim is on PATH but
+# fails when invoked, so probe it with a cheap `codex --version`.
+if command -v codex >/dev/null 2>&1 && codex --version >/dev/null 2>&1; then
+  "$REPO_DIR/scripts/install-codex.sh"
+else
+  echo "Codex: 'codex' CLI missing or not runnable; skipped." >&2
+fi
 
 # --- Home instructions: per-app override files (live symlink / generated) ---
 echo
