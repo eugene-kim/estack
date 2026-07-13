@@ -22,7 +22,11 @@ Turn agreed requirements into a concrete, testable engineering plan.
 
 Create a plan artifact where it best fits the work. Keep it in the conversation, a temporary file, an issue, a PR description, or another workspace when it is mainly a working artifact. Save it in the repo only when future work should treat it as durable project knowledge.
 
-Use this structure:
+Choose the simplest format that communicates the plan well. Use Markdown for straightforward plans. Use a self-contained HTML document when visual structure, diagrams, interaction, or richer navigation would materially improve understanding. Follow an explicit user format preference; otherwise use judgment based on the plan's complexity and audience without requiring a format-selection question.
+
+An HTML plan should remain a concrete implementation plan, not become a presentation about the plan. Make it responsive and easy to print, and add diagrams or interactive elements only when they clarify the work. Unless the plan belongs in the repo as durable project knowledge, save HTML outside the repo in the user's OS temporary directory.
+
+In either format, cover this structure:
 
 ```markdown
 # <Change Name> Implementation Plan
