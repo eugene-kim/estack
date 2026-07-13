@@ -27,6 +27,8 @@ Write the description for a human reviewer. Include:
 
 Let the review guide scale with the diff. A tiny change may need one sentence; a broad change may need grouped file paths and context for each group.
 
+Before publishing the PR description, invoke `ek-unslop` for a prose pass that preserves technical accuracy and reviewer guidance.
+
 ## Finish
 
 End with the PR URL, draft/ready status, verification status, and any reviewer notes worth preserving.

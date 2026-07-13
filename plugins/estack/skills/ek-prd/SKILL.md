@@ -36,4 +36,6 @@ Use this structure:
 
 ## Handoff
 
+Before finalizing the PRD, invoke `ek-unslop` for a prose pass that preserves the requirements and product meaning.
+
 End with the PRD path and the most useful next skill, usually `ek-plan`.

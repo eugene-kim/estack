@@ -42,4 +42,6 @@ In either format, cover this structure:
 
 ## Handoff
 
+Before finalizing the plan, invoke `ek-unslop` for a prose pass that preserves the technical meaning, evidence, and verification details.
+
 End with the plan location or summary, adversarial review status for non-trivial work, the verification step, and the most useful next skill, usually `ek-implement`.

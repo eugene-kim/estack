@@ -16,3 +16,5 @@ Do not duplicate content already captured in other artifacts such as specs, plan
 Redact sensitive information such as API keys, passwords, or personally identifiable information.
 
 If the user passed arguments, treat them as a description of what the next session will focus on and tailor the document accordingly.
+
+Before saving the handoff, invoke `ek-unslop` for a prose pass that preserves all facts, references, and continuation details.

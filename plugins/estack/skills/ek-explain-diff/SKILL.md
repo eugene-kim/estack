@@ -34,6 +34,8 @@ Before saving the file, scan each code block in the HTML source and confirm its 
 
 Write with the clarity and flow of Martin Kleppmann. Make it engaging and written in classic style. Transitions between sections should be smooth.
 
+Before finalizing the explanation, invoke `ek-unslop` for a prose pass that preserves technical accuracy and teaching value.
+
 Do not duplicate content already captured in other artifacts. Reference PRDs, plans, ADRs, issues, commits, diffs, or pull requests by path or URL when they already contain the detail.
 
 If the diff is associated with a pull request, make every meaningful mention of that PR in the HTML a clickable link to the PR. Use the PR URL for labels such as `PR #123`, the PR title, and references in the table of contents, background, code walkthrough, quiz feedback, or final metadata when they point to that PR.
