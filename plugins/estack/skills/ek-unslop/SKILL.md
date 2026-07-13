@@ -40,7 +40,7 @@ Removing patterns is half the job. Sterile, voiceless writing is just as obvious
 
 7. **AI vocabulary.** Additionally, crucial, delve, enduring, enhance, fostering, garner, interplay, intricate, landscape (abstract), pivotal, showcase, tapestry (abstract), testament, underscore, vibrant. Replace with plain words.
 8. **Copula avoidance.** "serves as", "stands as", "boasts", "features". Just say "is" or "has".
-9. **Negative parallelisms.** "It's not just X, it's Y." State the point directly.
+9. **Negative framing.** Do not carry conversational prohibitions into the artifact as its main framing. Define the thing directly by what it is and does. If an exclusion prevents a likely misunderstanding, place it after the positive definition as a supporting boundary. Remove it when the positive statement already makes the distinction clear. Likewise, replace "It's not just X, it's Y" with a direct statement of Y.
 10. **Rule of three.** Forcing ideas into groups of three. Use the natural number.
 11. **Synonym cycling.** Protagonist, main character, central figure, hero all in one paragraph. Pick one, repeat it.
 12. **False ranges.** "from X to Y" where X and Y aren't on a meaningful scale. List topics directly.
