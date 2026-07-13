@@ -11,7 +11,9 @@ Implement the requested software change with tight scope and clear verification.
 
 - Read the plan, PRD, issue, or instructions that define the work.
 - Inspect the existing code before editing.
+- Work autonomously toward a complete implementation. Resolve routine uncertainty through repository evidence, existing patterns, and reasonable in-scope judgment. Ask the user only when missing input would materially change the intended behavior, require authority the user has not granted, or make safe progress impossible. Do not stop at a proposal, partial implementation, or list of next steps while meaningful in-scope work remains.
 - Stay inside the agreed scope. If reality contradicts the plan, update the plan or explain the adjustment instead of silently expanding the work.
+- Record consequential in-scope decisions and their rationale where future work will naturally encounter them, such as the PRD or plan, nearby code or documentation, an ADR, or the commit or PR. Do not add ceremony for routine implementation choices.
 - Prefer existing patterns, helpers, and module boundaries.
 - Do not add speculative fallbacks, broad APIs, extra configuration, or defensive layers unless the requirement or observed usage calls for them.
 - Commit completed coherent increments as you go when the user wants committed work and the repo state is safe to commit. Avoid mixing unrelated changes in one commit.
@@ -25,4 +27,4 @@ Implement the requested software change with tight scope and clear verification.
 
 ## Handoff
 
-End with changed files, verification results, and the most useful next skill, usually `ek-review`.
+End with changed files, verification results, consequential decisions and where they were recorded, and the most useful next skill, usually `ek-review`.
