@@ -67,11 +67,20 @@ Do a high-level walkthrough of the changes to the code. Group and order the chan
 
 ### Explore
 
-When useful, give the reader a practical way to experience, exercise, or interrogate the change rather than only reading about it. Choose a form that fits the change and the available environment.
+When useful, give the reader a practical way to experience, exercise, or interrogate the change. For code changes, default to a guided repository lab that runs the real implementation. Inspect the relevant source, tests, and real artifacts before choosing the narrowest real command that demonstrates the behavior. Do not reimplement production behavior in HTML when the repository is available.
 
-This might be a runnable example, a before-and-after demonstration, a focused test or script, an interactive UI walkthrough, representative inputs and outputs, or another direct way to make the changed behavior observable. A test that fails before the change and passes after it can be useful, but do not require that technique when another demonstration communicates the behavior better.
+Use embedded HTML interactions to navigate, filter, or visualize captured evidence. Do not use them to simulate business logic that the actual code can exercise.
 
-Include the commands, steps, controls, or embedded interaction needed to follow along. Explain what to notice and how the observation connects to the change. If direct exploration is impractical, provide the closest useful verification or inspection path. Omit this section when it would be artificial or add no value.
+Build a useful code lab around this sequence when the steps apply:
+
+1. Begin with `git status --short`. Inspect the relevant source, tests, and real artifacts.
+2. Give the exact setup and run commands for the narrowest real demonstration. Explain what the result demonstrates about the change.
+3. When it improves understanding, make one small, purposeful, reversible edit. Ask the reader what they predict or should notice, rerun the real command, inspect its output and `git diff`, and explain the observed difference.
+4. Restore every modified or regenerated path and give exact cleanup commands.
+
+Prefer a disposable worktree when the exercise modifies files. If the current worktree is used, offer `git restore -- <explicit paths>` only for paths established as clean before the exercise. Never tell the reader to restore a path that was already dirty. Include exact setup, run, observation, diff, and cleanup commands without expanding into generic Git instruction.
+
+If direct exploration is impractical, provide the closest useful verification or inspection path. Omit this section when it would be artificial or add no value.
 
 When the change has a visible surface — a UI, a rendered report, generated HTML — exploring it must include viewing that surface: give the commands to render or serve it and say what to look at. Demonstrating such a change only through CLI output or tests is incomplete.
 
