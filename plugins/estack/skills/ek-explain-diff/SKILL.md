@@ -67,11 +67,11 @@ Do a high-level walkthrough of the changes to the code. Group and order the chan
 
 ### Explore
 
-Make Explore an interactive show-and-tell, not a source-reading guide. For code changes, default to a guided repository lab that runs the real implementation. Put source inspection and commands whose only purpose is `sed`, `rg`, or opening files in the Code walkthrough. Include setup or source-reading commands here only when needed to perform the interaction; they are not themselves the exploration. Do not reimplement production behavior in HTML when the repository is available.
+Make Explore an interactive show-and-tell through the change's real interface, not a source-reading guide. Choose an interaction that fits the change. For UI work, explain how to open and use the real UI and what behavior to try or observe. For backend or library logic, use a focused input/output exercise or a reversible fail/pass demonstration when useful. For a generated report, render and manipulate or view the real report. Put source inspection and commands whose only purpose is `sed`, `rg`, or opening files in the Code walkthrough. Include setup or source-reading commands here only when needed to perform the interaction; they are not themselves the exploration. Do not reimplement production behavior in HTML when the repository is available.
 
 Use embedded HTML interactions to navigate, filter, or visualize captured evidence. Do not use them to simulate business logic that the actual code can exercise.
 
-Prefer a fast fail/pass exercise when it safely reveals the change:
+One useful backend or library pattern is a fast fail/pass exercise:
 
 1. Begin with `git status --short` and establish that every path the exercise may touch is clean.
 2. Make one small, purposeful, reversible change and ask the reader what they predict.
