@@ -113,6 +113,10 @@ If you use a custom styled `div` instead, its CSS must include `white-space: pre
 
 Use callouts for key concepts, definitions, important edge cases, and ideas the reader should remember.
 
+## Verification
+
+Before delivering, test every displayed or copyable shell command exactly as rendered to the reader. For commands assembled by client-side JavaScript, render or open the HTML, read the resulting DOM text or clipboard payload, and, when safe, execute that exact string against the intended repository fixture. Source inspection of the JavaScript string is not sufficient because escaping can change across JavaScript, DOM, and shell layers.
+
 ## Final reply
 
 Reply with the absolute path to the generated HTML file and mention that it is outside the repo.
