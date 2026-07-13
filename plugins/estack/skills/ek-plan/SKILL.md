@@ -20,13 +20,15 @@ Turn agreed requirements into a concrete, testable engineering plan.
 
 ## Output
 
-Create a plan artifact where it best fits the work. Keep it in the conversation, a temporary file, an issue, a PR description, or another workspace when it is mainly a working artifact. Save it in the repo only when future work should treat it as durable project knowledge.
+When planning from an editable PRD, extend that PRD with a clearly separated implementation plan unless the work benefits from a distinct artifact. Keep product requirements and implementation decisions separate within the document. If code exploration reveals a missing or changed requirement, surface it as a product question instead of silently rewriting product intent.
 
-Choose the simplest format that communicates the plan well. Use Markdown for straightforward plans. Use a self-contained HTML document when visual structure, diagrams, interaction, or richer navigation would materially improve understanding. Follow an explicit user format preference; otherwise use judgment based on the plan's complexity and audience without requiring a format-selection question.
+When there is no editable PRD or a separate plan is more natural, create the plan where it best fits the work. Keep it in the conversation, a temporary file, an issue, a PR description, or another workspace when it is mainly a working artifact. Save it in the repo only when future work should treat it as durable project knowledge.
 
-An HTML plan should remain a concrete implementation plan, not become a presentation about the plan. Make it responsive and easy to print, and add diagrams or interactive elements only when they clarify the work. Unless the plan belongs in the repo as durable project knowledge, save HTML outside the repo in the user's OS temporary directory.
+Use Markdown as the canonical plan format. Add a focused Mermaid diagram when relationships, sequence, state transitions, data flow, or architecture are easier to understand visually than through prose. Diagrams are optional; omit them when they would only restate a short list or simple sequence.
 
-In either format, cover this structure:
+For a richer demonstration that Markdown and Mermaid cannot express well, such as a UI interaction or complicated chart, create a sibling HTML file and link to it from the plan. Keep the HTML focused on the demonstration instead of duplicating the plan.
+
+Cover this structure:
 
 ```markdown
 # <Change Name> Implementation Plan
