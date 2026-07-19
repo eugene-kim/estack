@@ -65,6 +65,14 @@ Focus on the essence, not the full details. Use concrete examples with toy data.
 
 Do a high-level walkthrough of the changes to the code. Group and order the changes in an understandable way.
 
+### Decision audit
+
+Expose the consequential choices behind the change. Focus on choices where a reasonable alternative could materially affect correctness, scope, performance, maintainability, or future behavior. Omit mechanical implementation details.
+
+When the implementing agent's conversation, handoff, or other author context is available, ask: "Which consequential choices did you make that you are not confident of? List all." Include those choices. Without author context, identify likely choices from repository evidence and label them as inferences. Do not claim to know the author's reasoning from a diff alone.
+
+For each decision, explain the choice, supporting evidence or constraint, important assumptions or limits, and the reviewer question that would validate or challenge it. Include alternatives when they help the reader judge the choice. Present the audit as easy-to-scan decision cards or a table, linked to the relevant code, test, artifact, or exploration.
+
 ### Explore
 
 Make Explore an interactive show-and-tell through the change's real interface, not a source-reading guide. Choose an interaction that fits the change. For UI work, explain how to open and use the real UI and what behavior to try or observe. For backend or library logic, use a focused input/output exercise or a reversible fail/pass demonstration when useful. For a generated report, render and manipulate or view the real report. Put source inspection and commands whose only purpose is `sed`, `rg`, or opening files in the Code walkthrough. Include setup or source-reading commands here only when needed to perform the interaction; they are not themselves the exploration. Do not reimplement production behavior in HTML when the repository is available.
@@ -84,6 +92,8 @@ If direct exploration is impractical, provide the closest useful verification or
 
 When the change has a visible surface — a UI, a rendered report, generated HTML — exploring it must include viewing that surface: give the commands to render or serve it and say what to look at. Demonstrating such a change only through CLI output or tests is incomplete.
 
+When practical, use an exploration to exercise a material assumption or limit from the Decision audit, not only the happy path.
+
 ### Quiz
 
 Come up with five questions that test the reader's knowledge of this PR or change.
@@ -91,6 +101,8 @@ Come up with five questions that test the reader's knowledge of this PR or chang
 The questions should be medium difficulty. They should be hard enough that the reader needs to understand the substance of the change to answer, but they should not be gotchas.
 
 Present the questions as interactive multiple-choice questions. When the user clicks an answer, tell them whether they were correct and give feedback.
+
+Include questions about consequential assumptions, limits, or tradeoffs as well as how the code works.
 
 ## Diagrams
 
