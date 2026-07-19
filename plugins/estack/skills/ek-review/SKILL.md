@@ -10,6 +10,8 @@ Review the actual diff for bugs, regressions, missing tests, and scope drift.
 ## Approach
 
 - Inspect the diff and the surrounding code needed to understand behavior.
+- Prefer an independent Codex CLI review when `scripts/codex-review.sh` is available. Invoke it with the appropriate review target, such as `scripts/codex-review.sh --base main`. It uses the configured Terra reviewer at high reasoning.
+- If the Codex CLI is unavailable, unauthenticated, or out of usage, continue with the independent review approach below. Do not silently substitute another Codex model; briefly note that the preferred Codex pass was unavailable.
 - When the platform supports delegated agents, ask a team of independent agents to review the change. Choose the number and focus of agents based on the size, complexity, and risk of the change, then synthesize their findings instead of treating any single pass as authoritative.
 - Prioritize correctness, data loss, security, concurrency, migration risk, user-visible regressions, and missing tests.
 - Check whether the implementation matches the PRD, plan, issue, or user request.
