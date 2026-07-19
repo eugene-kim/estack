@@ -1,0 +1,19 @@
+{
+  "description": "Inject Fable-root orchestration guidance at session boundaries.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/inject-fable-orchestration.py"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
