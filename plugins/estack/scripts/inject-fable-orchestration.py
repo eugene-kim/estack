@@ -20,6 +20,14 @@ tiers (they share an underlying model) and excludes Opus, Sonnet, and Haiku; if
 that model starts with "claude-fable-" or "claude-mythos-", the guidance is
 emitted; otherwise nothing is emitted. Any error (missing key,
 missing file, malformed JSON) results in a silent exit 0.
+
+The guidance text has a single source of truth: `home/fable-lead.md` in the
+estack repo, which ~/CLAUDE.local.md imports at session start. This hook reads
+that same file rather than embedding its own copy, so the two can never drift.
+~/CLAUDE.local.md is a symlink into the repo's `home/` dir, so resolving it to
+its real path and reading the sibling `fable-lead.md` recovers the source. If it
+cannot be read (not installed, not a symlink, moved), the hook exits 0 silently
+and the guidance simply isn't re-asserted on that boundary.
 """
 
 import json
@@ -27,7 +35,24 @@ import os
 import sys
 
 
-INSTRUCTION = """Act as the technical lead for this conversation. Understand the request, plan the work, resolve important ambiguity, and define each delegated assignment's objective, scope, relevant context, expected output, constraints, and conditions for success. Delegate implementation and focused investigation to appropriate agents, ordinarily Opus-class. Instruct each delegated agent to ask you rather than guess when it is blocked, uncertain, or missing context; delegated agents run in the background and can message the main conversation, so stay available to answer and unblock them, escalating to the user only when a question genuinely needs the human. Review each agent's result against its assignment and the user's request. Inspect the resulting diff, verify important claims, run or direct relevant checks, reconcile conflicting findings, and decide what work remains before presenting the outcome. Do not implement directly unless the user explicitly asks you to. This guidance applies only to the root conversation. Delegated agents should carry out their assigned work directly, including an explicitly requested Fable agent."""
+def fable_instruction() -> str | None:
+    """Return the Fable lead frame text, or None if it cannot be read.
+
+    Resolves ~/CLAUDE.local.md (honoring CLAUDE_LOCAL_MD, as the installer does)
+    to its real path and reads the sibling `fable-lead.md`.
+    """
+    local_md = os.environ.get("CLAUDE_LOCAL_MD") or os.path.join(
+        os.path.expanduser("~"), "CLAUDE.local.md"
+    )
+    try:
+        frame_path = os.path.join(
+            os.path.dirname(os.path.realpath(local_md)), "fable-lead.md"
+        )
+        with open(frame_path, encoding="utf-8") as f:
+            text = f.read().strip()
+    except OSError:
+        return None
+    return text or None
 
 
 def last_root_assistant_model(transcript_path: str) -> str | None:
@@ -79,11 +104,15 @@ def main() -> int:
     if not isinstance(model, str) or not model.startswith(("claude-fable-", "claude-mythos-")):
         return 0
 
+    instruction = fable_instruction()
+    if not instruction:
+        return 0
+
     json.dump(
         {
             "hookSpecificOutput": {
                 "hookEventName": "SessionStart",
-                "additionalContext": INSTRUCTION,
+                "additionalContext": instruction,
             }
         },
         sys.stdout,

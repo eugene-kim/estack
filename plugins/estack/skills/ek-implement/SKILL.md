@@ -23,8 +23,9 @@ Implement the requested software change with tight scope and clear verification.
 
 - Run meaningful checks sized to the change.
 - Broaden tests when the change touches shared behavior or user-facing flows.
+- For each new test, confirm it fails without the change; a test that passes either way proves nothing.
 - If a check cannot run, say exactly why and what risk remains.
 
 ## Handoff
 
-End with changed files, verification results, consequential decisions and where they were recorded, and the most useful next skill, usually `ek-review`.
+End with the changed files, verification results with real numbers (counts run, values checked), consequential decisions and where they were recorded, and the most useful next skill, usually `ek-review`. Report your result as a claim the reader can check, not a conclusion to take on trust.
