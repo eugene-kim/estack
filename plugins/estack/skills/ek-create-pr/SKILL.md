@@ -14,7 +14,7 @@ Create a pull request that helps reviewers understand the change quickly.
 - Before publishing, split distinct, independently reviewable outcomes into focused PRs when the benefit to review or merge timing outweighs the overhead. Keep small or atomic changes together.
 - Use the PR platform's supported tools to create the PR. Choose draft or ready-for-review based on the user's request, repo convention, and current confidence.
 - Do not duplicate long artifacts. Reference issues, PRDs, plans, ADRs, prior PRs, or generated explanations by URL or path when they already contain the detail.
-- After creating the PR, invoke `ek-explain` for the PR. Follow repository guidance for publishing or attaching the HTML when it exists. Otherwise, leave the explainer in the OS-specific temporary directory and report its path so it remains available without adding a permanent repository artifact.
+- After creating the PR, invoke `ek-explain` when the change benefits from a walkthrough. Skip it for trivial changes such as package bumps, config tweaks, or pure documentation updates. Follow repository guidance for publishing or attaching the HTML when it exists. Otherwise, leave the explainer in the OS-specific temporary directory and report its path so it remains available without adding a permanent repository artifact.
 
 ## PR description
 
@@ -33,4 +33,4 @@ Before publishing the PR description, invoke `ek-unslop` for a prose pass that p
 
 ## Finish
 
-End with the PR URL, draft/ready status, explainer path or URL, verification status, and any reviewer notes worth preserving.
+End with the PR URL, draft/ready status, explainer path or URL when created, verification status, and any reviewer notes worth preserving.
