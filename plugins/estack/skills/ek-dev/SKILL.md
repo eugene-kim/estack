@@ -43,7 +43,7 @@ Review is a bounded loop:
 2. The root agent decides whether each finding needs a fix, an answer, deferral, or rejection with evidence, then uses `ek-manage-pr` to carry out that decision. It may delegate code changes, but owns the decision, PR conversation, and thread resolution.
 3. When the changes or findings warrant it, re-run `ek-review` on the PR with the prior findings, their dispositions, resolved-thread context, new commits, and current diff. Check that the response solved the concern without adding risk.
 
-Allow two remediation-and-re-review cycles after the initial review. If material findings remain, stop, apply `ai-review:changes` when labels are available, and give the user a concise decision summary. Exceed the limit only at the user's request or when new evidence materially changes the work.
+Allow two remediation-and-re-review cycles after the initial review. If material findings remain, stop and give the user a concise decision summary. Exceed the limit only at the user's request or when new evidence materially changes the work.
 
 ## Operating rules
 

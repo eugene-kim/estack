@@ -10,7 +10,7 @@ Review the actual diff for bugs, regressions, missing tests, and scope drift. Pr
 ## Approach
 
 - Inspect the diff and the surrounding code needed to understand behavior.
-- Simplify recently modified code when it improves clarity, consistency, or maintainability without changing behavior. Keep that work within the review scope.
+- Invoke `ek-simplify` when recently modified code would benefit from behavior-preserving cleanup. Keep that work within the review scope.
 - Use adversarial review with separate agent(s). Choose their number and focus based on the size, complexity, and risk of the change, then synthesize their findings instead of treating any single pass as authoritative.
 - Before reporting a finding, put it through an independent check that tries to refute it against the code, and report only what survives.
 - Prioritize correctness, data loss, security, concurrency, migration risk, user-visible regressions, and missing tests.

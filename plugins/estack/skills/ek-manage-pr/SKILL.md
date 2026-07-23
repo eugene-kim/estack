@@ -17,7 +17,6 @@ Move an existing pull request toward merge readiness.
 - Keep fixes scoped to the failing check or review thread.
 - Update the PR description or notes when the change history needs to be understandable.
 - Preserve the dispositions of prior findings, resolved-thread context, new commits, and current diff for a later review pass.
-- When another review pass begins, replace any existing review-status label with `ai-review:in-progress` when the platform supports labels and access permits.
 - Loop until the PR is merge-ready or needs a user decision. Let `ek-dev` enforce its review-cycle limit when it coordinates the workflow.
 
 ## Output
