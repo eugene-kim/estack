@@ -16,11 +16,16 @@ Keep plugin and refresh machinery working:
 
 - `plugins/estack/.claude-plugin/plugin.json`
 - `plugins/estack/.codex-plugin/plugin.json`
+- `plugins/estack-fable/.claude-plugin/plugin.json`
 - `.claude-plugin/marketplace.json`
 - `.agents/plugins/marketplace.json`
 - `scripts/refresh.sh`
 - `scripts/install-codex.sh`
 - `scripts/install-home-instructions.sh`
+
+`plugins/estack/` is shared by Claude Code and Codex. `plugins/estack-fable/`
+is a Claude Code-only plugin for the Fable SessionStart hook. Do not add its
+hook or its Claude manifest to the shared plugin.
 
 ## Adding skills
 

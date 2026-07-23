@@ -1,0 +1,17 @@
+{
+  "name": "estack-fable",
+  "displayName": "estack Fable",
+  "version": "0.1.0",
+  "description": "Fable session guidance for Claude Code.",
+  "author": {
+    "name": "Eugene Kim"
+  },
+  "homepage": "https://github.com/eugene-kim/estack",
+  "repository": "https://github.com/eugene-kim/estack",
+  "license": "MIT",
+  "keywords": [
+    "estack",
+    "fable",
+    "claude-code"
+  ]
+}

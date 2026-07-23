@@ -71,6 +71,25 @@ for marketplace in json.load(sys.stdin).get("marketplaces", []):
   fi
 }
 
+clear_legacy_fable_hook_state() {
+  local config="${CODEX_HOME:-$HOME/.codex}/config.toml"
+  local header="[hooks.state.\"$PLUGIN@$MARKETPLACE:hooks/hooks.json:session_start:0:0\"]"
+  local temporary
+
+  if [ ! -f "$config" ] || ! grep -Fqx -- "$header" "$config"; then
+    return
+  fi
+
+  temporary="$(mktemp "${config}.XXXXXX")"
+  awk -v header="$header" '
+    $0 == header { skipping = 1; next }
+    skipping && /^\[/ { skipping = 0 }
+    !skipping { print }
+  ' "$config" > "$temporary"
+  mv "$temporary" "$config"
+  echo "Codex: removed obsolete estack Fable hook state."
+}
+
 if [ ! -d "$SRC" ]; then
   echo "error: no skills directory at '$SRC'; run this from inside the estack repo" >&2
   exit 1
@@ -80,6 +99,10 @@ cleanup_legacy_links
 
 if command -v codex >/dev/null 2>&1; then
   ensure_marketplace
+  # Codex can retain a removed plugin hook in its local state after `plugin add`.
+  # Reinstall from scratch so the active hook set matches the source plugin.
+  codex plugin remove "$PLUGIN@$MARKETPLACE" || true
+  clear_legacy_fable_hook_state
   codex plugin add "$PLUGIN@$MARKETPLACE"
   echo
   echo "Codex: installed/refreshed $PLUGIN@$MARKETPLACE."

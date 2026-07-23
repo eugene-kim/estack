@@ -18,6 +18,9 @@ The refresh script updates the local Claude Code and Codex plugin installs from
 this clone. In Codex, use Force Reload Skills or start a new thread. Restart
 Claude Code for its refreshed plugin install to apply.
 
+`estack-fable@estack` is a Claude Code-only auxiliary plugin. The refresh
+script installs it with `estack@estack`; Codex installs only `estack@estack`.
+
 ## Command reference
 
 | Action | Claude Code | Codex |

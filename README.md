@@ -10,6 +10,8 @@ when a real need appears, then installed through the same plugin refresh flow.
 - `plugins/estack/` is the plugin root shared by Claude Code and Codex.
 - `plugins/estack/skills/` contains the focused skills that have been added back
   as needs came up.
+- `plugins/estack-fable/` is a Claude Code-only plugin that reasserts Fable
+  guidance at resume and compaction. Codex does not install it.
 - `scripts/refresh.sh` refreshes the plugin install for both tools.
 - `scripts/install-codex.sh` installs or refreshes the Codex plugin and cleans
   old estack-owned personal skill symlinks.

@@ -17,6 +17,7 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PLUGIN="estack"
 MARKETPLACE="estack"
+CLAUDE_PLUGINS=("estack" "estack-fable")
 
 # --- Codex: remove legacy skill symlinks, then install/update the plugin ---
 # Skip the Codex step when its CLI is missing or not runnable (e.g. a stale
@@ -36,11 +37,15 @@ echo
 # --- Claude Code: reinstall the cached snapshot ---
 echo
 if command -v claude >/dev/null 2>&1; then
-  claude plugin uninstall "$PLUGIN@$MARKETPLACE" || true
+  for plugin in "${CLAUDE_PLUGINS[@]}"; do
+    claude plugin uninstall "$plugin@$MARKETPLACE" || true
+  done
   claude plugin marketplace update "$MARKETPLACE" || claude plugin marketplace add "$REPO_DIR"
-  claude plugin install "$PLUGIN@$MARKETPLACE"
+  for plugin in "${CLAUDE_PLUGINS[@]}"; do
+    claude plugin install "$plugin@$MARKETPLACE"
+  done
   echo
-  echo "Claude Code: reinstalled $PLUGIN@$MARKETPLACE — restart Claude Code to apply."
+  echo "Claude Code: reinstalled estack and estack-fable — restart Claude Code to apply."
 else
   echo "Claude Code: 'claude' not on PATH; skipped."
 fi
