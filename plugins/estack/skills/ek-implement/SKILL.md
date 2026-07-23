@@ -16,7 +16,7 @@ Implement the requested software change with tight scope and clear verification.
 - Record consequential in-scope decisions and their rationale where future work will naturally encounter them, such as the PRD or plan, nearby code or documentation, an ADR, or the commit or PR. Do not add ceremony for routine implementation choices.
 - Prefer existing patterns, helpers, and module boundaries.
 - Do not add speculative fallbacks, broad APIs, extra configuration, or defensive layers unless the requirement or observed usage calls for them.
-- Break work into focused increments that can be reviewed and merged on their own when that makes review clearer, lowers risk, or lets them land sooner. Split by coherent outcome, not file count, and keep changes together when they require the same atomic behavior.
+- Break work into focused increments that can be reviewed and merged on their own when the benefit to review, risk, or merge timing outweighs the overhead. Split by coherent outcome, not file count, and keep small or atomic changes together.
 - Commit completed coherent increments as you go when the user wants committed work and the repo state is safe to commit. Avoid mixing unrelated changes in one commit.
 - Do not mention or imply that the coding agent co-authored the work in commit messages. Do not add `Co-authored-by` trailers for the coding agent.
 

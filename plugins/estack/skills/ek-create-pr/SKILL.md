@@ -11,7 +11,7 @@ Create a pull request that helps reviewers understand the change quickly.
 
 - Inspect the branch, diff, commits, status, related issue, PRD, implementation plan, and verification evidence before writing.
 - Confirm the branch is ready to publish: intended files are included, unrelated changes are excluded or explained, and required checks have been run or clearly noted.
-- Before publishing, split distinct, independently reviewable outcomes into focused PRs when doing so improves review or lets them merge sooner. Keep changes together when they form one atomic behavior.
+- Before publishing, split distinct, independently reviewable outcomes into focused PRs when the benefit to review or merge timing outweighs the overhead. Keep small or atomic changes together.
 - Use the PR platform's supported tools to create the PR. Choose draft or ready-for-review based on the user's request, repo convention, and current confidence.
 - Do not duplicate long artifacts. Reference issues, PRDs, plans, ADRs, prior PRs, or generated explanations by URL or path when they already contain the detail.
 
