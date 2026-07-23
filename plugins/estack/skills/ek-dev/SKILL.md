@@ -33,7 +33,7 @@ State the chosen starting phase and the evidence for that choice, then proceed a
 
 ## Increment loop
 
-For each publishable increment, implement, create its PR, create an explainer when the change benefits from a walkthrough, review it, and manage the resulting feedback before moving to the next increment. Skip `ek-explain` for trivial changes such as package bumps, config tweaks, or pure documentation updates. A PR is the preferred review surface. When a PR cannot be created because the platform, credentials, or access are unavailable, review the local change and state why no PR exists.
+For each publishable increment, implement, create its PR, review it, and manage the resulting feedback before moving to the next increment. `ek-create-pr` owns PR-specific artifacts such as an explainer. A PR is the preferred review surface. When a PR cannot be created because the platform, credentials, or access are unavailable, review the local change and state why no PR exists.
 
 Use the agent harness's native task-tracking mechanism for meaningful multi-step work. Track the outcome and each substantial increment or PR with its scope, success conditions, current phase, and PR link when available. Keep it current as work moves between phases; do not create task noise for trivial work.
 
