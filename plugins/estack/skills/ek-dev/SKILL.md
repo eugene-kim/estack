@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Dev
 
-Run the software development cycle end to end, using the phase skills as the rails.
+Run the software development cycle end to end, using the phase skills as the rails. Treat each independently reviewable increment as its own PR lifecycle when that improves review or merge timing.
 
 ## Entry point
 
@@ -25,12 +25,25 @@ State the chosen starting phase and the evidence for that choice, then proceed a
 
 1. `ek-prd` - clarify the product need and create or identify the requirements artifact.
 2. `ek-plan` - turn requirements into a grounded engineering plan.
-3. `ek-implement` - implement the plan with narrow scope and verification.
-4. `ek-simplify` - refine recently modified code for clarity while preserving behavior.
-5. `ek-review` - review the resulting diff for correctness and missing tests.
-6. `ek-create-pr` - create a reviewer-friendly PR with a clear description and reading guide when publication is requested.
-7. `ek-manage-pr` - handle PR feedback, CI, and merge readiness after a PR exists.
-8. `ek-compound` - improve the relevant artifact when the work reveals a useful lesson, correction, or source of friction.
+3. `ek-implement` - implement a reviewable increment with narrow scope and verification.
+4. `ek-create-pr` - create a reviewer-friendly PR with a clear description and reading guide when the platform and credentials allow.
+5. `ek-review` - simplify recently modified code as useful, then review the PR or local change for correctness and missing tests.
+6. `ek-manage-pr` - synthesize feedback, address it, maintain the PR conversation, and move the PR toward merge readiness.
+7. `ek-compound` - improve the relevant artifact when the work reveals a useful lesson, correction, or source of friction.
+
+## Increment loop
+
+For each publishable increment, implement, create its PR, create its explainer, review it, and manage the resulting feedback before moving to the next increment. A PR is the preferred review surface. When a PR cannot be created because the platform, credentials, or access are unavailable, review the local change and state why no PR exists.
+
+Use the agent harness's native task-tracking mechanism for meaningful multi-step work. Track the outcome and each substantial increment or PR with its scope, success conditions, current phase, and PR link when available. Keep it current as work moves between phases; do not create task noise for trivial work.
+
+Review is a bounded loop:
+
+1. The root agent runs `ek-review`, uses separate review agents as useful, and synthesizes the findings.
+2. The root agent decides whether each finding needs a fix, an answer, deferral, or rejection with evidence, then uses `ek-manage-pr` to carry out that decision. It may delegate code changes, but owns the decision, PR conversation, and thread resolution.
+3. When the changes or findings warrant it, re-run `ek-review` on the PR with the prior findings, their dispositions, resolved-thread context, new commits, and current diff. Check that the response solved the concern without adding risk.
+
+Allow two remediation-and-re-review cycles after the initial review. If material findings remain, stop, apply `ai-review:changes` when labels are available, and give the user a concise decision summary. Exceed the limit only at the user's request or when new evidence materially changes the work.
 
 ## Operating rules
 
@@ -38,7 +51,7 @@ State the chosen starting phase and the evidence for that choice, then proceed a
 - Keep phase artifacts linked. Each phase should reference the artifact it consumed.
 - Ask only the questions that block useful progress. Prefer making reversible assumptions and recording them.
 - Do not invent requirements, APIs, fallbacks, abstractions, or edge-case handling beyond what the evidence supports.
-- Stop and report when the next action requires user permission, external access, unavailable credentials, or a product decision.
+- Stop and report when the next action requires user permission or a product decision. When PR access is unavailable, continue with local review and record the limitation.
 - When the platform supports delegated agents, use them for independent review or parallel investigation; otherwise run the phases directly.
 
 ## Output
@@ -48,11 +61,7 @@ Maintain a short phase log in the conversation:
 ```markdown
 - PRD: pending / done / skipped
 - Plan: pending / done / skipped
-- Implement: pending / done / skipped
-- Simplify: pending / done / skipped
-- Review: pending / done / skipped
-- Create PR: pending / done / skipped
-- Manage PR: pending / done / skipped
+- Increments / PRs: <increment>: implement / PR / review / manage / done
 - Compound: pending / done / skipped
 ```
 

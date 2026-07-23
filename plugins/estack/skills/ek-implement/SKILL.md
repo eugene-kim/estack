@@ -29,4 +29,4 @@ Implement the requested software change with tight scope and clear verification.
 
 ## Handoff
 
-End with the changed files, verification results with real numbers (counts run, values checked), consequential decisions and where they were recorded, and the most useful next skill, usually `ek-review`. Report your result as a claim the reader can check, not a conclusion to take on trust.
+End with the changed files, verification results with real numbers (counts run, values checked), consequential decisions and where they were recorded, and the most useful next skill. For a committed reviewable increment, usually create a PR with `ek-create-pr` when the platform and credentials allow, then run `ek-review`; otherwise state why review will use the local change. Report your result as a claim the reader can check, not a conclusion to take on trust.
