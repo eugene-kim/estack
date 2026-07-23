@@ -9,6 +9,7 @@
 	"homepage": "https://github.com/eugene-kim/estack",
 	"repository": "https://github.com/eugene-kim/estack",
 	"license": "MIT",
+	"hooks": "./claude-hooks/hooks.json",
 	"keywords": [
 		"estack",
 		"skills",
