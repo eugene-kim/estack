@@ -35,11 +35,13 @@ State the chosen starting phase and the evidence for that choice, then proceed a
 
 For each publishable increment, implement, create its PR, review it, and manage the resulting feedback before moving to the next increment. `ek-create-pr` owns PR-specific artifacts. A PR is the preferred review surface. When a PR cannot be created because the platform, credentials, or access are unavailable, review the local change and state why no PR exists.
 
+Creating or updating a PR starts `ek-review` immediately. Do not wait for CI or ask whether to review: CI and review run together, and `ek-manage-pr` brings their results together. An increment is not complete, and the turn must not end, until its review has started.
+
 Use the platform's built-in task tracker for meaningful multi-step work. Track the outcome and each substantial increment or PR with its scope, success conditions, current phase, and PR link when available. Keep it current as work moves between phases; do not create task noise for trivial work.
 
 Review is a bounded loop:
 
-1. The root agent runs `ek-review`, uses separate review agents as useful, and synthesizes the findings.
+1. The root agent runs `ek-review`, launching independent review agents as the change's size, complexity, and risk warrant. Use a multi-agent review workflow when the platform provides one and the change warrants it; this instruction authorizes it. The root agent synthesizes the findings.
 2. The root agent uses `ek-manage-pr` to decide and carry out the response to each finding. It may delegate code changes, but owns the decisions, PR conversation, and thread resolution.
 3. After `ek-manage-pr` addresses the relevant review threads, re-run `ek-review` on the current PR with fresh review agents when the changes or findings warrant another pass.
 
