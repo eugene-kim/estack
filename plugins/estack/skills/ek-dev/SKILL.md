@@ -29,7 +29,7 @@ State the chosen starting phase and the evidence for that choice, then proceed a
 4. `ek-create-pr` - create a reviewer-friendly PR with a clear description and reading guide when the platform and credentials allow.
 5. `ek-review` - simplify recently modified code as useful, then review the PR or local change for correctness and missing tests.
 6. `ek-manage-pr` - synthesize feedback, address it, maintain the PR conversation, and move the PR toward merge readiness.
-7. `ek-compound` - improve relevant artifacts when the work reveals a useful lesson, correction, or source of friction.
+7. `ek-compound` - after an increment merges, reflect on that completed loop and improve relevant artifacts when it reveals a useful lesson, correction, or source of friction.
 
 ## Increment loop
 
@@ -47,6 +47,8 @@ Review is a bounded loop:
 
 Allow two remediation-and-re-review cycles after the initial review. If material findings remain, stop and give the user a concise decision summary. Exceed the limit only at the user's request or when new evidence materially changes the work.
 
+After an increment merges, give that completed increment its own `ek-compound` pass before starting the next one. Use the outcome, decisions, review findings, and friction from that one loop while they are fresh. Skip the pass when there is nothing worth capturing. If another person must merge the PR, leave compounding for that increment pending until it merges.
+
 ## Operating rules
 
 - Start at the appropriate phase determined by the entry-point routing rules. Within that path, skip phases that are already complete. If the user provides a PRD or plan, consume it instead of recreating it.
@@ -63,8 +65,7 @@ Maintain a short phase log in the conversation:
 ```markdown
 - PRD: pending / done / skipped
 - Plan: pending / done / skipped
-- Increments / PRs: <increment>: implement / PR / review / manage / done
-- Compound: pending / done / skipped
+- Increments / PRs: <increment>: implement / PR / review / manage / merged / compound / done
 ```
 
 End with the final artifact links, verification status, PR status if relevant, and any captured follow-up.
