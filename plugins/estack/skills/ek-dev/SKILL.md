@@ -29,7 +29,7 @@ State the chosen starting phase and the evidence for that choice, then proceed a
 4. `ek-create-pr` - create a reviewer-friendly PR with a clear description and reading guide when the platform and credentials allow.
 5. `ek-review` - simplify recently modified code as useful, then review the PR or local change for correctness and missing tests.
 6. `ek-manage-pr` - synthesize feedback, address it, maintain the PR conversation, and move the PR toward merge readiness.
-7. `ek-compound` - improve the relevant artifact when the work reveals a useful lesson, correction, or source of friction.
+7. `ek-compound` - improve relevant artifacts when the work reveals a useful lesson, correction, or source of friction.
 
 ## Increment loop
 
