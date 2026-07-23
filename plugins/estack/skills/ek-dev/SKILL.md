@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Dev
 
-Run the software development cycle end to end, using the phase skills as the rails. Treat each independently reviewable increment as its own PR lifecycle when that improves review or merge timing.
+Run the software development cycle end to end, using the phase skills as guides. Treat each independently reviewable increment as its own PR lifecycle when that improves review or merge timing.
 
 ## Entry point
 
@@ -35,13 +35,13 @@ State the chosen starting phase and the evidence for that choice, then proceed a
 
 For each publishable increment, implement, create its PR, review it, and manage the resulting feedback before moving to the next increment. `ek-create-pr` owns PR-specific artifacts. A PR is the preferred review surface. When a PR cannot be created because the platform, credentials, or access are unavailable, review the local change and state why no PR exists.
 
-Use the agent harness's native task-tracking mechanism for meaningful multi-step work. Track the outcome and each substantial increment or PR with its scope, success conditions, current phase, and PR link when available. Keep it current as work moves between phases; do not create task noise for trivial work.
+Use the platform's built-in task tracker for meaningful multi-step work. Track the outcome and each substantial increment or PR with its scope, success conditions, current phase, and PR link when available. Keep it current as work moves between phases; do not create task noise for trivial work.
 
 Review is a bounded loop:
 
 1. The root agent runs `ek-review`, uses separate review agents as useful, and synthesizes the findings.
-2. The root agent decides whether each finding needs a fix, an answer, deferral, or rejection with evidence, then uses `ek-manage-pr` to carry out that decision. It may delegate code changes, but owns the decision, PR conversation, and thread resolution.
-3. When the changes or findings warrant it, re-run `ek-review` on the PR with the prior findings, their dispositions, resolved-thread context, new commits, and current diff. Check that the response solved the concern without adding risk.
+2. The root agent uses `ek-manage-pr` to decide and carry out the response to each finding. It may delegate code changes, but owns the decisions, PR conversation, and thread resolution.
+3. After `ek-manage-pr` addresses the relevant review threads, re-run `ek-review` on the current PR with fresh review agents when the changes or findings warrant another pass.
 
 Allow two remediation-and-re-review cycles after the initial review. If material findings remain, stop and give the user a concise decision summary. Exceed the limit only at the user's request or when new evidence materially changes the work.
 

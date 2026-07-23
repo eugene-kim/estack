@@ -11,12 +11,12 @@ Turn agreed requirements into a concrete, testable engineering plan.
 
 - Read the PRD, issue, discussion, or code context that defines the work.
 - Do not invent product behavior. If a requirement is missing, either ask or mark it as an explicit open question.
-- Ground claims in repo evidence: cite files, APIs, tests, data paths, and constraints discovered while reading.
+- Base claims on evidence from the repo: cite files, APIs, tests, data paths, and constraints you find.
 - Prefer a focused coherent change that satisfies the requirement.
 - Avoid speculative APIs, fallbacks, validators, parsers, abstractions, or compatibility layers unless the requirement or observed usage demands them.
 - Split the work into phases only when it reduces risk or enables review.
 - Include a verification step in every plan. Say what checks, tests, inspections, or manual validation would give confidence that the change works.
-- For non-trivial tasks, have agent(s) adversarially review the plan before implementation. Choose review scope based on task risk, ask them to look for incorrect assumptions, missed requirements, overreach, sequencing problems, and missing verification, then iterate on the plan.
+- For larger or riskier tasks, have agent(s) adversarially review the plan before implementation. Choose review scope based on task risk, ask them to look for incorrect assumptions, missed requirements, overreach, sequencing problems, and missing verification, then iterate on the plan.
 
 ## Output
 
@@ -46,4 +46,4 @@ Cover this structure:
 
 Before finalizing the plan, invoke `ek-unslop` for a prose pass that preserves the technical meaning, evidence, and verification details.
 
-End with the plan location or summary, adversarial review status for non-trivial work, the verification step, and the most useful next skill, usually `ek-implement`.
+End with the plan location or summary, adversarial review status for larger or riskier work, the verification step, and the most useful next skill, usually `ek-implement`.

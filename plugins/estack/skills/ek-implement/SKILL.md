@@ -11,7 +11,7 @@ Implement the requested software change with tight scope and clear verification.
 
 - Read the plan, PRD, issue, or instructions that define the work.
 - Inspect the existing code before editing.
-- Work autonomously toward a complete implementation. Resolve routine uncertainty through repository evidence, existing patterns, and reasonable in-scope judgment. Ask the user only when missing input would materially change the intended behavior, require authority the user has not granted, or make safe progress impossible. Do not stop at a proposal, partial implementation, or list of next steps while meaningful in-scope work remains.
+- Finish the in-scope work. Use repository evidence and existing patterns to resolve routine uncertainty. Ask only when missing input would materially change behavior, require authority the user has not granted, or prevent safe progress. Do not stop while meaningful in-scope work remains.
 - Stay inside the agreed scope. If reality contradicts the plan, update the plan or explain the adjustment instead of silently expanding the work.
 - Record consequential in-scope decisions and their rationale where future work will naturally encounter them, such as the PRD or plan, nearby code or documentation, an ADR, or the commit or PR. Do not add ceremony for routine implementation choices.
 - Prefer existing patterns, helpers, and module boundaries.
@@ -24,7 +24,7 @@ Implement the requested software change with tight scope and clear verification.
 
 - Run meaningful checks sized to the change.
 - Broaden tests when the change touches shared behavior or user-facing flows.
-- For each new test, confirm it fails without the change; a test that passes either way proves nothing.
+- Confirm each new test fails before the change.
 - If a check cannot run, say exactly why and what risk remains.
 
 ## Handoff

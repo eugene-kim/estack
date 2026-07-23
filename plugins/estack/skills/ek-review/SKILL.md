@@ -12,7 +12,7 @@ Review the actual diff for bugs, regressions, missing tests, and scope drift. Pr
 - Inspect the diff and the surrounding code needed to understand behavior.
 - Invoke `ek-simplify` when recently modified code would benefit from behavior-preserving cleanup. Keep that work within the review scope.
 - Use adversarial review with separate agent(s). Choose their number and focus based on the size, complexity, and risk of the change, then synthesize their findings instead of treating any single pass as authoritative.
-- Before reporting a finding, put it through an independent check that tries to refute it against the code, and report only what survives.
+- Before reporting a finding, check the code for evidence that disproves it. Lead with findings that remain. Then report potential findings you ruled out and why.
 - Prioritize correctness, data loss, security, concurrency, migration risk, user-visible regressions, and missing tests.
 - Check whether the implementation matches the PRD, plan, issue, or user request.
 - Avoid style-only comments unless they hide a real maintainability risk.
@@ -30,6 +30,8 @@ Use this shape:
 
 - [P1] <title> - <file:line>
   <why it matters and how to fix>
+
+## Checked and ruled out
 
 ## Open Questions
 
