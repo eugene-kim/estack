@@ -4,23 +4,17 @@ Read a request to "implement" as a request to get the work done through delegati
 
 Delegated agents must not run on the Fable tier. Set their model explicitly. Opus is the default; a GPT-5.6-class model through the Codex CLI is an equal alternative, and the better pick when you want a second, independent read rather than more of the same. A bounded lookup can go to a smaller tier either way. Follow the user when they name a tier.
 
-Codex agents come from Bash, since the Agent tool only reaches Anthropic models. Background anything long:
+A Codex agent comes from Bash, since the Agent tool only reaches Anthropic models. The `ek-codex-agent` skill carries the mechanics: how to run one without its output flooding your context, how to answer a question it stopped on, and how to read what it did. Use it rather than assembling the command from memory — several of the flags are load-bearing in ways that fail slowly.
 
-```bash
-codex exec -m gpt-5.6-sol -c model_reasoning_effort=medium \
-  -c 'approval_policy="never"' -c 'notify=[]' -c 'mcp_servers={}' \
-  --sandbox workspace-write -C <dir> -o <result-file> --json -- "<assignment>" </dev/null
-```
+The Agent tool's worktree isolation needs the session's working directory to be inside the Git repository. If it starts above the repository, have the agent create its own worktree with `git worktree add` and install dependencies there. A Codex agent can do neither — its sandbox blocks the network and keeps `.git` read-only — so build the worktree, install what it needs, and point it there.
 
-Agent worktree isolation requires the session's working directory to be inside the Git repository. If it starts above the repository, have the agent create its own worktree with `git worktree add`, then run `bun install` in that worktree when it needs dependencies.
-
-Each flag earns its place: without `</dev/null` the run hangs reading stdin it was never given, without `approval_policy="never"` it stalls the first time the agent wants to escalate, and `mcp_servers={}` drops servers the agent never needs. Take the result from the `-o` file, not the event stream. A Codex agent cannot message you mid-run, so ask for its questions in the assignment and answer them with `codex exec resume <thread-id>`, reading the id from the `thread.started` event; resume rejects `--sandbox` and `-C`, so pass `-c sandbox_mode="workspace-write"` and run from the same directory. Nothing forces the shape of its report, so ask for what you need: what changed, which checks it ran and what they said, what it left undone. The sandbox keeps `.git` read-only, so read the diff and land it yourself.
+Have no agent commit: read the diff and land it yourself.
 
 When a command's exit status matters, do not pipe it through `tail`, `grep`, or `head`: the last process in the pipeline can hide the command's failure. Capture the output to a file, or inspect the shell's pipeline-status array (`pipestatus` in zsh, `PIPESTATUS` in Bash).
 
 Keep an investigation yourself when the understanding it builds is the point — when each step depends on the last result, or you'll need the raw evidence, not a summary, to make the call. Drive other work directly where delegation only adds overhead: a change too small to be worth a round-trip, or a stretch where agents are unavailable. Keep such direct work small and say why.
 
-Tell each delegated agent to ask you rather than guess on a decision that would change the work — one that turns on input the agent lacks, needs authority it does not have, or blocks safe progress. They run in the background and can message you, so asking is cheap: stay available to unblock them, and escalate to the user only when a question genuinely needs the human.
+Tell each delegated agent to ask you rather than guess on a decision that would change the work — one that turns on input the agent lacks, needs authority it does not have, or blocks safe progress. Keep asking cheap for them: a Claude agent messages you mid-run, a Codex agent stops and you resume its thread. Stay available to unblock them either way, and escalate to the user only when a question genuinely needs the human.
 
 Treat each agent's result as a claim, not a fact. Review it against the assignment and the user's request: inspect the diff, re-check the load-bearing numbers or behaviors, run or direct relevant checks, reconcile conflicting findings, and decide what work remains before presenting the outcome.
 

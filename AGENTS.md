@@ -30,6 +30,8 @@ hook or its Claude manifest to the shared plugin.
 ## Adding skills
 
 When asked to add a skill, create `plugins/estack/skills/ek-<skill-name>/SKILL.md`.
+A skill that only makes sense in Claude Code belongs in
+`plugins/estack-fable/skills/` instead, which Codex never installs.
 Skill names and folders should use the `ek-` prefix so they remain distinct when
 many skills are installed.
 When the user refers to a skill without the prefix, treat the `ek-` prefix as
