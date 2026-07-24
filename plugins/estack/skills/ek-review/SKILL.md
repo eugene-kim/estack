@@ -17,7 +17,7 @@ Review the actual diff for bugs, regressions, missing tests, and scope drift. Pr
 - Check whether the implementation matches the PRD, plan, issue, or user request.
 - Avoid style-only comments unless they hide a real maintainability risk.
 - If there are no findings, say so clearly and name any residual risk or unrun checks.
-- When the PR platform supports labels and access permits, maintain exactly one review-status label: set `ai-review:in-progress` when review begins; replace it with `ai-review:changes` for unresolved actionable findings or `ai-review:LGTM` when no such findings remain. Replace a prior status label rather than accumulating them.
+- When the PR platform supports labels and access permits, maintain exactly one review-status label. Set `ai-review:in-progress` when review begins. Replace it with `ai-review:changes` for unresolved actionable findings or `ai-review:LGTM` when no such findings remain. The label is the authoritative outcome; comments may explain it but never replace it.
 
 ## Output
 
