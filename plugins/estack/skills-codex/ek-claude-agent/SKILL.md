@@ -20,7 +20,8 @@ separate context window. Resume that session only to clarify its findings.
 
 Use Opus unless the user asks for another Claude model. Set the model
 explicitly so local defaults and inherited settings do not change the delegate.
-Choose the effort from the task's complexity and risk.
+Use `xhigh` effort for review and `medium` effort for implementation. For other
+assignments, choose the effort from the task's complexity and risk.
 
 ## Write the assignment
 
@@ -41,7 +42,7 @@ assignment and result outside the repository.
 ```bash
 repo_root=<absolute path to the repository>
 claude_model=opus
-claude_effort=high
+claude_effort=<xhigh for review; medium for implementation>
 claude_run=$(mktemp -d)
 assignment_file="$claude_run/assignment.md"
 
