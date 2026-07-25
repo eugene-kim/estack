@@ -2,7 +2,7 @@
 	"name": "estack",
 	"displayName": "estack",
 	"version": "0.1.0",
-	"description": "Personal plugin scaffold for adding Claude Code and Codex skills as needs come up.",
+	"description": "Personal workflow plugin composed for Claude Code.",
 	"author": {
 		"name": "Eugene Kim"
 	},

@@ -8,7 +8,8 @@ set -euo pipefail
 shopt -s nullglob
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SRC="$REPO_DIR/plugins/estack/skills"
+SHARED_SRC="$REPO_DIR/plugins/estack/skills"
+CODEX_SRC="$REPO_DIR/plugins/estack/skills-codex"
 LEGACY_DST="${CODEX_SKILLS_DIR:-$HOME/.agents/skills}"
 PLUGIN="estack"
 MARKETPLACE="estack"
@@ -19,16 +20,18 @@ cleanup_legacy_links() {
   fi
 
   removed=0
-  for skill in "$SRC"/*/; do
-    name="$(basename "$skill")"
-    target="$LEGACY_DST/$name"
-    src="${skill%/}"
+  for src_dir in "$SHARED_SRC" "$CODEX_SRC"; do
+    for skill in "$src_dir"/*/; do
+      name="$(basename "$skill")"
+      target="$LEGACY_DST/$name"
+      src="${skill%/}"
 
-    if [ -L "$target" ] && [ "$(readlink "$target")" = "$src" ]; then
-      rm "$target"
-      echo "removed legacy link: $target"
-      removed=$((removed + 1))
-    fi
+      if [ -L "$target" ] && [ "$(readlink "$target")" = "$src" ]; then
+        rm "$target"
+        echo "removed legacy link: $target"
+        removed=$((removed + 1))
+      fi
+    done
   done
 
   if [ "$removed" -eq 0 ]; then
@@ -38,37 +41,10 @@ cleanup_legacy_links() {
   fi
 }
 
-ensure_marketplace() {
-  marketplace_type="$(
-    codex plugin marketplace list --json \
-      | python3 -c 'import json, sys
-name = sys.argv[1]
-for marketplace in json.load(sys.stdin).get("marketplaces", []):
-    if marketplace.get("name") == name:
-        print(marketplace.get("marketplaceSource", {}).get("sourceType", "unknown"))
-        break
-' "$MARKETPLACE"
-  )"
-
-  if [ -z "$marketplace_type" ]; then
-    codex plugin marketplace add "$REPO_DIR"
-    marketplace_type="$(
-      codex plugin marketplace list --json \
-        | python3 -c 'import json, sys
-name = sys.argv[1]
-for marketplace in json.load(sys.stdin).get("marketplaces", []):
-    if marketplace.get("name") == name:
-        print(marketplace.get("marketplaceSource", {}).get("sourceType", "unknown"))
-        break
-' "$MARKETPLACE"
-    )"
-  fi
-
-  if [ "$marketplace_type" = "git" ]; then
-    codex plugin marketplace upgrade "$MARKETPLACE"
-  else
-    echo "Codex: marketplace '$MARKETPLACE' is ${marketplace_type:-unknown}; skipping Git-only marketplace upgrade."
-  fi
+register_local_marketplace() {
+  codex plugin marketplace remove "$MARKETPLACE" || true
+  codex plugin marketplace add "$REPO_DIR"
+  echo "Codex: registered this clone as the local '$MARKETPLACE' marketplace."
 }
 
 clear_legacy_fable_hook_state() {
@@ -90,19 +66,20 @@ clear_legacy_fable_hook_state() {
   echo "Codex: removed obsolete estack Fable hook state."
 }
 
-if [ ! -d "$SRC" ]; then
-  echo "error: no skills directory at '$SRC'; run this from inside the estack repo" >&2
+if [ ! -d "$SHARED_SRC" ] || [ ! -d "$CODEX_SRC" ]; then
+  echo "error: estack source skill directories are missing" >&2
   exit 1
 fi
 
+"$REPO_DIR/scripts/build-plugins.sh"
 cleanup_legacy_links
 
 if command -v codex >/dev/null 2>&1; then
-  ensure_marketplace
   # Codex can retain a removed plugin hook in its local state after `plugin add`.
   # Reinstall from scratch so the active hook set matches the source plugin.
   codex plugin remove "$PLUGIN@$MARKETPLACE" || true
   clear_legacy_fable_hook_state
+  register_local_marketplace
   codex plugin add "$PLUGIN@$MARKETPLACE"
   echo
   echo "Codex: installed/refreshed $PLUGIN@$MARKETPLACE."

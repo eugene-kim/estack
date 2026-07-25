@@ -1,25 +1,23 @@
 # Updating estack
 
-estack is the source of truth for this personal plugin scaffold. The plugin
-content lives in `plugins/estack/`; skills belong under
-`plugins/estack/skills/`.
+estack is the source of truth for this personal plugin scaffold. Shared skills
+belong under `plugins/estack/skills/`. Host-only skills belong under
+`plugins/estack/skills-claude/` or `plugins/estack/skills-codex/`.
 
 The old bundled skill suite was removed. Add only the skill that is needed now.
 
 ## Add or change a skill
 
-1. Create or edit `plugins/estack/skills/ek-<skill-name>/SKILL.md`.
+1. Create or edit the skill in the matching source directory.
 2. Validate the skill shape.
 3. Commit the source change.
 4. Run `scripts/refresh.sh`.
 5. Push `main`.
 
-The refresh script updates the local Claude Code and Codex plugin installs from
-this clone. In Codex, use Force Reload Skills or start a new thread. Restart
-Claude Code for its refreshed plugin install to apply.
-
-`estack-fable@estack` is a Claude Code-only auxiliary plugin. The refresh
-script installs it with `estack@estack`; Codex installs only `estack@estack`.
+The refresh script builds separate Claude Code and Codex packages, both named
+`estack`, then updates each local install. In Codex, use Force Reload Skills or
+start a new thread. Restart Claude Code for its refreshed plugin install to
+apply.
 
 ## Command reference
 
@@ -40,5 +38,5 @@ the real path of a known estack `SKILL.md`, then ask Git for the repo root:
 repo="$(git -C "$(dirname "$(readlink -f "<skill-file>")")" rev-parse --show-toplevel)"
 ```
 
-Edit files under `$repo/plugins/estack/skills/...`, not copied plugin cache
-files or loose user skill directories.
+Edit files in the matching source directory under `$repo/plugins/estack/`, not
+generated packages, copied plugin cache files, or loose user skill directories.

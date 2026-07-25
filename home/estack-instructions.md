@@ -15,9 +15,11 @@ skill_file="<path-to-an-estack-SKILL.md>"
 repo="$(git -C "$(dirname "$(readlink -f "$skill_file")")" rev-parse --show-toplevel)"
 ```
 
-Edit files under `$repo/plugins/estack/skills/...`. Do not edit active copied
-skills under the Codex plugin cache, and do not edit loose user-level skill
-copies such as `~/.claude/skills` or `~/.agents/skills`.
+Edit shared skills under `$repo/plugins/estack/skills/...`, Claude-only skills
+under `$repo/plugins/estack/skills-claude/...`, and Codex-only skills under
+`$repo/plugins/estack/skills-codex/...`. Do not edit generated or cached plugin
+copies, or loose user-level copies such as `~/.claude/skills` or
+`~/.agents/skills`.
 
 After changing estack skills, commit and push from the clone, then run
 `$repo/scripts/refresh.sh` so Claude Code and Codex pick up the plugin update.

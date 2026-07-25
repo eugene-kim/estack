@@ -8,7 +8,7 @@ behavior.
 
 ## Current shape
 
-The old bundled skill suite was removed. Skills now live under
+The old bundled skill suite was removed. Shared skills live under
 `plugins/estack/skills/` and should be added back one at a time as real needs
 come up.
 
@@ -16,22 +16,25 @@ Keep plugin and refresh machinery working:
 
 - `plugins/estack/.claude-plugin/plugin.json`
 - `plugins/estack/.codex-plugin/plugin.json`
-- `plugins/estack-fable/.claude-plugin/plugin.json`
+- `plugins/estack/skills-claude/`
+- `plugins/estack/skills-codex/`
+- `plugins/estack/claude/`
 - `.claude-plugin/marketplace.json`
 - `.agents/plugins/marketplace.json`
+- `scripts/build-plugins.sh`
 - `scripts/refresh.sh`
 - `scripts/install-codex.sh`
 - `scripts/install-home-instructions.sh`
 
-`plugins/estack/` is shared by Claude Code and Codex. `plugins/estack-fable/`
-is a Claude Code-only plugin for the Fable SessionStart hook. Do not add its
-hook or its Claude manifest to the shared plugin.
+`scripts/build-plugins.sh` composes host-specific packages under `.generated/`.
+Both hosts install a plugin named `estack`. Never edit generated packages.
 
 ## Adding skills
 
 When asked to add a skill, create `plugins/estack/skills/ek-<skill-name>/SKILL.md`.
 A skill that only makes sense in Claude Code belongs in
-`plugins/estack-fable/skills/` instead, which Codex never installs.
+`plugins/estack/skills-claude/`. A Codex-only skill belongs in
+`plugins/estack/skills-codex/`.
 Skill names and folders should use the `ek-` prefix so they remain distinct when
 many skills are installed.
 When the user refers to a skill without the prefix, treat the `ek-` prefix as

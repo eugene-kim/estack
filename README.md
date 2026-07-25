@@ -7,12 +7,12 @@ when a real need appears, then installed through the same plugin refresh flow.
 
 ## Layout
 
-- `plugins/estack/` is the plugin root shared by Claude Code and Codex.
-- `plugins/estack/skills/` contains the focused skills that have been added back
-  as needs came up.
-- `plugins/estack-fable/` is a Claude Code-only plugin that reasserts Fable
-  guidance at resume and compaction. Codex does not install it.
-- `scripts/refresh.sh` refreshes the plugin install for both tools.
+- `plugins/estack/skills/` contains shared skills.
+- `plugins/estack/skills-claude/` contains Claude Code-only skills.
+- `plugins/estack/skills-codex/` contains Codex-only skills.
+- `plugins/estack/claude/` contains Claude Code-only hooks and scripts.
+- `scripts/build-plugins.sh` composes one ignored `estack` package per host.
+- `scripts/refresh.sh` builds and refreshes the plugin install for both tools.
 - `scripts/install-codex.sh` installs or refreshes the Codex plugin and cleans
   old estack-owned personal skill symlinks.
 - `scripts/install-home-instructions.sh` surfaces estack's global instructions
@@ -20,8 +20,10 @@ when a real need appears, then installed through the same plugin refresh flow.
 
 ## Add a skill
 
-Create a folder under `plugins/estack/skills/ek-<skill-name>/` with a `SKILL.md`.
-Keep each skill focused and tied to a workflow that has actually come up.
+Create a folder under the matching source skill directory with a `SKILL.md`.
+Use `plugins/estack/skills/ek-<skill-name>/` for shared skills and the matching
+host directory for a host-only skill. Keep each skill focused and tied to a
+workflow that has actually come up.
 
 Write skills as lightweight judgment aids. Avoid over-prescribing outputs or
 turning broad ideas into closed menus unless the workflow really is closed. A
@@ -78,9 +80,7 @@ git pull
 This repo is managed by one person. If the user asks for a change and is happy
 with it, commit it, run `scripts/refresh.sh`, and push `main` by default.
 
-The plugin should remain usable even with no skills installed. The empty
-`skills/` directory is tracked with `.gitkeep` when no skills exist so future
-skills have a stable home.
+The plugin should remain usable even with no skills installed.
 
 ## License
 

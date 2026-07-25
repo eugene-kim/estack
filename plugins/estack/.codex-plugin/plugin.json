@@ -19,7 +19,7 @@
   "interface": {
     "displayName": "estack",
     "shortDescription": "Personal plugin scaffold for adding skills as needs come up.",
-    "longDescription": "estack is a personal plugin scaffold shared by Claude Code and Codex. Add small skills under plugins/estack/skills only when a real workflow need appears, then refresh the plugin install with scripts/refresh.sh.",
+    "longDescription": "estack is a personal workflow plugin for Claude Code and Codex. Add focused shared or host-specific skills only when a real need appears, then compose and refresh each host package with scripts/refresh.sh.",
     "developerName": "Eugene Kim",
     "category": "Developer Tools",
     "capabilities": [

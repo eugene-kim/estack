@@ -176,7 +176,7 @@
 
 <div class="diagram">
   <div class="lane">
-    <div class="node src"><span class="who">source of truth</span><b>the clone</b>plugins/estack, plugins/estack-fable, home/</div>
+    <div class="node src"><span class="who">source of truth</span><b>the clone</b>plugins/estack and home/</div>
   </div>
   <div class="arrow">scripts/refresh.sh fans out</div>
   <div class="lane">
@@ -186,17 +186,17 @@
   </div>
   <div class="arrow">lands as</div>
   <div class="lane">
-    <div class="node cc"><span class="who">Claude Code</span><b>estack + estack-fable</b>Cached snapshot. ~/CLAUDE.local.md symlink.</div>
+    <div class="node cc"><span class="who">Claude Code</span><b>estack</b>Shared skills, Claude-only skills, and hooks.</div>
     <div class="node cx"><span class="who">Codex</span><b>estack only</b>Marketplace install. ~/.codex/AGENTS.override.md generated.</div>
   </div>
 </div>
 
-<p>The split between <code>plugins/estack/</code> and <code>plugins/estack-fable/</code> is the load-bearing structural choice. The shared plugin holds everything both tools can run. The Fable plugin holds a SessionStart hook and one skill about driving the Codex CLI, neither of which means anything inside Codex itself. Two marketplace manifests encode the split, and they are not merely two formats for one list:</p>
+<p>The source separates shared content from host-only content. <code>skills/</code> holds shared skills, <code>skills-claude/</code> and <code>skills-codex/</code> hold host-only skills, and <code>claude/</code> holds Claude-only hooks. The build script combines the right source for each host:</p>
 
-<pre><code>.claude-plugin/marketplace.json     lists estack AND estack-fable
-.agents/plugins/marketplace.json    lists estack only</code></pre>
+<pre><code>.generated/claude/estack    shared + Claude-only
+.generated/codex/estack     shared + Codex-only</code></pre>
 
-<p>Codex never learns that <code>estack-fable</code> exists. That is the mechanism behind the rule in <code>CLAUDE.md</code> saying not to add the Fable hook or its Claude manifest to the shared plugin.</p>
+<p>Both tools install a plugin named <code>estack</code>. Package composition keeps Claude-only hooks and skills out of Codex, and keeps Codex-only skills out of Claude Code.</p>
 
 <div class="callout">
   <span class="label">Why it matters</span>
@@ -352,18 +352,18 @@ fi</code></pre>
 <pre><code>claude plugin list
 codex plugin list</code></pre>
 
-<p>Claude Code should report both <code>estack</code> and <code>estack-fable</code>. Codex lists the plugins of every marketplace it knows about, so read only the block under its <code>estack</code> heading: <code>estack@estack</code> should be alone there. If <code>estack-fable</code> appears under it, something has added it to the wrong manifest.</p>
+<p>Both tools should report one plugin: <code>estack@estack</code>. The installed contents differ by host because <code>refresh.sh</code> builds each package before installation.</p>
 
 <h2 id="quiz">Quiz</h2>
 
 <p>Five questions. Click an answer for feedback.</p>
 
 <div class="q" data-answer="1">
-  <p class="stem">1. You add a skill to <code>plugins/estack-fable/skills/</code>. A colleague running Codex reports they cannot see it. What happened?</p>
+  <p class="stem">1. You add a skill to <code>plugins/estack/skills-claude/</code>. A colleague running Codex reports they cannot see it. What happened?</p>
   <button>The Codex plugin cache is stale and needs Force Reload Skills.</button>
-  <button>Working as designed. The Codex manifest does not list <code>estack-fable</code>.</button>
+  <button>Working as designed. The Codex package excludes Claude-only skills.</button>
   <button>The skill is missing <code>disable-model-invocation</code>.</button>
-  <p class="fb"><span class="answer-key">Answer: B. </span><code>.agents/plugins/marketplace.json</code> lists only <code>estack</code>, so Codex never learns the Fable plugin exists. No amount of reloading will surface it. The fix is to decide whether the skill belongs in the shared plugin instead.</p>
+  <p class="fb"><span class="answer-key">Answer: B. </span>The Codex package combines shared and Codex-only skills. No amount of reloading will surface a Claude-only skill. The fix is to decide whether the skill belongs in the shared source instead.</p>
 </div>
 
 <div class="q" data-answer="2">

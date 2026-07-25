@@ -8,7 +8,7 @@
 			"name": "estack",
 			"source": {
 				"source": "local",
-				"path": "./plugins/estack"
+				"path": "./.generated/codex/estack"
 			},
 			"policy": {
 				"installation": "AVAILABLE",

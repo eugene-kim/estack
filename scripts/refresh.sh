@@ -6,18 +6,17 @@
 # reinstall to see changes, and a restart afterward to apply them (Claude Code
 # loads plugins at startup; `claude plugin install` only refreshes the cache).
 #
-# Codex installs estack through its plugin marketplace. If the marketplace is a
-# Git source, this script upgrades the marketplace snapshot before installing.
-# If the marketplace is local, there is no snapshot to upgrade, so install is
-# enough. In an open Codex app session, use Cmd+K / Ctrl+K -> Force Reload
-# Skills; if the update still doesn't appear, start a new thread or restart
-# Codex.
+# The refresh registers this clone as each tool's local marketplace because the
+# host packages are composed under .generated/ and are not committed. In an
+# open Codex app session, use Cmd+K / Ctrl+K -> Force Reload Skills; if the
+# update still does not appear, start a new thread or restart Codex.
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PLUGIN="estack"
 MARKETPLACE="estack"
-CLAUDE_PLUGINS=("estack" "estack-fable")
+
+"$REPO_DIR/scripts/build-plugins.sh"
 
 # --- Codex: remove legacy skill symlinks, then install/update the plugin ---
 # Skip the Codex step when its CLI is missing or not runnable (e.g. a stale
@@ -37,15 +36,13 @@ echo
 # --- Claude Code: reinstall the cached snapshot ---
 echo
 if command -v claude >/dev/null 2>&1; then
-  for plugin in "${CLAUDE_PLUGINS[@]}"; do
-    claude plugin uninstall "$plugin@$MARKETPLACE" || true
-  done
-  claude plugin marketplace update "$MARKETPLACE" || claude plugin marketplace add "$REPO_DIR"
-  for plugin in "${CLAUDE_PLUGINS[@]}"; do
-    claude plugin install "$plugin@$MARKETPLACE"
-  done
+  claude plugin uninstall "estack-fable@$MARKETPLACE" || true
+  claude plugin uninstall "$PLUGIN@$MARKETPLACE" || true
+  claude plugin marketplace remove "$MARKETPLACE" || true
+  claude plugin marketplace add "$REPO_DIR"
+  claude plugin install "$PLUGIN@$MARKETPLACE"
   echo
-  echo "Claude Code: reinstalled estack and estack-fable. Restart Claude Code to apply."
+  echo "Claude Code: reinstalled estack. Restart Claude Code to apply."
 else
   echo "Claude Code: 'claude' not on PATH; skipped."
 fi

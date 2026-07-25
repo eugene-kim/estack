@@ -21,4 +21,4 @@ Inspect the relevant context and propose what should improve, why, and where. Pr
 
 ## Finish
 
-End by saying what improved and where it changed. When editing estack skills, update the source clone under `plugins/estack/skills/...`, then follow the repo refresh flow.
+End by saying what improved and where it changed. When editing estack skills, update the appropriate source directory under `plugins/estack/`, then follow the repo refresh flow.
