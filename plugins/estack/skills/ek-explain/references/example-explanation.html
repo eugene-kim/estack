@@ -205,7 +205,21 @@
 
 <h2 id="flow">Data flow: what happens when you edit a skill</h2>
 
-<p>Say you fix a sentence in <code>plugins/estack/skills/ek-review/SKILL.md</code>. Nothing has reached either agent yet. Both tools read from their own installed copy, not from your clone. Running <code>scripts/refresh.sh</code> walks three paths in sequence.</p>
+<p>Say you fix a sentence in <code>plugins/estack/skills/ek-review/SKILL.md</code>. Nothing has reached either agent yet. Both tools read from their own installed copy, not from your clone. Running <code>scripts/refresh.sh</code> walks three paths in sequence, and the same edit becomes visible at three different moments.</p>
+
+<div class="diagram">
+  <div class="lane">
+    <div class="node src"><span class="who">your edit</span><b>ek-review/SKILL.md</b>line 12, one sentence changed, committed as <code>a1b2c3d</code></div>
+  </div>
+  <div class="arrow">./scripts/refresh.sh</div>
+  <div class="lane">
+    <div class="node cx"><span class="who">Codex, step 1</span><b>plugin remove, then add</b>estack@estack reinstalled from the marketplace. Visible after Force Reload Skills, inside the running session.</div>
+    <div class="node"><span class="who">step 2</span><b>home instructions</b>~/.codex/AGENTS.override.md rewritten. ~/CLAUDE.local.md already pointed at the clone, so nothing to copy.</div>
+    <div class="node cc"><span class="who">Claude Code, step 3</span><b>uninstall, then install</b>Cache refreshed. Still invisible until you restart the app.</div>
+  </div>
+</div>
+
+<p>Read that middle box twice. The Claude Code home instructions needed no step at all, because a symlink has nothing to copy, while the Claude Code <em>skill</em> needed the slowest path of the three. Same tool, same refresh, opposite behavior, and the reason is the next three sections.</p>
 
 <h3>Codex, through the marketplace</h3>
 
@@ -308,7 +322,7 @@ fi</code></pre>
 
 <h2 id="explore">Explore</h2>
 
-<p>The claim worth testing is the one from the decision audit: that the Claude side is live and the Codex side is a snapshot. Two commands show it, and neither writes anything.</p>
+<p>The claim worth testing is the one from the decision audit: that the Claude side is live and the Codex side is a snapshot. Three commands show it, and none of them write anything.</p>
 
 <p class="printhint">Run these from anywhere. Nothing here modifies the repository.</p>
 
@@ -326,7 +340,7 @@ fi</code></pre>
 
 <pre><code>cat ~/CLAUDE.local.md</code></pre>
 
-<p>Five lines: two <code>@import</code> directives and a heading. Claude Code resolves those imports when it loads the file, so the prose never sits on disk at that path and an edit in the clone takes effect with no install step. The Codex file cannot work that way, because <code>AGENTS.override.md</code> replaces rather than appends, so the installer flattens everything into one literal copy. Check its modification date against your last edit to the clone and you are looking straight at the drift.</p>
+<p>Five lines: a heading and two import directives, each just <code>@</code> followed by a filename. Claude Code resolves those imports when it loads the file, so the prose never sits on disk at that path and an edit in the clone takes effect with no install step. The Codex file cannot work that way, because <code>AGENTS.override.md</code> replaces rather than appends, so the installer flattens everything into one literal copy. Check its modification date against your last edit to the clone and you are looking straight at the drift.</p>
 
 <div class="callout">
   <span class="label">What this demonstrates</span>
@@ -338,7 +352,7 @@ fi</code></pre>
 <pre><code>claude plugin list
 codex plugin list</code></pre>
 
-<p>Claude Code should report both <code>estack</code> and <code>estack-fable</code>. Codex should report only <code>estack</code>. If Codex lists <code>estack-fable</code>, something has added it to the wrong manifest.</p>
+<p>Claude Code should report both <code>estack</code> and <code>estack-fable</code>. Codex lists the plugins of every marketplace it knows about, so read only the block under its <code>estack</code> heading: <code>estack@estack</code> should be alone there. If <code>estack-fable</code> appears under it, something has added it to the wrong manifest.</p>
 
 <h2 id="quiz">Quiz</h2>
 
@@ -381,7 +395,7 @@ codex plugin list</code></pre>
   <button>The commit has not been pushed, and the marketplace installs from origin.</button>
   <button>Claude Code loads plugins at startup, so the refreshed cache applies only after a restart.</button>
   <button><code>refresh.sh</code> skipped Claude Code because <code>claude</code> was not on <code>PATH</code>.</button>
-  <p class="fb"><span class="answer-key">Answer: B. </span><code>claude plugin install</code> refreshes the cached snapshot but does not reload a running process. Codex differs here: Force Reload Skills works inside a live session. Note that the marketplace is added from <code>$REPO_DIR</code>, so an unpushed commit is not the problem.</p>
+  <p class="fb"><span class="answer-key">Answer: B. </span><code>claude plugin install</code> refreshes the cached snapshot but does not reload a running process. Codex differs here: Force Reload Skills works inside a live session. Whether an unpushed commit matters depends on how your marketplace was added: a local one installs straight from the clone, while one added from GitHub gets refreshed by <code>marketplace update</code> against origin.</p>
 </div>
 
 <script>

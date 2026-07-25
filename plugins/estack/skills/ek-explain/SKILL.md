@@ -22,13 +22,17 @@ Example:
 
 ## Format
 
-`references/example-explanation.html` is a real explanation of this repo's own plugin and refresh machinery, and it carries the format. Read it before writing. It shows the table of contents, callouts, decision cards, HTML diagrams, the interactive quiz, responsive layout, dark mode, and print rules for US letter paper. Match it rather than reconstructing those from a description, and improve on it where the subject calls for something it does not cover.
+`references/example-explanation.html` is a real explanation of this repo's own plugin and refresh machinery, and it carries the format. Read it before writing. It shows the table of contents, callouts, decision cards, diagrams, the interactive quiz, dark mode, and print rules for US letter paper. Match it rather than reconstructing those from a description. Treat it as a floor. Its subject has no user interface, so it demonstrates no UI diagram, and a subject that needs more than it shows should get more.
 
-Three things are easy to lose and worth checking by hand:
+The page should read well on a phone.
 
-- Every code block needs `white-space: pre` or `white-space: pre-wrap` in its CSS. Without it the browser collapses newlines into a single line. Scan each one before saving.
-- Print rules should expand quiz answers and hide interactive-only controls, so the printed page still teaches.
-- Diagrams are HTML and CSS. Never ASCII.
+**Diagrams.** Build a small set of diagram families and reuse them through the explanation, so the reader learns to read them once and then reads them everywhere. Two usually earn their place: a simplified drawing of the UI the reader sees, for UI changes, and a component diagram with concrete example data moving through it. Use HTML and CSS, never ASCII, with HTML lists for lists and semantic markup where it applies.
+
+**Callouts.** Use them for key concepts, definitions, important edge cases, and anything the reader should walk away remembering.
+
+**Print.** The printed page has to teach on its own: US letter `@page`, light colors, no heading or callout or diagram or quiz question split across a break, interactive-only controls hidden, and quiz answers expanded. Copy the example's print block rather than rebuilding it.
+
+**Code blocks.** Every one needs `white-space: pre` or `white-space: pre-wrap` in its CSS, or the browser collapses the newlines into a single line. Scan each before saving.
 
 ## Writing
 
