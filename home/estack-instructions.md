@@ -24,7 +24,7 @@ After changing estack skills, commit and push from the clone, then run
 
 ## Writing rules
 
-Writing rules, from Orwell, 1946. These govern prose: docs, PR text, messages. Never touch code or technical terms; swap in everyday words only where precision survives.
+Writing rules, from Orwell, 1946. These govern prose: docs, PR text, messages, comments written for humans, and prose a tool emits. Never touch code or technical terms; swap in everyday words only where precision survives.
 
 1. Never use a metaphor, simile, or other figure of speech which you are used to seeing in print.
 2. Never use a long word where a short one will do.
