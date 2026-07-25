@@ -46,9 +46,11 @@ Default to broad principles, natural next steps, and examples of possible homes
 for the work rather than exhaustive lists.
 
 - Prefer wording that leaves the agent room to improve the relevant artifact.
-- Write for durability across model improvements. Capture enduring intent,
-  constraints, and quality bars rather than instructions that compensate for
-  current model limitations.
+- Write for durability across model families, not just newer versions of one.
+  Shared skills run on Claude and on GPT-class models through Codex, so one
+  model handling something unaided is not grounds to cut it. Capture enduring
+  intent, constraints, and quality bars rather than instructions that
+  compensate for current model limitations.
 - Avoid phrases like "produce one of" unless the skill truly has a closed set of
   valid outputs.
 - Do not hard-code scale unless the user or domain requires it. Let the agent
