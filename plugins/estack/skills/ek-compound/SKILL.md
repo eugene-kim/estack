@@ -9,7 +9,7 @@ Use what you learned to improve the system.
 
 ## Confirmation
 
-Inspect the relevant context and propose what should improve, why, and where. Present the proposed changes to the user and wait for their explicit confirmation before editing files or making any other changes. Invoking this skill is not itself approval to implement the proposal.
+Inspect the relevant context and first decide whether a durable change is warranted. A no-change result is valid when the lesson is already encoded, existing feedback makes recovery clear, the event was a one-off mistake, or an edit would add process without reducing recurrence. If a change is warranted, propose what should improve, why, and where. Present the proposal to the user and wait for explicit confirmation before editing files or making any other changes. Invoking this skill is not itself approval to implement the proposal.
 
 ## Approach
 
@@ -21,4 +21,4 @@ Inspect the relevant context and propose what should improve, why, and where. Pr
 
 ## Finish
 
-End by saying what improved and where it changed. When editing estack skills, update the appropriate source directory under `plugins/estack/`, then follow the repo refresh flow.
+If no change is warranted, explain why the current system is sufficient and stop. If a change was made, say what improved and where it changed. When editing estack skills, update the appropriate source directory under `plugins/estack/`, then follow the repo refresh flow.
