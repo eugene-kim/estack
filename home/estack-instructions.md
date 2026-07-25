@@ -24,6 +24,11 @@ copies, or loose user-level copies such as `~/.claude/skills` or
 After changing estack skills, commit and push from the clone, then run
 `$repo/scripts/refresh.sh` so Claude Code and Codex pick up the plugin update.
 
+## Working preferences
+
+- When independent work can run while the main thread is busy, delegate it so the user gets useful results sooner. Keep dependent work in the main thread, and do not parallelize work that shares unsafe state.
+- Store preferences that should apply across coding agents in this platform-agnostic estack source, not in Claude Code- or Codex-specific memory. Put each preference where both tools will load it and keep the wording tool-agnostic.
+
 ## Writing rules
 
 Writing rules, from Orwell, 1946. These govern prose: docs, PR text, messages, comments written for humans, and prose a tool emits. Never touch code or technical terms; swap in everyday words only where precision survives.
