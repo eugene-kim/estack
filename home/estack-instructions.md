@@ -37,4 +37,4 @@ Review every prose output against these rules before delivering.
 
 <!-- This file is estack's global instructions, surfaced to both Claude Code and
      Codex by scripts/install-home-instructions.sh. Keep it tool-agnostic; where
-     guidance differs, phrase it inline ("In Claude Code… / In Codex…"). -->
+     guidance differs, phrase it inline ("In Claude Code... / In Codex..."). -->

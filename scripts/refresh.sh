@@ -3,7 +3,7 @@
 # committed plugin version.
 #
 # Claude Code installs estack as a cached snapshot, so it needs an explicit
-# reinstall to see changes — and a restart afterward to apply them (Claude Code
+# reinstall to see changes, and a restart afterward to apply them (Claude Code
 # loads plugins at startup; `claude plugin install` only refreshes the cache).
 #
 # Codex installs estack through its plugin marketplace. If the marketplace is a
@@ -45,7 +45,7 @@ if command -v claude >/dev/null 2>&1; then
     claude plugin install "$plugin@$MARKETPLACE"
   done
   echo
-  echo "Claude Code: reinstalled estack and estack-fable — restart Claude Code to apply."
+  echo "Claude Code: reinstalled estack and estack-fable. Restart Claude Code to apply."
 else
   echo "Claude Code: 'claude' not on PATH; skipped."
 fi

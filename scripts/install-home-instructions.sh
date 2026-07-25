@@ -5,9 +5,9 @@
 # Claude side is a live symlink to an overlay that imports shared instructions.
 #
 # Codex starts its AGENTS.md walk at the repository root and never reads your
-# home ~/CLAUDE.md, and it has no *.local append — only AGENTS.override.md,
-# which replaces the base file at its level. So the Codex side is a generated
-# file combining your home instructions with estack's delta.
+# home ~/CLAUDE.md, and it has no *.local append. Its only override mechanism is
+# AGENTS.override.md, which replaces the base file at its level. So the Codex
+# side is a generated file combining your home instructions with estack's delta.
 #
 # This is Nix-agnostic on purpose: ~/CLAUDE.md is read as opaque rendered text
 # (whatever produced it), and if it's absent the Codex file is the shared
@@ -51,7 +51,7 @@ if [ -e "$OVERRIDE" ] && ! grep -qF "$MANAGED_MARKER" "$OVERRIDE" 2>/dev/null; t
   echo "codex: $OVERRIDE exists and is not estack-managed; leaving it alone"
 else
   {
-    echo "<!-- $MANAGED_MARKER — do not edit; re-run the script to regenerate -->"
+    echo "<!-- $MANAGED_MARKER. Do not edit; re-run the script to regenerate -->"
     echo
     if [ -f "$HOME_CLAUDE" ]; then
       cat "$HOME_CLAUDE"

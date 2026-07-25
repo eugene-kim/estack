@@ -1,6 +1,6 @@
 ---
 name: ek-codex-agent
-description: Use when delegating work to a GPT-5.6-class agent through the Codex CLI from Claude Code — running one, answering a question it stopped on, or reading what it did. Covers the flags that are load-bearing, keeping its output out of your context, and the round trip.
+description: Use when delegating work to a GPT-5.6-class agent through the Codex CLI from Claude Code, whether running one, answering a question it stopped on, or reading what it did. Covers the flags that are load-bearing, keeping its output out of your context, and the round trip.
 ---
 
 # Codex Agent
@@ -17,9 +17,9 @@ the assignment. It inherits no lead framing.
 
 Route the work; do not reach for the top tier by reflex.
 
-- **Luna** — cleanup, summaries, tagging, anything high-volume.
-- **Terra** — research, ordinary code, daily work.
-- **Sol** — strategy, hard debugging, decisions that are costly to get wrong.
+- **Luna.** Cleanup, summaries, tagging, anything high-volume.
+- **Terra.** Research, ordinary code, daily work.
+- **Sol.** Strategy, hard debugging, decisions that are costly to get wrong.
 
 Model and effort trade against each other, so pick the pair. Delegating from a
 lead, Sol at low or medium and Terra at high are the ones that earn their cost;
@@ -34,7 +34,7 @@ reaches the model with `Not inside a trusted directory`. Add
 
 Keep the log and result out of the repository. Left inside, they show up
 untracked in the diff you are about to review, and two agents running at once
-overwrite each other's — including the log holding the thread id you need.
+overwrite each other's, including the log holding the thread id you need.
 
 ```bash
 dir=<absolute path to the working root>
@@ -52,7 +52,7 @@ That last line matters: shell variables do not survive between tool calls, and
 the round trip always spans several. Keep the printed run directory and thread
 id, and set them again in any later call.
 
-Read `$run/result.txt` when the run exits. Background anything long — but the
+Read `$run/result.txt` when the run exits. Background anything long, but the
 result file does not exist until it finishes, so do not read it in the same
 call.
 
@@ -60,9 +60,9 @@ call.
 ## Why these flags
 
 The redirect is the one that earns the most. The event stream dwarfs the final
-message — often by an order of magnitude, sometimes far more — and all of it
-lands in your context if it reaches stdout. That is the cost delegation exists
-to avoid. Keep it on disk and read the `-o` file.
+message, often by an order of magnitude and sometimes far more. All of it lands
+in your context if it reaches stdout. That is the cost delegation exists to
+avoid. Keep it on disk and read the `-o` file.
 
 `approval_policy="never"` stops the run stalling the first time the agent wants
 to escalate. `mcp_servers={}` drops servers it never needs. `notify=[]`
@@ -79,25 +79,26 @@ it anyway; this is not the only place the recipe runs.
 The agent has no network. It cannot install dependencies, clone, or fetch
 anything, so do that yourself before handing over the workspace.
 
-It also cannot write `.git` — no commits, and no `git worktree add` either,
+It also cannot write `.git`, so no commits, and no `git worktree add` either,
 since that writes there too. Build the worktree yourself and point `-C` at it.
 
 ## Reading the outcome
 
 A zero exit means the agent produced a message. It does not mean the agent
-finished, because stopping to ask also exits zero — read the result file to tell
+finished, because stopping to ask also exits zero. Read the result file to tell
 those apart. A nonzero exit means the run itself failed, and then no result file
 exists at all: the cause is at the end of `$run/log.jsonl`.
 
 Nothing forces the shape of the report, so ask for what you need: what changed,
 which checks it ran and what they said, what it left undone.
 
-When you need to see how the agent got there, its whole thread — prompts,
-messages, every command and output, growing across resumes — is at
-`~/.codex/sessions/<yyyy>/<mm>/<dd>/rollout-<timestamp>-<thread-id>.jsonl`.
-That directory is local time, not UTC, so a run just past midnight UTC sits
-under the previous day. Reasoning appears only above `low` effort. Find the file
-by thread id, take the slice you want, and never read it whole.
+When you need to see how the agent got there, the whole thread is at
+`~/.codex/sessions/<yyyy>/<mm>/<dd>/rollout-<timestamp>-<thread-id>.jsonl`. It
+holds the prompts, the messages, and every command and output, and it grows
+across resumes. That directory is local time, not UTC, so a run just past
+midnight UTC sits under the previous day. Reasoning appears only above `low`
+effort. Find the file by thread id, take the slice you want, and never read it
+whole.
 
 ## The round trip
 
@@ -134,5 +135,5 @@ is, so a resume with an unset variable runs against whatever workspace you
 happen to be in.
 
 The thread id comes from the `thread.started` event in the launch log. Match it
-by line, as the launch block does, rather than parsing that file as strict JSON
-— a stray stderr line can land mid-stream.
+by line, as the launch block does, rather than parsing that file as strict JSON.
+A stray stderr line can land mid-stream.
