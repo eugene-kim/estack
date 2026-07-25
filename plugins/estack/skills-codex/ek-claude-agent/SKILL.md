@@ -34,84 +34,95 @@ and ruled out.
 Do not prime an independent review with suspected bugs or findings from another
 reviewer unless the task is to verify one specific concern.
 
-## Run a fresh agent
+## Prepare the source
 
-Check `claude --help` before relying on flags that may have changed. Keep the
-assignment and result outside the repository.
+Materialize the source the agent needs before starting it. For GitHub work,
+fetch the relevant refs and include the issue or PR body, base SHA, and head SHA
+in the neutral assignment. For other work, supply the applicable source
+material rather than assuming the headless agent can recover missing context.
+
+Choose isolation from the assignment:
+
+- For a ref-based PR review or a check that may write or regenerate files,
+  default to a disposable worktree at the exact source ref.
+- When local or uncommitted state is part of the assignment, use that working
+  tree.
+- A read-only investigation may use the normal checkout.
+
+## Choose access
+
+Grant only the tools and integrations the assignment needs. The runner disables
+Chrome by default. Use `--no-mcp` when no MCP server is needed. Use
+`--mcp-config <path>` to load only selected servers. Omit both only when the
+assignment specifically needs the caller's configured MCP servers.
+
+For review, omit editing tools and tell the reviewer not to modify the
+repository. `dontAsk` denies actions that still need permission instead of
+stalling the headless run. Use broader permissions only when the assignment
+requires them. Do not bypass all permissions for a review.
+
+## Run an agent
+
+Use `scripts/run_claude.py` from this skill. It creates one
+`/tmp/ek-claude-.../` directory for the assignment, raw stream, final result,
+stderr, and manifest. The stream stays out of Codex context unless you read it.
+
+Check `claude --help` before relying on flags that may have changed. Write the
+complete assignment outside the repository, then run:
 
 ```bash
-repo_root=<absolute path to the repository>
+repo_root=<absolute path to the prepared source>
 claude_model=opus
 claude_effort=<xhigh for review; medium for implementation>
-claude_run=$(mktemp -d)
-assignment_file="$claude_run/assignment.md"
+claude_tools=<assignment-required built-in tools>
+assignment_file=<path to the completed assignment>
+runner=<path to this skill>/scripts/run_claude.py
 
-cd "$repo_root"
-claude -p \
+python3 "$runner" \
+  --cwd "$repo_root" \
+  --assignment "$assignment_file" \
   --model "$claude_model" \
   --effort "$claude_effort" \
-  --permission-mode dontAsk \
-  --tools "Read,Glob,Grep,Bash" \
-  --output-format json \
-  "Complete the assignment provided on stdin." \
-  <"$assignment_file" >"$claude_run/result.json" 2>"$claude_run/stderr.log"
+  --tools "$claude_tools" \
+  --no-mcp
 claude_status=$?
 ```
-
-Write the complete assignment to `assignment_file` before starting the command.
-The tool list omits direct file-editing tools, but Bash can still write. Tell
-the reviewer not to modify the repository. `dontAsk` denies any action that
-still needs permission instead of stalling the headless run. Use a disposable
-worktree when review commands may generate or modify files. Grant more access
-only when the task requires it. Do not bypass all permissions for a review.
 
 Do not use `--bare` or `--safe-mode` for repository work. Both suppress project
-context that the reviewer should normally see.
+context that the agent should normally see.
 
-Check `claude_status` before reading the result. On success, read only the final
-answer and keep the session id for a possible follow-up:
+The runner prints a small start event with the run directory and PID, then a
+finish event with status and session ID. Check `claude_status` and
+`manifest.json` before reading `result.json`. Read the raw stream only when
+diagnosing the run.
 
 ```bash
-claude_session=$(jq -r '.session_id' "$claude_run/result.json")
-jq -r '.result' "$claude_run/result.json"
-printf 'claude_run=%s\nclaude_session=%s\n' "$claude_run" "$claude_session"
+jq -r '.result' /tmp/ek-claude-.../result.json
 ```
 
-Retain both printed values. Shell variables may not survive the next tool call.
+The manifest records the run directory, cwd, model, effort, PID, timestamps,
+status, session ID, and output paths. Keep task-specific refs and identifiers
+in the assignment, not the generic manifest.
 
-## Continue the same review
+## Continue the same session
 
 Use a fresh session for a new review pass. Resume only when answering a question
-or asking the same reviewer to explain or verify its own finding.
+or asking the same agent to explain or verify its own result. Run the helper
+again with a new assignment and the saved session ID:
 
 ```bash
-repo_root=<the same repository>
-claude_model=<the same model>
-claude_effort=<the same effort>
-claude_run=<the run directory printed at launch>
-claude_session=<the session id printed at launch>
-follow_up_file="$claude_run/follow-up.md"
-
-if [ -z "$repo_root" ] || [ -z "$claude_run" ] || [ -z "$claude_session" ]; then
-  printf '%s\n' "Missing Claude resume state" >&2
-  exit 1
-fi
-cd "$repo_root"
-claude -p \
+python3 "$runner" \
   --resume "$claude_session" \
+  --cwd "$repo_root" \
+  --assignment "$follow_up_file" \
   --model "$claude_model" \
   --effort "$claude_effort" \
-  --permission-mode dontAsk \
-  --tools "Read,Glob,Grep,Bash" \
-  --output-format json \
-  "Respond to the follow-up provided on stdin." \
-  <"$follow_up_file" >"$claude_run/follow-up.json" 2>"$claude_run/follow-up.stderr.log"
-claude_status=$?
+  --tools "$claude_tools" \
+  --no-mcp
 ```
 
-Write the follow-up to `follow_up_file` before resuming.
-The JSON result includes the final text, session id, usage, and cost metadata.
-Do not use `--no-session-persistence` when a follow-up may be needed.
+Each turn gets its own run directory and evidence. Do not disable session
+persistence when a follow-up may be needed.
 
 ## Gate ultrareview on user approval
 
@@ -124,8 +135,9 @@ explicitly approve the specific run. The agent may suggest it, but must wait for
 that approval before running:
 
 ```bash
+ultrareview_run=$(mktemp -d /tmp/ek-claude-ultrareview-XXXXXX)
 claude ultrareview <pr-number-or-base-branch> \
-  --json >"$claude_run/ultrareview.json" 2>"$claude_run/ultrareview.log"
+  --json >"$ultrareview_run/result.json" 2>"$ultrareview_run/stderr.log"
 claude_status=$?
 ```
 
