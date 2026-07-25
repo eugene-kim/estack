@@ -112,6 +112,25 @@ Write the follow-up to `follow_up_file` before resuming.
 The JSON result includes the final text, session id, usage, and cost metadata.
 Do not use `--no-session-persistence` when a follow-up may be needed.
 
+## Gate ultrareview on user approval
+
+Claude Code also offers `claude ultrareview` for a remote multi-agent review.
+It uploads the branch or clones the pull request into Anthropic's cloud review
+service. After any trial runs, it may bill usage credits.
+
+Never start ultrareview based on the model's judgment alone. The user must
+explicitly approve the specific run. The agent may suggest it, but must wait for
+that approval before running:
+
+```bash
+claude ultrareview <pr-number-or-base-branch> \
+  --json >"$claude_run/ultrareview.json" 2>"$claude_run/ultrareview.log"
+claude_status=$?
+```
+
+A successful ultrareview exits zero whether or not it found bugs. Read the
+result to determine the review outcome.
+
 ## Fall back cleanly
 
 If Claude Code is missing, unauthenticated, unavailable, or out of usage, record
