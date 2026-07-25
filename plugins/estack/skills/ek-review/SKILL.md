@@ -12,6 +12,7 @@ Review the actual diff for bugs, regressions, missing tests, and scope drift. Pr
 - Inspect the diff and the surrounding code needed to understand behavior.
 - Invoke `ek-simplify` when recently modified code would benefit from behavior-preserving cleanup. Keep that work within the review scope.
 - Use adversarial review with separate agent(s). Choose their number and focus based on the size, complexity, and risk of the change, then synthesize their findings instead of treating any single pass as authoritative.
+- When the change warrants another model family, include a reviewer from a different provider when available. From Codex, use `ek-claude-agent`; from Claude Code, use `ek-codex-agent`. If the external CLI is unavailable or out of usage, continue with independent reviewers in the current platform.
 - Before reporting a finding, check the code for evidence that disproves it. Lead with findings that remain. Then report potential findings you ruled out and why.
 - Prioritize correctness, data loss, security, concurrency, migration risk, user-visible regressions, and missing tests.
 - Check whether the implementation matches the PRD, plan, issue, or user request.
