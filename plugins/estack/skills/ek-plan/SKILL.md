@@ -20,9 +20,11 @@ Turn agreed requirements into a concrete, testable engineering plan.
 
 ## Output
 
-When planning from an editable PRD, extend that PRD with a clearly separated implementation plan unless the work benefits from a distinct artifact. Keep product requirements and implementation decisions separate within the document. If code exploration reveals a missing or changed requirement, surface it as a product question instead of silently rewriting product intent.
+Before choosing a plan location, find any editable PRD or other authoritative requirements document for the same feature. If one exists, add or update a clearly separated implementation plan in that document. Keep product requirements and implementation decisions separate within the document. If code exploration reveals a missing or changed requirement, surface it as a product question instead of silently rewriting product intent. Follow repository status and revision conventions when updating point-in-time documents.
 
-When there is no editable PRD or a separate plan is more natural, create the plan where it best fits the work. Keep it in the conversation, a temporary file, an issue, a PR description, or another workspace when it is mainly a working artifact. Save it in the repo only when future work should treat it as durable project knowledge.
+Create a separate durable plan only when the user or repository explicitly requires one, the requirements document cannot be edited, or the plan spans multiple requirements documents. In that case, cross-link the documents and identify the authoritative requirements source. The existence of a `plans/` directory, plan length, or a desire to separate product and engineering sections is not enough reason to create another durable document.
+
+When there is no editable requirements document, create the plan where it best fits the work. Keep it in the conversation, a temporary file, an issue, a PR description, or another workspace when it is mainly a working artifact. Save it in the repo only when future work should treat it as durable project knowledge.
 
 Use Markdown as the canonical plan format. Add a focused Mermaid diagram when relationships, sequence, state transitions, data flow, or architecture are easier to understand visually than through prose. Diagrams are optional; omit them when they would only restate a short list or simple sequence.
 
