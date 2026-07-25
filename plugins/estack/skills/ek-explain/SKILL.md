@@ -51,73 +51,73 @@ Broadly explore before writing. What "explore" means depends on the subject:
 
 ## Choosing sections
 
-Pick the section set below that matches the subject. Adapt section names and add or drop sections when the subject calls for it — these are starting points, not a rigid template.
+Pick the section set below that matches the subject. Adapt section names and add or drop sections when the subject calls for it. These are starting points, not a rigid template.
 
 ### Diff, branch, commit, or PR
 
-**Background** — Explain the existing system relevant to this change. We do not know how much the reader already knows, so include a deep background for beginners (skippable if familiar) and a narrower background directly relevant to the change.
+**Background.** Explain the existing system relevant to this change. We do not know how much the reader already knows, so include a deep background for beginners (skippable if familiar) and a narrower background directly relevant to the change.
 
-**Intuition** — Explain the core intuition for the code change. Focus on the essence, not the full details. Use concrete examples with toy data. Use figures and diagrams liberally.
+**Intuition.** Explain the core intuition for the code change. Focus on the essence, not the full details. Use concrete examples with toy data. Use figures and diagrams liberally.
 
-**Code** — Do a high-level walkthrough of the changes to the code. Group and order the changes in an understandable way.
+**Code.** Do a high-level walkthrough of the changes to the code. Group and order the changes in an understandable way.
 
-**Decision audit** — See the shared Decision audit pattern below.
+**Decision audit.** See the shared Decision audit pattern below.
 
-**Explore** — See the shared Explore pattern below.
+**Explore.** See the shared Explore pattern below.
 
-**Quiz** — See the shared Quiz pattern below.
+**Quiz.** See the shared Quiz pattern below.
 
 ### Concept
 
-**Background** — What problem the concept solves and what came before it.
+**Background.** What problem the concept solves and what came before it.
 
-**Intuition** — The core mental model, with concrete examples. This is the heart of a concept explanation — spend the most effort here.
+**Intuition.** The core mental model, with concrete examples. This is the heart of a concept explanation, so spend the most effort here.
 
-**Mechanics** — How it actually works, step by step, at the level of detail the reader needs to use it correctly.
+**Mechanics.** How it actually works, step by step, at the level of detail the reader needs to use it correctly.
 
-**Application** — Where and how it shows up in this codebase or in practice, with real or realistic examples. Omit if the concept is purely theoretical for this audience.
+**Application.** Where and how it shows up in this codebase or in practice, with real or realistic examples. Omit if the concept is purely theoretical for this audience.
 
-**Quiz** — See the shared Quiz pattern below.
+**Quiz.** See the shared Quiz pattern below.
 
 ### Architecture
 
-**Overview** — The components involved and the boundaries between them.
+**Overview.** The components involved and the boundaries between them.
 
-**Data flow** — How a request or a piece of data actually moves through the system, with a diagram and example data.
+**Data flow.** How a request or a piece of data actually moves through the system, with a diagram and example data.
 
-**Decision audit** — See the shared Decision audit pattern below. Focus on structural choices: why components are split this way, why a boundary sits where it does, what it costs to change later.
+**Decision audit.** See the shared Decision audit pattern below. Focus on structural choices: why components are split this way, why a boundary sits where it does, what it costs to change later.
 
-**Explore** — See the shared Explore pattern below. Favor observing the real system (logs, tracing, hitting a real endpoint) over reading source.
+**Explore.** See the shared Explore pattern below. Favor observing the real system (logs, tracing, hitting a real endpoint) over reading source.
 
-**Quiz** — See the shared Quiz pattern below.
+**Quiz.** See the shared Quiz pattern below.
 
 ### PRD
 
-**Problem and goals** — What the PRD says is broken or missing, and what success looks like.
+**Problem and goals.** What the PRD says is broken or missing, and what success looks like.
 
-**Proposed solution** — The core approach, explained with the same intuition-first treatment as a concept.
+**Proposed solution.** The core approach, explained with the same intuition-first treatment as a concept.
 
-**Scope and non-goals** — What's explicitly in and out, and why the line is drawn there.
+**Scope and non-goals.** What's explicitly in and out, and why the line is drawn there.
 
-**Decision audit** — See the shared Decision audit pattern below. Treat contested calls in the PRD as decisions to audit, not settled facts.
+**Decision audit.** See the shared Decision audit pattern below. Treat contested calls in the PRD as decisions to audit, not settled facts.
 
-**Open questions and risks** — What the PRD itself flags as unresolved, plus any the author didn't flag but the reader should know about.
+**Open questions and risks.** What the PRD itself flags as unresolved, plus any the author didn't flag but the reader should know about.
 
-**Quiz** — See the shared Quiz pattern below.
+**Quiz.** See the shared Quiz pattern below.
 
 ### Plan
 
-**Goal and context** — What the plan is trying to accomplish and why, linking back to the PRD or issue that motivated it.
+**Goal and context.** What the plan is trying to accomplish and why, linking back to the PRD or issue that motivated it.
 
-**Approach and sequencing** — The steps or phases, in order, and why that order was chosen.
+**Approach and sequencing.** The steps or phases, in order, and why that order was chosen.
 
-**Decision audit** — See the shared Decision audit pattern below. Focus on sequencing choices, chosen tools or libraries, and anything the plan defers or explicitly avoids doing now.
+**Decision audit.** See the shared Decision audit pattern below. Focus on sequencing choices, chosen tools or libraries, and anything the plan defers or explicitly avoids doing now.
 
-**Risks and mitigations** — What could go wrong at each phase and what the plan does about it.
+**Risks and mitigations.** What could go wrong at each phase and what the plan does about it.
 
-**Definition of done** — How the reader will know the plan succeeded.
+**Definition of done.** How the reader will know the plan succeeded.
 
-**Quiz** — See the shared Quiz pattern below.
+**Quiz.** See the shared Quiz pattern below.
 
 ## Shared patterns
 
@@ -144,9 +144,9 @@ One useful backend or library pattern is a fast fail/pass exercise:
 
 Prefer a disposable worktree when the exercise modifies files. If the current worktree is used, offer `git restore -- <explicit paths>` only for paths established as clean before the exercise. Never tell the reader to restore a path that was already dirty. Include exact setup, run, observation, diff, and cleanup commands without expanding into generic Git instruction.
 
-If direct exploration is impractical — for example, a PRD or plan for work that doesn't exist yet — provide the closest useful verification or inspection path, such as exploring the current system the work will change, or omit this section when it would be artificial or add no value.
+Direct exploration is sometimes impractical, as with a PRD or plan for work that doesn't exist yet. Then provide the closest useful verification or inspection path, such as exploring the current system the work will change, or omit this section when it would be artificial or add no value.
 
-When the subject has a visible surface — a UI, a rendered report, generated HTML — exploring it must include viewing that surface: give the commands to render or serve it and say what to look at. Demonstrating such a change only through CLI output or tests is incomplete.
+Some subjects have a visible surface, such as a UI, a rendered report, or generated HTML. Exploring those must include viewing that surface: give the commands to render or serve it and say what to look at. Demonstrating such a change only through CLI output or tests is incomplete.
 
 When practical, use an exploration to exercise a material assumption or limit from the Decision audit, not only the happy path.
 
@@ -185,7 +185,7 @@ Use callouts for key concepts, definitions, important edge cases, and ideas the 
 
 Before delivering, test every displayed or copyable shell command exactly as rendered to the reader. For commands assembled by client-side JavaScript, render or open the HTML, read the resulting DOM text or clipboard payload, and, when safe, execute that exact string against the intended repository fixture. Source inspection of the JavaScript string is not sufficient because escaping can change across JavaScript, DOM, and shell layers.
 
-This applies whenever the explanation includes runnable commands. A PRD or plan for not-yet-built work may have none — in that case, skip this step.
+This applies whenever the explanation includes runnable commands. A PRD or plan for not-yet-built work may have none, and then you skip this step.
 
 ## Final reply
 
