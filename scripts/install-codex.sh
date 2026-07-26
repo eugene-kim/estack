@@ -25,10 +25,20 @@ cleanup_legacy_links() {
       name="$(basename "$skill")"
       target="$LEGACY_DST/$name"
       src="${skill%/}"
+      legacy_target="$LEGACY_DST/ek-$name"
+      legacy_src="$src_dir/ek-$name"
 
       if [ -L "$target" ] && [ "$(readlink "$target")" = "$src" ]; then
         rm "$target"
         echo "removed legacy link: $target"
+        removed=$((removed + 1))
+      fi
+
+      # Skill names no longer use the old ek- prefix. Remove only links that
+      # point to the matching pre-migration path in this estack clone.
+      if [ -L "$legacy_target" ] && [ "$(readlink "$legacy_target")" = "$legacy_src" ]; then
+        rm "$legacy_target"
+        echo "removed legacy link: $legacy_target"
         removed=$((removed + 1))
       fi
     done

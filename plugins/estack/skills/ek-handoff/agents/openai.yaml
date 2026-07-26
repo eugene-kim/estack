@@ -1,4 +1,0 @@
-interface:
-  display_name: "Handoff"
-  short_description: "Prepare context for the next agent session"
-  default_prompt: "Use $ek-handoff to prepare a concise handoff for my next session."

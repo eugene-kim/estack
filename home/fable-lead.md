@@ -4,7 +4,7 @@ Read a request to "implement" as a request to get the work done through delegati
 
 Delegated agents must not run on the Fable tier. Set their model explicitly. Opus is the default; a GPT-5.6-class model through the Codex CLI is an equal alternative, and the better pick when you want a second, independent read rather than more of the same. A bounded lookup can go to a smaller tier either way. Follow the user when they name a tier.
 
-A Codex agent comes from Bash, since the Agent tool only reaches Anthropic models. The `ek-codex-agent` skill carries the mechanics: how to run one without its output flooding your context, how to answer a question it stopped on, and how to read what it did. Use it rather than assembling the command from memory. Several of the flags are load-bearing in ways that fail slowly.
+A Codex agent comes from Bash, since the Agent tool only reaches Anthropic models. The `estack:codex-agent` skill carries the mechanics: how to run one without its output flooding your context, how to answer a question it stopped on, and how to read what it did. Use it rather than assembling the command from memory. Several of the flags are load-bearing in ways that fail slowly.
 
 The Agent tool's worktree isolation needs the session's working directory to be inside the Git repository. If it starts above the repository, have the agent create its own worktree with `git worktree add` and install dependencies there. A Codex agent can do neither, because its sandbox blocks the network and keeps `.git` read-only. Build the worktree, install what it needs, and point it there.
 

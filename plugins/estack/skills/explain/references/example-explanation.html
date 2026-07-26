@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How estack reaches two agents</title>
+<style>
+  :root {
+    --bg: #fbfaf8;
+    --fg: #1c1b19;
+    --muted: #5f5b55;
+    --rule: #e2ddd5;
+    --accent: #7a4f2b;
+    --accent-soft: #f2ece4;
+    --code-bg: #f4f1ec;
+    --claude: #b5651d;
+    --codex: #3d6b7d;
+    --warn-bg: #fdf6e7;
+    --warn-edge: #d9a441;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171614;
+      --fg: #e8e4dd;
+      --muted: #a29c93;
+      --rule: #34312c;
+      --accent: #d59a6a;
+      --accent-soft: #26231f;
+      --code-bg: #201e1b;
+      --claude: #d59a6a;
+      --codex: #7fb0c4;
+      --warn-bg: #241f16;
+      --warn-edge: #7a6027;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 17px/1.65 "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 6rem; }
+  h1 { font-size: 2.1rem; line-height: 1.2; margin: 0 0 .4rem; letter-spacing: -.01em; }
+  h2 {
+    font-size: 1.45rem; margin: 3.2rem 0 1rem; padding-top: 1.2rem;
+    border-top: 1px solid var(--rule); letter-spacing: -.005em;
+  }
+  h3 { font-size: 1.1rem; margin: 2rem 0 .6rem; }
+  .sub { color: var(--muted); font-size: 1.05rem; margin: 0 0 2.5rem; }
+  a { color: var(--accent); }
+  code {
+    font: .86em/1.5 ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    background: var(--code-bg); padding: .12em .35em; border-radius: 3px;
+  }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--rule); border-radius: 6px;
+    padding: .9rem 1rem; overflow-x: auto; white-space: pre;
+    font: 13px/1.55 ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+
+  /* Table of contents */
+  nav.toc {
+    background: var(--accent-soft); border: 1px solid var(--rule);
+    border-radius: 8px; padding: 1rem 1.25rem; margin: 0 0 2.5rem;
+  }
+  nav.toc p { margin: 0 0 .5rem; font-weight: 700; font-size: .82rem;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  nav.toc ol { margin: 0; padding-left: 1.2rem; }
+  nav.toc li { margin: .2rem 0; }
+
+  /* Callout */
+  .callout {
+    background: var(--warn-bg); border-left: 3px solid var(--warn-edge);
+    border-radius: 0 6px 6px 0; padding: .85rem 1.1rem; margin: 1.5rem 0;
+  }
+  .callout p { margin: 0; }
+  .callout .label {
+    display: block; font-size: .74rem; letter-spacing: .09em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: .3rem;
+    font-weight: 700;
+  }
+
+  /* Diagram: channel map */
+  .diagram { margin: 1.8rem 0; }
+  .lane { display: flex; gap: .75rem; align-items: stretch; margin-bottom: .75rem; flex-wrap: wrap; }
+  .node {
+    flex: 1 1 11rem; border: 1px solid var(--rule); border-radius: 6px;
+    padding: .6rem .75rem; background: var(--bg); font-size: .84rem; line-height: 1.45;
+  }
+  .node b { display: block; font-size: .8rem; margin-bottom: .15rem; }
+  .node.src { border-color: var(--accent); }
+  .node.cc { border-color: var(--claude); }
+  .node.cx { border-color: var(--codex); }
+  .node .who { font-size: .7rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+  .arrow { text-align: center; color: var(--muted); font-size: .8rem; margin: .1rem 0 .55rem; }
+
+  /* Decision cards */
+  .decision {
+    border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0; padding: .9rem 1.1rem; margin: 1.2rem 0;
+    background: var(--bg);
+  }
+  .decision h4 { margin: 0 0 .5rem; font-size: 1rem; }
+  .decision dl { margin: 0; font-size: .92rem; }
+  .decision dt {
+    font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted); margin-top: .6rem; font-weight: 700;
+  }
+  .decision dd { margin: .1rem 0 0; }
+
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; margin: 1.4rem 0; }
+  th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-size: .75rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+  .tablewrap { overflow-x: auto; }
+
+  /* Quiz */
+  .q { border: 1px solid var(--rule); border-radius: 8px; padding: 1rem 1.15rem; margin: 1.3rem 0; }
+  .q .stem { font-weight: 600; margin: 0 0 .7rem; }
+  .q button {
+    display: block; width: 100%; text-align: left; margin: .35rem 0;
+    padding: .5rem .7rem; border: 1px solid var(--rule); border-radius: 5px;
+    background: var(--bg); color: var(--fg); font: inherit; font-size: .92rem; cursor: pointer;
+  }
+  .q button:hover:not(:disabled) { border-color: var(--accent); }
+  .q button.right { border-color: #4a7c48; background: rgba(74,124,72,.12); }
+  .q button.wrong { border-color: #a94a42; background: rgba(169,74,66,.12); }
+  .q .fb { margin: .7rem 0 0; font-size: .9rem; color: var(--muted); display: none; }
+  .q .fb.show { display: block; }
+
+  @page { size: letter; margin: 0.75in; }
+  @media print {
+    :root {
+      --bg: #fff; --fg: #000; --muted: #444; --rule: #bbb;
+      --accent: #000; --accent-soft: #fff; --code-bg: #f6f6f6;
+      --warn-bg: #fff; --warn-edge: #888;
+    }
+    body { font-size: 11pt; }
+    .wrap { max-width: none; padding: 0; }
+    nav.toc { break-after: page; }
+    h2 { break-after: avoid; }
+    h3, .stem { break-after: avoid; }
+    pre, .callout, .decision, .q, table, .diagram { break-inside: avoid; }
+    .q button { cursor: default; }
+    .q .fb { display: block !important; }        /* answers open in print */
+    .q .answer-key { display: inline !important; }
+    .printhint { display: none; }
+    a { text-decoration: none; color: #000; }
+  }
+  .answer-key { display: none; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>How estack reaches two agents</h1>
+<p class="sub">One repository, two coding tools that share almost none of their plugin machinery, and the small pile of scripts that hides the difference.</p>
+
+<nav class="toc">
+  <p>Contents</p>
+  <ol>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#flow">Data flow: what happens when you edit a skill</a></li>
+    <li><a href="#decisions">Decision audit</a></li>
+    <li><a href="#explore">Explore</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+  </ol>
+</nav>
+
+<h2 id="overview">Overview</h2>
+
+<p>estack is a personal scaffold that pushes the same working habits into two different coding agents. Claude Code and Codex both support plugins, both read instruction files, and the resemblance stops roughly there. Their manifests use different schemas, their install commands differ, one caches a snapshot while the other tracks a marketplace, and only one of them runs hooks that estack cares about.</p>
+
+<p>The repository handles this with three delivery channels rather than one.</p>
+
+<div class="diagram">
+  <div class="lane">
+    <div class="node src"><span class="who">source of truth</span><b>the clone</b>plugins/estack and home/</div>
+  </div>
+  <div class="arrow">scripts/refresh.sh fans out</div>
+  <div class="lane">
+    <div class="node"><span class="who">channel 1</span><b>Skills</b>Shipped as a plugin through each tool's own marketplace.</div>
+    <div class="node"><span class="who">channel 2</span><b>Home instructions</b>Always-loaded prose, installed differently per tool.</div>
+    <div class="node"><span class="who">channel 3</span><b>Session hook</b>Claude Code only. Re-asserts Fable guidance.</div>
+  </div>
+  <div class="arrow">lands as</div>
+  <div class="lane">
+    <div class="node cc"><span class="who">Claude Code</span><b>estack</b>Shared skills, Claude-only skills, and hooks.</div>
+    <div class="node cx"><span class="who">Codex</span><b>estack only</b>Marketplace install. ~/.codex/AGENTS.override.md generated.</div>
+  </div>
+</div>
+
+<p>The source separates shared content from host-only content. <code>skills/</code> holds shared skills, <code>skills-claude/</code> and <code>skills-codex/</code> hold host-only skills, and <code>claude/</code> holds Claude-only hooks. The build script combines the right source for each host:</p>
+
+<pre><code>.generated/claude/estack    shared + Claude-only
+.generated/codex/estack     shared + Codex-only</code></pre>
+
+<p>Both tools install a plugin named <code>estack</code>. Package composition keeps Claude-only hooks and skills out of Codex, and keeps Codex-only skills out of Claude Code.</p>
+
+<div class="callout">
+  <span class="label">Why it matters</span>
+  <p>A skill placed in the wrong plugin either fails to reach Codex at all, or reaches it carrying instructions about tools Codex does not have. The directory you create a skill in is a distribution decision, not just filing.</p>
+</div>
+
+<h2 id="flow">Data flow: what happens when you edit a skill</h2>
+
+<p>Say you fix a sentence in <code>plugins/estack/skills/review/SKILL.md</code>. Nothing has reached either agent yet. Both tools read from their own installed copy, not from your clone. Running <code>scripts/refresh.sh</code> walks three paths in sequence, and the same edit becomes visible at three different moments.</p>
+
+<div class="diagram">
+  <div class="lane">
+    <div class="node src"><span class="who">your edit</span><b>review/SKILL.md</b>line 12, one sentence changed, committed as <code>a1b2c3d</code></div>
+  </div>
+  <div class="arrow">./scripts/refresh.sh</div>
+  <div class="lane">
+    <div class="node cx"><span class="who">Codex, step 1</span><b>plugin remove, then add</b>estack@estack reinstalled from the marketplace. Visible after Force Reload Skills, inside the running session.</div>
+    <div class="node"><span class="who">step 2</span><b>home instructions</b>~/.codex/AGENTS.override.md rewritten. ~/CLAUDE.local.md already pointed at the clone, so nothing to copy.</div>
+    <div class="node cc"><span class="who">Claude Code, step 3</span><b>uninstall, then install</b>Cache refreshed. Still invisible until you restart the app.</div>
+  </div>
+</div>
+
+<p>Read that middle box twice. The Claude Code home instructions needed no step at all, because a symlink has nothing to copy, while the Claude Code <em>skill</em> needed the slowest path of the three. Same tool, same refresh, opposite behavior, and the reason is the next three sections.</p>
+
+<h3>Codex, through the marketplace</h3>
+
+<p><code>refresh.sh</code> first checks whether Codex is really usable, and it does not trust <code>command -v</code> alone:</p>
+
+<pre><code>if command -v codex &gt;/dev/null 2&gt;&amp;1 &amp;&amp; codex --version &gt;/dev/null 2&gt;&amp;1; then
+  "$REPO_DIR/scripts/install-codex.sh"
+else
+  echo "Codex: 'codex' CLI missing or not runnable; skipped." &gt;&amp;2
+fi</code></pre>
+
+<p>A stale launcher shim pointing at a moved application bundle still sits on <code>PATH</code>, so <code>command -v</code> succeeds and the invocation fails. Probing with a cheap <code>--version</code> lets the Claude Code half of the refresh continue instead of dying on someone else's broken install.</p>
+
+<p>Inside <code>install-codex.sh</code>, the plugin is removed before it is added. That looks redundant and is not: Codex keeps hook state for a plugin in <code>~/.codex/config.toml</code>, and a plain re-add can leave a hook active that no longer exists in the source. There is even a dedicated function that deletes the obsolete Fable hook's TOML section by matching its header line and skipping to the next <code>[</code>.</p>
+
+<h3>Home instructions, two mechanisms for one file</h3>
+
+<p>This is the sharpest asymmetry in the repository, and <code>install-home-instructions.sh</code> exists entirely because of it.</p>
+
+<div class="tablewrap">
+<table>
+  <thead><tr><th></th><th>Claude Code</th><th>Codex</th></tr></thead>
+  <tbody>
+    <tr><td>Reads</td><td><code>~/CLAUDE.md</code>, then appends <code>~/CLAUDE.local.md</code></td><td><code>AGENTS.md</code> walk from the repo root, never your home <code>~/CLAUDE.md</code></td></tr>
+    <tr><td>Override</td><td>The <code>.local</code> file is an append, so estack can take that slot outright</td><td><code>AGENTS.override.md</code> <em>replaces</em> the base file at its level</td></tr>
+    <tr><td>estack installs</td><td>A live symlink into the clone</td><td>A generated file: your home instructions concatenated with estack's</td></tr>
+    <tr><td>Edit visibility</td><td>Immediate, next session</td><td>Stale until the script runs again</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Because Codex has no append mechanism, estack cannot simply add itself. It has to rebuild the whole override, which means copying your personal instructions in alongside its own. That generated file needs a guard so it never silently eats a hand-written override:</p>
+
+<pre><code>if [ -e "$OVERRIDE" ] &amp;&amp; ! grep -qF "$MANAGED_MARKER" "$OVERRIDE" 2&gt;/dev/null; then
+  echo "codex: $OVERRIDE exists and is not estack-managed; leaving it alone"
+else
+  ...regenerate...
+fi</code></pre>
+
+<div class="callout">
+  <span class="label">Subtle</span>
+  <p>Detection matches <code>$MANAGED_MARKER</code> as a substring, not the full header line. The surrounding wording can change without orphaning files generated by an older version of the script. That is what makes the header safe to edit.</p>
+</div>
+
+<h3>Claude Code, last and coarsest</h3>
+
+<p>Claude Code installs estack as a cached snapshot, so the script uninstalls both plugins, updates the marketplace, and reinstalls. Even then the change is not live: Claude Code loads plugins at startup, and <code>claude plugin install</code> only refreshes the cache. You have to restart. Codex, by contrast, offers Force Reload Skills inside a running session.</p>
+
+<p>So the same edit becomes visible at three different moments. Home instructions on the Claude side apply next session with no install step at all, because the symlink means there is nothing to copy. Codex skills apply after a reload. Claude Code skills apply after a full restart.</p>
+
+<h2 id="decisions">Decision audit</h2>
+
+<p>These are the choices where a reasonable alternative would have produced a different system. The reasoning is inferred from the code and its comments, not from the author.</p>
+
+<div class="decision">
+  <h4>Two plugins rather than one plugin with conditional content</h4>
+  <dl>
+    <dt>Choice</dt>
+    <dd>Fable-only material lives in a separate plugin that the Codex manifest omits.</dd>
+    <dt>Evidence</dt>
+    <dd>The two marketplace manifests list different plugin sets. <code>CLAUDE.md</code> states the rule explicitly.</dd>
+    <dt>Alternative</dt>
+    <dd>One plugin whose skills say "ignore this in Codex". Cheaper to maintain, but every Codex session would then carry descriptions for tools it cannot use, and skill descriptions load whether or not the skill runs.</dd>
+    <dt>Limit</dt>
+    <dd>The split is by tool, not by model. A Fable session in Codex, if that ever exists, gets nothing.</dd>
+    <dt>Reviewer question</dt>
+    <dd>What happens the first time a skill is genuinely useful to both tools but only <em>mechanically</em> possible in one?</dd>
+  </dl>
+</div>
+
+<div class="decision">
+  <h4>A live symlink for Claude, a generated copy for Codex</h4>
+  <dl>
+    <dt>Choice</dt>
+    <dd><code>~/CLAUDE.local.md</code> links into the clone. <code>~/.codex/AGENTS.override.md</code> is regenerated from source.</dd>
+    <dt>Evidence</dt>
+    <dd>The header comment in <code>install-home-instructions.sh</code> derives both from what each tool supports.</dd>
+    <dt>Assumption</dt>
+    <dd>That <code>~/CLAUDE.md</code> can be treated as opaque rendered text whatever produced it, which is what keeps the script Nix-agnostic on a machine where that file is generated by Home Manager.</dd>
+    <dt>Cost</dt>
+    <dd>The two sides drift between refreshes. Editing <code>home/estack-instructions.md</code> changes Claude's behavior immediately and Codex's not at all until the script runs.</dd>
+    <dt>Reviewer question</dt>
+    <dd>Is that drift ever going to produce a confusing session where the two agents disagree about their own instructions?</dd>
+  </dl>
+</div>
+
+<div class="decision">
+  <h4>The Fable hook only fires on resume and compact</h4>
+  <dl>
+    <dt>Choice</dt>
+    <dd>The SessionStart matcher is <code>resume|compact</code>. Fresh sessions are covered by the always-loaded home instructions instead.</dd>
+    <dt>Constraint</dt>
+    <dd>The hook payload carries no model field, so the script recovers the model by reading the transcript for the last non-sidechain assistant message. At startup there is no transcript to read.</dd>
+    <dt>Consequence</dt>
+    <dd>Every session on every model loads the Fable guidance, then ignores it unless it is Fable or Mythos. That is the price of not being able to detect the model early.</dd>
+    <dt>Reviewer question</dt>
+    <dd>Is shortening that text the only available lever, or is there a startup-time signal nobody has looked for yet?</dd>
+  </dl>
+</div>
+
+<h2 id="explore">Explore</h2>
+
+<p>The claim worth testing is the one from the decision audit: that the Claude side is live and the Codex side is a snapshot. Three commands show it, and none of them write anything.</p>
+
+<p class="printhint">Run these from anywhere. Nothing here modifies the repository.</p>
+
+<p>Start with what each tool actually has on disk:</p>
+
+<pre><code>ls -l ~/CLAUDE.local.md ~/.codex/AGENTS.override.md</code></pre>
+
+<p>The first is a symlink, shown with an arrow pointing into your estack clone. The second is an ordinary file whose modification time is the last time you ran the installer. If it does not exist yet, that is its own answer: the script has never run here, and the Claude side has been working anyway.</p>
+
+<p><strong>Predict before running the next command.</strong> Both files are supposed to deliver the same instructions. How many lines does each one contain?</p>
+
+<pre><code>wc -l ~/CLAUDE.local.md ~/.codex/AGENTS.override.md</code></pre>
+
+<p>The answer is lopsided, and the reason is the interesting part. Look at the small one:</p>
+
+<pre><code>cat ~/CLAUDE.local.md</code></pre>
+
+<p>Five lines: a heading and two import directives, each just <code>@</code> followed by a filename. Claude Code resolves those imports when it loads the file, so the prose never sits on disk at that path and an edit in the clone takes effect with no install step. The Codex file cannot work that way, because <code>AGENTS.override.md</code> replaces rather than appends, so the installer flattens everything into one literal copy. Check its modification date against your last edit to the clone and you are looking straight at the drift.</p>
+
+<div class="callout">
+  <span class="label">What this demonstrates</span>
+  <p>The two channels are not the same mechanism with different paths. One is a pointer chain that stays live. The other is a build artifact that goes stale the moment you edit the source. That is the drift named in the decision audit, visible in three commands.</p>
+</div>
+
+<p>For the plugin side, compare what each tool believes it has installed:</p>
+
+<pre><code>claude plugin list
+codex plugin list</code></pre>
+
+<p>Both tools should report one plugin: <code>estack@estack</code>. The installed contents differ by host because <code>refresh.sh</code> builds each package before installation.</p>
+
+<h2 id="quiz">Quiz</h2>
+
+<p>Five questions. Click an answer for feedback.</p>
+
+<div class="q" data-answer="1">
+  <p class="stem">1. You add a skill to <code>plugins/estack/skills-claude/</code>. A colleague running Codex reports they cannot see it. What happened?</p>
+  <button>The Codex plugin cache is stale and needs Force Reload Skills.</button>
+  <button>Working as designed. The Codex package excludes Claude-only skills.</button>
+  <button>The skill is missing <code>disable-model-invocation</code>.</button>
+  <p class="fb"><span class="answer-key">Answer: B. </span>The Codex package combines shared and Codex-only skills. No amount of reloading will surface a Claude-only skill. The fix is to decide whether the skill belongs in the shared source instead.</p>
+</div>
+
+<div class="q" data-answer="2">
+  <p class="stem">2. Why does <code>refresh.sh</code> run <code>codex --version</code> when <code>command -v codex</code> has already succeeded?</p>
+  <button>To record the version in the refresh log.</button>
+  <button>To warm the marketplace cache before installing.</button>
+  <button>Because a stale launcher shim passes <code>command -v</code> but fails when invoked.</button>
+  <p class="fb"><span class="answer-key">Answer: C. </span>A shim pointing at a moved app bundle is still on <code>PATH</code>. Without the probe, a broken Codex install would abort the script under <code>set -e</code> and the Claude Code refresh below would never run.</p>
+</div>
+
+<div class="q" data-answer="0">
+  <p class="stem">3. You change the wording of the header line that <code>install-home-instructions.sh</code> writes into the generated override. What breaks on a machine that installed the previous version?</p>
+  <button>Nothing. Detection matches <code>$MANAGED_MARKER</code> as a substring, and that variable is unchanged.</button>
+  <button>The old file is treated as hand-written and left alone forever.</button>
+  <button>Codex refuses to load an override whose header it does not recognize.</button>
+  <p class="fb"><span class="answer-key">Answer: A. </span>The guard is <code>grep -qF "$MANAGED_MARKER"</code> against the marker alone, not the full line. Had it matched the whole header, every existing install would have been orphaned as unmanaged.</p>
+</div>
+
+<div class="q" data-answer="2">
+  <p class="stem">4. Why does the Fable hook not fire on a fresh session start?</p>
+  <button>Fresh sessions do not need the guidance.</button>
+  <button>SessionStart hooks cannot emit additional context.</button>
+  <button>The payload has no model field, and at startup there is no transcript to infer the model from.</button>
+  <p class="fb"><span class="answer-key">Answer: C. </span>Detection works by reading the last non-sidechain assistant message in the transcript, which only exists on resume or compact. Startup coverage falls back to the always-loaded home instructions, which is why every model pays for that text.</p>
+</div>
+
+<div class="q" data-answer="1">
+  <p class="stem">5. You edit a skill, commit, and run <code>refresh.sh</code>. Your open Claude Code session still uses the old skill. Why?</p>
+  <button>The commit has not been pushed, and the marketplace installs from origin.</button>
+  <button>Claude Code loads plugins at startup, so the refreshed cache applies only after a restart.</button>
+  <button><code>refresh.sh</code> skipped Claude Code because <code>claude</code> was not on <code>PATH</code>.</button>
+  <p class="fb"><span class="answer-key">Answer: B. </span><code>claude plugin install</code> refreshes the cached snapshot but does not reload a running process. Codex differs here: Force Reload Skills works inside a live session. Whether an unpushed commit matters depends on how your marketplace was added: a local one installs straight from the clone, while one added from GitHub gets refreshed by <code>marketplace update</code> against origin.</p>
+</div>
+
+<script>
+document.querySelectorAll('.q').forEach(function (q) {
+  var correct = parseInt(q.dataset.answer, 10);
+  var buttons = Array.prototype.slice.call(q.querySelectorAll('button'));
+  var feedback = q.querySelector('.fb');
+  buttons.forEach(function (b, i) {
+    b.addEventListener('click', function () {
+      buttons.forEach(function (other, j) {
+        other.disabled = true;
+        if (j === correct) other.classList.add('right');
+      });
+      if (i !== correct) b.classList.add('wrong');
+      feedback.classList.add('show');
+    });
+  });
+});
+</script>
+
+</div>
+</body>
+</html>

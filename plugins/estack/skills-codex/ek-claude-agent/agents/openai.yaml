@@ -1,4 +1,0 @@
-interface:
-  display_name: "Claude Agent"
-  short_description: "Delegate repository work to Claude Code"
-  default_prompt: "Use $ek-claude-agent to delegate this task to an independent Claude model and return the result."

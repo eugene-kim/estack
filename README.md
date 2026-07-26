@@ -21,7 +21,7 @@ when a real need appears, then installed through the same plugin refresh flow.
 ## Add a skill
 
 Create a folder under the matching source skill directory with a `SKILL.md`.
-Use `plugins/estack/skills/ek-<skill-name>/` for shared skills and the matching
+Use `plugins/estack/skills/<skill-name>/` for shared skills and the matching
 host directory for a host-only skill. Keep each skill focused and tied to a
 workflow that has actually come up.
 
@@ -47,17 +47,17 @@ its refreshed plugin install to apply.
 
 ## Current skills
 
-- `ek-explain` creates a rich, printable HTML explanation of a code change, concept, architecture, PRD, or plan.
-- `ek-bundle-context` creates a self-contained temporary context bundle for an external model, reviewer, or fresh agent.
-- `ek-prd` turns a product idea or feature request into a concise PRD.
-- `ek-plan` turns requirements into a grounded engineering plan.
-- `ek-implement` implements an agreed change with tight scope and verification.
-- `ek-simplify` refines recently modified code while preserving behavior.
-- `ek-review` checks a diff for correctness, regressions, and missing tests.
-- `ek-create-pr` creates a reviewer-friendly PR with a reading guide.
-- `ek-manage-pr` handles PR feedback, CI failures, notes, and readiness.
-- `ek-compound` improves the relevant artifact based on what became clear.
-- `ek-dev` runs the software development cycle across the phase skills.
+- `estack:explain` creates a rich, printable HTML explanation of a code change, concept, architecture, PRD, or plan.
+- `estack:bundle-context` creates a self-contained temporary context bundle for an external model, reviewer, or fresh agent.
+- `estack:prd` turns a product idea or feature request into a concise PRD.
+- `estack:plan` turns requirements into a grounded engineering plan.
+- `estack:implement` implements an agreed change with tight scope and verification.
+- `estack:simplify` refines recently modified code while preserving behavior.
+- `estack:review` checks a diff for correctness, regressions, and missing tests.
+- `estack:create-pr` creates a reviewer-friendly PR with a reading guide.
+- `estack:manage-pr` handles PR feedback, CI failures, notes, and readiness.
+- `estack:compound` improves the relevant artifact based on what became clear.
+- `estack:dev` runs the software development cycle across the phase skills.
 
 ## Install or refresh on another machine
 

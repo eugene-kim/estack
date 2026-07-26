@@ -31,14 +31,13 @@ Both hosts install a plugin named `estack`. Never edit generated packages.
 
 ## Adding skills
 
-When asked to add a skill, create `plugins/estack/skills/ek-<skill-name>/SKILL.md`.
+When asked to add a skill, create `plugins/estack/skills/<skill-name>/SKILL.md`.
 A skill that only makes sense in Claude Code belongs in
 `plugins/estack/skills-claude/`. A Codex-only skill belongs in
 `plugins/estack/skills-codex/`.
-Skill names and folders should use the `ek-` prefix so they remain distinct when
-many skills are installed.
-When the user refers to a skill without the prefix, treat the `ek-` prefix as
-implied unless they explicitly say otherwise.
+Use the plain skill name for its folder and frontmatter. Claude Code and Codex
+expose it under the `estack` plugin namespace, so no extra skill-name prefix is
+needed.
 Keep the skill focused. Do not recreate the old bundled suite unless the user asks
 for a specific skill because the need has come up again.
 
