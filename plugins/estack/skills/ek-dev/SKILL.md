@@ -33,9 +33,11 @@ State the chosen starting phase and the evidence for that choice, then proceed a
 
 ## Increment loop
 
+Treat implementation slices, PR boundaries, and user checkpoints as separate choices. Follow the plan's chosen boundaries without assuming they map one-to-one.
+
 For each publishable increment, implement, create its PR, review it, and manage the resulting feedback before moving to the next increment. `ek-create-pr` owns PR-specific artifacts. A PR is the preferred review surface. When a PR cannot be created because the platform, credentials, or access are unavailable, review the local change and state why no PR exists.
 
-Creating or updating a PR starts `ek-review` immediately. Do not wait for CI or ask whether to review: CI and review run together, and `ek-manage-pr` brings their results together. An increment is not complete, and the turn must not end, until its review has started.
+Creating or updating a PR starts `ek-review` immediately. Do not wait for CI or ask whether to review: CI and review run together, and `ek-manage-pr` brings their results together. An increment is not complete, and the turn must not end, until its review has started. A planned user checkpoint may end the turn before a PR exists when its purpose requires feedback on a prototype or local demonstration.
 
 Use the platform's built-in task tracker for meaningful multi-step work. Track the outcome and each substantial increment or PR with its scope, success conditions, current phase, and PR link when available. Keep it current as work moves between phases; do not create task noise for trivial work.
 
@@ -55,6 +57,7 @@ After an increment merges, give that completed increment its own `ek-compound` p
 - Keep phase artifacts linked. Each phase should reference the artifact it consumed.
 - Ask only the questions that block useful progress. Prefer making reversible assumptions and recording them.
 - Do not invent requirements, APIs, fallbacks, abstractions, or edge-case handling beyond what the evidence supports.
+- Honor a planned user checkpoint after reaching its coherent state. Otherwise, use the planned checks and PR boundaries without stopping merely because a slice or PR finished.
 - Stop and report when the next action requires user permission or a product decision. When PR access is unavailable, continue with local review and record the limitation.
 - When the platform supports delegated agents, use them for independent review or parallel investigation; otherwise run the phases directly.
 
