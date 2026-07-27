@@ -10,6 +10,7 @@ Move an existing pull request toward merge readiness.
 ## Approach
 
 - Inspect the PR, branch, diff, checks, and review comments using the platform's supported tools.
+- Before rewriting PR history, fetch the current head and base. Push with `--force-with-lease`. If the lease fails, fetch again and compare the remote commits and patch with the local branch. Retry with an explicit expected SHA only when the remote contains no distinct work; otherwise preserve and incorporate it.
 - Before acting, decide whether to fix, answer, defer, or reject each finding. Record the evidence. Make or delegate changes only after deciding.
 - Address actionable review feedback. If feedback is ambiguous, ask a targeted question or state the assumption before changing code.
 - When a review thread has been answered, fixed, or otherwise handled, resolve the thread using the PR platform's supported mechanism.
