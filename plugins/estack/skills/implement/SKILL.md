@@ -11,6 +11,7 @@ Implement the requested software change with tight scope and clear verification.
 
 - Read the plan, PRD, issue, or instructions that define the work.
 - Inspect the existing code before editing.
+- In a fresh worktree, use the repository's setup or bootstrap script when available; otherwise install dependencies inside that worktree. Never symlink `node_modules` across worktrees: workspace-package links may resolve to another checkout and invalidate verification.
 - Finish the in-scope work. Use repository evidence and existing patterns to resolve routine uncertainty. Ask only when missing input would materially change behavior, require authority the user has not granted, prevent safe progress, or a planned user checkpoint requires feedback. Otherwise, do not stop while meaningful in-scope work remains.
 - Stay inside the agreed scope. If reality contradicts the plan, update the plan or explain the adjustment instead of silently expanding the work.
 - Record consequential in-scope decisions and their rationale where future work will naturally encounter them, such as the PRD or plan, nearby code or documentation, an ADR, or the commit or PR. Do not add ceremony for routine implementation choices.
