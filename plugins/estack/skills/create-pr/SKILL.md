@@ -21,6 +21,7 @@ Create a pull request that helps reviewers understand the change quickly.
 Write the description for a human reviewer. Include:
 
 - Summary of what changed and why.
+- When merging the PR should close an issue, use the platform's closing syntax, such as `Closes #123` on GitHub. Use a passive reference only when the issue should remain open.
 - Key review framing: important schema, signature, migration, API, data model, config, dependency, generated-code, or behavior changes when present.
 - Review guide: suggest a useful file-reading order, starting with the files that explain the intent or main behavior.
 - Attention map: call out files that deserve close review, and distinguish supportive, mechanical, generated, or test-only files that can be skimmed.
