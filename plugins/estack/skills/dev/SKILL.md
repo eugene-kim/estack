@@ -35,7 +35,9 @@ State the chosen starting phase and the evidence for that choice, then proceed a
 
 Treat implementation slices, PR boundaries, and user checkpoints as separate choices. Follow the plan's chosen boundaries without assuming they map one-to-one.
 
-For each publishable increment, implement, create its PR, review it, and manage the resulting feedback before moving to the next increment. `estack:create-pr` owns PR-specific artifacts. A PR is the preferred review surface. When a PR cannot be created because the platform, credentials, or access are unavailable, review the local change and state why no PR exists.
+For each publishable increment, implement, create its PR, review it, and manage the resulting feedback. `estack:create-pr` owns PR-specific artifacts. A PR is the preferred review surface. When a PR cannot be created because the platform, credentials, or access are unavailable, review the local change and state why no PR exists.
+
+When the plan calls for stacked PRs, creating the parent PR starts two tracks immediately: run `estack:review` and `estack:manage-pr` for the parent while implementing the next increment on a branch based on the parent's head. Do not wait for the parent's review, CI, approval, or merge before starting the child. If the parent changes, rebase the child onto the updated parent and reverify affected child work. Open the child PR against the parent branch when the child is reviewable, then give it the same review and management cycle.
 
 Creating or updating a PR starts `estack:review` immediately. Do not wait for CI or ask whether to review: CI and review run together, and `estack:manage-pr` brings their results together. An increment is not complete, and the turn must not end, until its review has started. A planned user checkpoint may end the turn before a PR exists when its purpose requires feedback on a prototype or local demonstration.
 
@@ -49,7 +51,7 @@ Review is a bounded loop:
 
 Allow two remediation-and-re-review cycles after the initial review. If material findings remain, stop and give the user a concise decision summary. Exceed the limit only at the user's request or when new evidence materially changes the work.
 
-After an increment merges, give that completed increment its own `estack:compound` pass before starting the next one. Use the outcome, decisions, review findings, and friction from that one loop while they are fresh. Skip the pass when there is nothing worth capturing. If another person must merge the PR, leave compounding for that increment pending until it merges.
+After an increment merges, give that completed increment its own `estack:compound` pass. Use the outcome, decisions, review findings, and friction from that one loop while they are fresh. Skip the pass when there is nothing worth capturing. If another person must merge the PR, leave compounding for that increment pending until it merges. A pending post-merge compound pass does not delay work already underway on a stacked child.
 
 ## Operating rules
 
