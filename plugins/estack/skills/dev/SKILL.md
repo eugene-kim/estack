@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 Run the software development cycle end to end, using the phase skills as guides. Treat each independently reviewable increment as its own PR lifecycle when that improves review or merge timing.
 
+Keep `estack:dev` as the orchestration guide throughout the cycle. Invoke and read each phase skill when entering that phase; do not preload every phase skill. After the phase, use the current state and phase log to choose what comes next. When delegating phase work, tell the agent to invoke the relevant phase skill.
+
 ## Entry point
 
 Before starting, infer the appropriate phase from the user's request and the repository's current artifacts. Honor an explicit request to start from a named phase.
@@ -35,11 +37,13 @@ State the chosen starting phase and the evidence for that choice, then proceed a
 
 Treat implementation slices, PR boundaries, and user checkpoints as separate choices. Follow the plan's chosen boundaries without assuming they map one-to-one.
 
+Once `estack:dev` starts an increment, it remains active for follow-up changes to the same branch or PR until merge, an explicit stop, or a blocker. Resume follow-up work at the earliest unfinished or invalidated phase.
+
 For each publishable increment, implement, create its PR, review it, and manage the resulting feedback. `estack:create-pr` owns PR-specific artifacts. A PR is the preferred review surface. When a PR cannot be created because the platform, credentials, or access are unavailable, review the local change and state why no PR exists.
 
 When the plan calls for stacked PRs, creating the parent PR starts two tracks immediately: run `estack:review` and `estack:manage-pr` for the parent while implementing the next increment on a branch based on the parent's head. Do not wait for the parent's review, CI, approval, or merge before starting the child. If the parent changes, rebase the child onto the updated parent and reverify affected child work. Open the child PR against the parent branch when the child is reviewable, then give it the same review and management cycle.
 
-Creating or updating a PR starts `estack:review` immediately. Do not wait for CI or ask whether to review: CI and review run together, and `estack:manage-pr` brings their results together. An increment is not complete, and the turn must not end, until its review has started. A planned user checkpoint may end the turn before a PR exists when its purpose requires feedback on a prototype or local demonstration.
+Creating or updating a PR starts `estack:review` immediately. Every new commit or material PR update invalidates the prior review result. When labels are supported and access permits, set `ai-review:in-progress`; in all cases, start a fresh review before reporting the PR as ready. Do not wait for CI or ask whether to review: CI and review run together, and `estack:manage-pr` brings their results together. An increment is not complete, and the turn must not end, until its review has started. A planned user checkpoint may end the turn before a PR exists when its purpose requires feedback on a prototype or local demonstration.
 
 Use the platform's built-in task tracker for meaningful multi-step work. Track the outcome and each substantial increment or PR with its scope, success conditions, current phase, and PR link when available. Keep it current as work moves between phases; do not create task noise for trivial work.
 
