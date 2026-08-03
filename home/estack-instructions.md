@@ -34,7 +34,7 @@ After changing estack skills, commit and push from the clone, then run
 
 ## Writing rules
 
-Follow the ASD-STE100 Simplified Technical English spec when you write docs and when you respond to the user. Never touch code or technical terms; apply this only to prose.
+Follow the ASD-STE100 Simplified Technical English spec for prose: docs, PR text, messages, and comments written for humans. Never change code, repo symbols, or other technical terms.
 
 <!-- This file is estack's global instructions, surfaced to both Claude Code and
      Codex by scripts/install-home-instructions.sh. Keep it tool-agnostic; where
