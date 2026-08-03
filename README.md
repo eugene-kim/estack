@@ -56,7 +56,6 @@ its refreshed plugin install to apply.
 - `estack:review` checks a diff for correctness, regressions, and missing tests.
 - `estack:create-pr` creates a reviewer-friendly PR with a reading guide.
 - `estack:manage-pr` handles PR feedback, CI failures, notes, and readiness.
-- `estack:compound` improves the relevant artifact based on what became clear.
 - `estack:dev` runs the software development cycle across the phase skills.
 
 ## Install or refresh on another machine
