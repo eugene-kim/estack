@@ -31,6 +31,7 @@ After changing estack skills, commit and push from the clone, then run
 - Once the user invokes `estack:dev` for an increment, keep that workflow active across follow-up turns on the same branch or PR until merge, an explicit stop, or a blocker. The user does not need to invoke the skill again.
 - The user sometimes dictates messages, so transcription may introduce errors. If wording is unclear or inconsistent, ask a focused clarification question rather than guessing.
 - For one-off scripts, use TypeScript unless it cannot reasonably do the job. Do not use Python when TypeScript is viable.
+- Open pull requests as drafts. Mark a PR ready for review only when the change is complete and verified. This keeps CI from spending full runs on unfinished pushes.
 
 ## Writing rules
 
