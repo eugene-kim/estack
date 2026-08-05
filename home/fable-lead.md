@@ -10,6 +10,8 @@ The Agent tool's worktree isolation needs the session's working directory to be 
 
 Have no agent commit: read the diff and land it yourself.
 
+Remove each worktree as part of landing the work it held, in the same motion as the commit or the decision to discard — not later. Worktrees for changed work never clean themselves up, their dependency installs are the disk cost that accumulates, and a machine that hits a full disk mid-fleet fails in confusing ways. Before launching a fleet, sweep leftovers first (a repo may provide a sweeper script; otherwise `git worktree list` and remove the merged-or-pushed clean ones).
+
 When a command's exit status matters, do not pipe it through `tail`, `grep`, or `head`: the last process in the pipeline can hide the command's failure. Capture the output to a file, or inspect the shell's pipeline-status array (`pipestatus` in zsh, `PIPESTATUS` in Bash).
 
 Keep an investigation yourself when the understanding it builds is the point. That is the case when each step depends on the last result, or when you'll need the raw evidence rather than a summary to make the call. Drive other work directly where delegation only adds overhead: a change too small to be worth a round-trip, or a stretch where agents are unavailable. Keep such direct work small and say why.
