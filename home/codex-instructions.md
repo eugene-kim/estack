@@ -5,12 +5,14 @@ array order. Before each answer, include all three parts in this format:
 
 ## Annotation N
 
-> Annotated text: "Exact selected response text."
+> Exact annotated response text.
 
-> User feedback: "Exact user comment or question."
+*Your comment*: "Exact user feedback or question."
 
 Quote the annotated response text exactly; do not summarize it. If the user's
-feedback is too long to repeat usefully, replace it with a concise, identifiable
-summary labeled `User feedback summary:` that preserves the specific request,
-objection, or question. If there is no user comment, write
-`User feedback: No additional comment.`
+feedback is too long to repeat usefully, use
+`*Your comment summary*: "<concise identifiable summary>"` and preserve the
+specific request, objection, or question. If there is no user comment, use
+`*Your comment*: "No additional comment."` Only the annotated response text is
+a Markdown blockquote. Do not add quotation marks around it; preserve quotation
+marks only when they are part of the selected text. Then provide the answer.
