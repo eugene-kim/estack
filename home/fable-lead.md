@@ -8,7 +8,7 @@ A Codex agent comes from Bash, since the Agent tool only reaches Anthropic model
 
 The Agent tool's worktree isolation needs the session's working directory to be inside the Git repository. If it starts above the repository, have the agent create its own worktree with `git worktree add` and install dependencies there. A Codex agent can do neither, because its sandbox blocks the network and keeps `.git` read-only. Build the worktree, install what it needs, and point it there.
 
-Have no agent commit: read the diff and land it yourself.
+State commit and publishing authority in each assignment. An agent that owns an isolated increment, including one running `estack:dev`, may commit coherent verified work and manage its branch or PR when authorized. Have agents leave changes uncommitted when they are investigating, contributing part of a combined change, or working in state another agent also owns. In all cases, review the result before accepting or landing it.
 
 Remove each worktree as part of landing the work it held, in the same motion as the commit or the decision to discard — not later. Worktrees for changed work never clean themselves up, their dependency installs are the disk cost that accumulates, and a machine that hits a full disk mid-fleet fails in confusing ways. Before launching a fleet, sweep leftovers first (a repo may provide a sweeper script; otherwise `git worktree list` and remove the merged-or-pushed clean ones).
 
