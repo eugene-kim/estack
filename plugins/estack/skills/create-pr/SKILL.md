@@ -12,7 +12,7 @@ Create a pull request that helps reviewers understand the change quickly.
 - Inspect the branch, diff, commits, status, related issue, PRD, implementation plan, and verification evidence before writing.
 - Confirm the branch is ready to publish: intended files are included, unrelated changes are excluded or explained, and required checks have been run or clearly noted.
 - Before publishing, split distinct, independently reviewable outcomes into focused PRs when the benefit to review or merge timing outweighs the overhead. Keep small or atomic changes together.
-- Use the PR platform's supported tools to create the PR. Choose draft or ready-for-review based on the user's request, repo convention, and current confidence.
+- Use the PR platform's supported tools to create the PR as a draft by default. Open it ready only when the user explicitly requests otherwise; the review and PR-management phases own the normal transition to ready.
 - Do not duplicate long artifacts. Reference issues, PRDs, plans, ADRs, prior PRs, or generated explanations by URL or path when they already contain the detail.
 - After creating the PR, invoke `estack:explain` when the change benefits from a walkthrough. Skip it for trivial changes such as package bumps, config tweaks, or pure documentation updates. Follow repository guidance for publishing or attaching the HTML when it exists. Otherwise, leave the explainer in the OS-specific temporary directory and report its path so it remains available without adding a permanent repository artifact.
 

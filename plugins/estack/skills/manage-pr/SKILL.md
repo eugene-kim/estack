@@ -18,6 +18,7 @@ Move an existing pull request toward merge readiness.
 - Keep fixes scoped to the failing check or review thread.
 - Update the PR description or notes when the change history needs to be understandable.
 - When a PR with a published HTML explainer changes materially, update and revalidate the explainer, republish it, and replace its existing link in the PR. Do not leave stale and current explainer links together.
+- When a draft has `ai-review:LGTM` and all required verification has passed, mark it ready for review unless the user requested a different state.
 - Loop until the PR is merge-ready or needs a user decision. Let `estack:dev` enforce its review-cycle limit when it coordinates the workflow.
 
 ## Output

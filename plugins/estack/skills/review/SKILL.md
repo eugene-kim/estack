@@ -20,7 +20,7 @@ Review the actual diff for bugs, regressions, missing tests, and scope drift. Pr
 - Call a failure pre-existing only after it reproduces on the base branch for the same cause — same error, same stack, matching environment. A baseline that fails for a different reason proves nothing.
 - Avoid style-only comments unless they hide a real maintainability risk.
 - If there are no findings, say so clearly and name any residual risk or unrun checks.
-- When the PR platform supports labels and access permits, maintain exactly one review-status label. Set `ai-review:in-progress` when review begins. Replace it with `ai-review:changes` for unresolved actionable findings or `ai-review:LGTM` when no such findings remain. The label is the authoritative outcome; comments may explain it but never replace it.
+- When the PR platform supports labels and access permits, maintain exactly one review-status label. Set `ai-review:in-progress` when review begins. Replace it with `ai-review:changes` for unresolved actionable findings or `ai-review:LGTM` when no such findings remain. The label is the authoritative outcome; comments may explain it but never replace it. When applying `ai-review:LGTM`, mark a complete and verified draft ready for review. If required verification remains, leave it draft for `estack:manage-pr` to mark ready after verification passes.
 
 ## Output
 
