@@ -7,13 +7,24 @@ estack is set up on this machine.
 Do not assume estack lives at a fixed path. Different machines may install the
 clone in different locations.
 
-When editing estack skills, first locate the source clone by resolving the real
-path of an estack `SKILL.md`, then ask Git for the repo root:
+When editing estack skills, first locate the source clone. Each tool records the
+clone path when `refresh.sh` registers it as a local marketplace. Read that
+record, then ask Git for the repo root:
 
 ```bash
-skill_file="<path-to-an-estack-SKILL.md>"
-repo="$(git -C "$(dirname "$(readlink -f "$skill_file")")" rev-parse --show-toplevel)"
+repo="$( { sed -n '/"estack"/,/}/s/.*"path": "\(.*\)".*/\1/p' ~/.claude/plugins/known_marketplaces.json
+           sed -n '/^\[marketplaces\.estack\]/,/^\[/s/^source = "\(.*\)"/\1/p' ~/.codex/config.toml
+         } 2>/dev/null | head -1 )"
+repo="$(git -C "${repo:?no estack marketplace record found}" rev-parse --show-toplevel)"
 ```
+
+The first `sed` reads Claude Code's marketplace record, the second reads Codex's.
+Either one is enough, so the block works in both tools. The `git` call confirms
+the path is a real clone. Keep the `:?` guard: `git -C ""` does not fail, it
+returns the repo you are standing in, so an empty result would quietly point at
+the wrong repository. Do not resolve a cached `SKILL.md` with `readlink -f`: the
+plugin caches hold real files, not symlinks into the clone, so that path leads
+out of the repo.
 
 Edit shared skills under `$repo/plugins/estack/skills/...`, Claude-only skills
 under `$repo/plugins/estack/skills-claude/...`, and Codex-only skills under
