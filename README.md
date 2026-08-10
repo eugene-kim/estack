@@ -11,7 +11,8 @@ when a real need appears, then installed through the same plugin refresh flow.
 - `plugins/estack/skills-claude/` contains Claude Code-only skills.
 - `plugins/estack/skills-codex/` contains Codex-only skills.
 - `plugins/estack/claude/` contains Claude Code-only hooks and scripts.
-- `scripts/build-plugins.sh` composes one ignored `estack` package per host.
+- `scripts/build-plugins.sh` mirrors the tracked Claude plugin for validation and
+  composes the ignored Codex package.
 - `scripts/refresh.sh` builds and refreshes the plugin install for both tools.
 - `scripts/install-codex.sh` installs or refreshes the Codex plugin and cleans
   old estack-owned personal skill symlinks.

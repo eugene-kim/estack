@@ -1,7 +1,6 @@
 {
 	"name": "estack",
 	"displayName": "estack",
-	"version": "0.1.0",
 	"description": "Personal workflow plugin composed for Claude Code.",
 	"author": {
 		"name": "Eugene Kim"
@@ -14,5 +13,7 @@
 		"skills",
 		"plugin",
 		"scaffold"
-	]
+	],
+	"skills": "./skills-claude/",
+	"hooks": "./claude/hooks/hooks.json"
 }

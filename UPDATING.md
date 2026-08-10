@@ -14,10 +14,11 @@ The old bundled skill suite was removed. Add only the skill that is needed now.
 4. Run `scripts/refresh.sh`.
 5. Push `main`.
 
-The refresh script builds separate Claude Code and Codex packages, both named
-`estack`, then updates each local install. In Codex, use Force Reload Skills or
-start a new thread. Restart Claude Code for its refreshed plugin install to
-apply.
+The refresh script validates a mirrored Claude package, builds the Codex
+package, then updates each local install. Claude installs the tracked source
+plugin; Codex installs its generated host package. In Codex, use Force Reload
+Skills or start a new thread. Restart Claude Code for its refreshed plugin
+install to apply.
 
 ## Command reference
 
@@ -29,14 +30,10 @@ apply.
 | Update released install | `claude plugin marketplace update estack` then `claude plugin update estack` | `codex plugin marketplace upgrade estack` then `codex plugin add estack@estack` |
 | Local refresh | `./scripts/refresh.sh` | `./scripts/refresh.sh` |
 
-## Finding the clone from inside a copied skill
+## Finding the source clone
 
-If a future skill needs to find this repo from a copied plugin install, resolve
-the real path of a known estack `SKILL.md`, then ask Git for the repo root:
-
-```bash
-repo="$(git -C "$(dirname "$(readlink -f "<skill-file>")")" rev-parse --show-toplevel)"
-```
-
-Edit files in the matching source directory under `$repo/plugins/estack/`, not
-generated packages, copied plugin cache files, or loose user skill directories.
+Use the local marketplace records as described in
+`home/estack-instructions.md`. Plugin caches contain copied files, not links
+back to the clone. Edit the matching source directory under
+`$repo/plugins/estack/`, not generated packages, plugin caches, or loose user
+skill directories.

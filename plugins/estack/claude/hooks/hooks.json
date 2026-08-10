@@ -3,13 +3,13 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "resume|compact",
+        "matcher": "startup|resume|compact",
         "hooks": [
           {
             "type": "command",
             "command": "python3",
             "args": [
-              "${CLAUDE_PLUGIN_ROOT}/scripts/inject-fable-orchestration.py"
+              "${CLAUDE_PLUGIN_ROOT}/claude/scripts/inject-fable-orchestration.py"
             ]
           }
         ]

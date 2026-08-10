@@ -6,10 +6,11 @@
 # reinstall to see changes, and a restart afterward to apply them (Claude Code
 # loads plugins at startup; `claude plugin install` only refreshes the cache).
 #
-# The refresh registers this clone as each tool's local marketplace because the
-# host packages are composed under .generated/ and are not committed. In an
-# open Codex app session, use Cmd+K / Ctrl+K -> Force Reload Skills; if the
-# update still does not appear, start a new thread or restart Codex.
+# The refresh registers this clone as each tool's local marketplace. Claude
+# installs the tracked source plugin directly; Codex installs its composed host
+# package under .generated/. In an open Codex app session, use Cmd+K / Ctrl+K ->
+# Force Reload Skills; if the update still does not appear, start a new thread
+# or restart Codex.
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
