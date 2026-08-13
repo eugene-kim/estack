@@ -9,7 +9,7 @@ Turn the request into a durable product requirements document.
 
 ## Approach
 
-- Ask one focused question at a time when requirements are unclear.
+- Ask independent questions together in a short batch. Ask dependent questions in sequence after earlier answers.
 - Separate the user's desired behavior from possible implementation strategies.
 - Explore multiple product approaches when the request is still open-ended, using the number of approaches that fits the uncertainty, then recommend one.
 - Pressure-test gaps: users, jobs-to-be-done, scope boundaries, non-goals, edge cases, rollout, observability, and success criteria.
