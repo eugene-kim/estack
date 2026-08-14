@@ -30,6 +30,7 @@ Implement the requested software change with tight scope and clear verification.
 - Broaden tests when the change touches shared behavior or user-facing flows.
 - For visible changes, inspect the real rendered surface. For other behavior, use the narrowest real interface that demonstrates it.
 - Confirm each new test fails before the change.
+- Execute every test you author, in the environment it targets, before pushing it. Green unrelated suites are not evidence for a spec that has never run. An unrun guard can pass on an artifact of its own measurement, or on the fallback state it exists to rule out, and it then defeats its purpose while looking like protection.
 - If a check cannot run, say exactly why and what risk remains.
 
 ## Handoff
