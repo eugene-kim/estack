@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Usage"
+  short_description: "Show current Codex usage and remaining allowance"
+  default_prompt: "Show my current Codex usage, remaining allowance, reset times, and credit state."
