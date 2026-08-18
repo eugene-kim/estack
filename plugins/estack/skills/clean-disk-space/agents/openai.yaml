@@ -1,0 +1,4 @@
+interface:
+  display_name: "Clean Disk Space"
+  short_description: "Audit disk usage and propose safe cleanup"
+  default_prompt: "Audit this machine for meaningful disk-space cleanup opportunities and propose safe actions without deleting anything."
