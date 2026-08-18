@@ -37,6 +37,16 @@ comment is probably a question instead.
 - State the defect. Do not orient the reader to the subsystem.
 - Keep measurements, counts and timings out of it. Those go in the body. The
   summary frames the problem; the body proves it.
+- Name the thing and say what goes wrong. A phrase that made sense in the code,
+  in the discussion, or in your own analysis loses that context in a summary.
+
+  Bad: **The check happens too late.**
+
+  "The check" names nothing the reader can look up, and "too late" does not say
+  what it causes.
+
+  Good: **`validate()` runs after the row is written, so an invalid row is
+  already persisted.**
 
 ## Language
 
