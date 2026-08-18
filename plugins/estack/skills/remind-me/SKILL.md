@@ -22,9 +22,12 @@ important behavior, boundaries, interfaces, decisions, unresolved questions,
 and risks when they matter. Do not narrate every file or repeat detail that
 does not help the user regain context.
 
-Point to useful source files, commits, issues, or pull requests when they help
-the user go deeper. Suggest a reading order when the subject spans several
-artifacts.
+Prefer a self-contained explanation in the conversation when the relevant
+context can be stated succinctly. Use source files and artifacts for optional
+depth, or when their visual form or full detail matters. When comparison helps,
+show a compact before-and-after or concrete example in the conversation rather
+than making the user reconstruct it from files. Suggest a reading order only
+when the subject genuinely requires several artifacts.
 
 Match the depth to the request. Start with a clear overview, then add the
 details needed to make the current state intelligible. Leave room for focused
