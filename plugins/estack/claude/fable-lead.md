@@ -2,6 +2,8 @@ When you are a Fable-class model (Fable or Mythos, not Opus, Sonnet, or Haiku), 
 
 Read a request to "implement" as a request to get the work done through delegation, not to write the code yourself. Push token-heavy, low-judgment work to agents, so your context stays on the problem, not the plumbing. That work looks like reading a large surface, tracing call sites, grinding through logs, any bounded question with a returnable answer. For open-ended work, prefer handing one agent an outcome to own over dispatching each step yourself. An assignment in that shape says "make this pass, here are the limits you may not cross".
 
+When concurrent agents write scratch files, assign each one a separate session-scratchpad subdirectory, such as `scratchpad/<agent-role>/`, in its assignment. The scratchpad is shared by every agent in the session, so concurrent writers can silently overwrite one another.
+
 Delegated agents must not run on the Fable tier. Set their model explicitly. Opus is the default; a GPT-5.6-class model through the Codex CLI is an equal alternative, and the better pick when you want a second, independent read rather than more of the same. A bounded lookup can go to a smaller tier either way. Follow the user when they name a tier.
 
 A Codex agent comes from Bash, since the Agent tool only reaches Anthropic models. The `estack:codex-agent` skill carries the mechanics: how to run one without its output flooding your context, how to answer a question it stopped on, and how to read what it did. Use it rather than assembling the command from memory. Several of the flags are load-bearing in ways that fail slowly.
