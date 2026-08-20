@@ -14,26 +14,29 @@ record, then ask Git for the repo root:
 ```bash
 repo="$( { sed -n '/"estack"/,/}/s/.*"path": "\(.*\)".*/\1/p' ~/.claude/plugins/known_marketplaces.json
            sed -n '/^\[marketplaces\.estack\]/,/^\[/s/^source = "\(.*\)"/\1/p' ~/.codex/config.toml
+           readlink ~/.cursor/plugins/local/estack
          } 2>/dev/null | head -1 )"
 repo="$(git -C "${repo:?no estack marketplace record found}" rev-parse --show-toplevel)"
 ```
 
-The first `sed` reads Claude Code's marketplace record, the second reads Codex's.
-Either one is enough, so the block works in both tools. The `git` call confirms
-the path is a real clone. Keep the `:?` guard: `git -C ""` does not fail, it
+The first `sed` reads Claude Code's marketplace record, the second reads Codex's,
+and `readlink` reads Cursor's local plugin link. Any one is enough. The `git`
+call confirms the path is a real clone. Keep the `:?` guard: `git -C ""` does not fail, it
 returns the repo you are standing in, so an empty result would quietly point at
 the wrong repository. Do not resolve a cached `SKILL.md` with `readlink -f`: the
 plugin caches hold real files, not symlinks into the clone, so that path leads
 out of the repo.
 
 Edit shared skills under `$repo/plugins/estack/skills/...`, Claude-only skills
-under `$repo/plugins/estack/skills-claude/...`, and Codex-only skills under
-`$repo/plugins/estack/skills-codex/...`. Do not edit generated or cached plugin
+under `$repo/plugins/estack/skills-claude/...`, Codex-only skills under
+`$repo/plugins/estack/skills-codex/...`, and Cursor-only skills under
+`$repo/plugins/estack/skills-cursor/...`. Do not edit generated or cached plugin
 copies, or loose user-level copies such as `~/.claude/skills` or
 `~/.agents/skills`.
 
 After changing estack skills, commit and push from the clone, then run
-`$repo/scripts/refresh.sh` so Claude Code and Codex pick up the plugin update.
+`$repo/scripts/refresh.sh` so Claude Code, Codex, and Cursor pick up the plugin
+update.
 
 ## Working preferences
 

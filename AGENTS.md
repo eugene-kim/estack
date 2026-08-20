@@ -1,10 +1,10 @@
 # estack
 
-This repo is a personal Claude Code and Codex plugin scaffold.
+This repo is a personal Claude Code, Codex, and Cursor plugin scaffold.
 
-Skills must work in both Claude Code and Codex. Tool-specific features are
-allowed only when paired with a fallback that gives the other tool equivalent
-behavior.
+Shared skills must work in Claude Code, Codex, and Cursor. Tool-specific
+features are allowed only when paired with a fallback that gives the other
+tools equivalent behavior.
 
 ## Current shape
 
@@ -18,26 +18,30 @@ Keep plugin and refresh machinery working:
 - `plugins/estack/.codex-plugin/plugin.json`
 - `plugins/estack/skills-claude/`
 - `plugins/estack/skills-codex/`
+- `plugins/estack/skills-cursor/`
 - `plugins/estack/claude/`
+- `plugins/estack/cursor/`
 - `.claude-plugin/marketplace.json`
 - `.agents/plugins/marketplace.json`
 - `scripts/build-plugins.sh`
 - `scripts/refresh.sh`
 - `scripts/install-codex.sh`
+- `scripts/install-cursor.sh`
 - `scripts/install-home-instructions.sh`
 
 `scripts/build-plugins.sh` composes host-specific packages under `.generated/`.
-Both hosts install a plugin named `estack`. Never edit generated packages.
+All hosts install a plugin named `estack`. Never edit generated packages.
 
 ## Adding skills
 
 When asked to add a skill, create `plugins/estack/skills/<skill-name>/SKILL.md`.
 A skill that only makes sense in Claude Code belongs in
 `plugins/estack/skills-claude/`. A Codex-only skill belongs in
-`plugins/estack/skills-codex/`.
-Use the plain skill name for its folder and frontmatter. Claude Code and Codex
-expose it under the `estack` plugin namespace, so no extra skill-name prefix is
-needed.
+`plugins/estack/skills-codex/`. A Cursor-only skill belongs in
+`plugins/estack/skills-cursor/`.
+Use the plain skill name for its folder and frontmatter. Claude Code, Codex, and
+Cursor expose it under the `estack` plugin namespace, so no extra skill-name
+prefix is needed.
 Keep the skill focused. Do not recreate the old bundled suite unless the user asks
 for a specific skill because the need has come up again.
 

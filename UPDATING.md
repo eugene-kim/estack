@@ -2,7 +2,8 @@
 
 estack is the source of truth for this personal plugin scaffold. Shared skills
 belong under `plugins/estack/skills/`. Host-only skills belong under
-`plugins/estack/skills-claude/` or `plugins/estack/skills-codex/`.
+`plugins/estack/skills-claude/`, `plugins/estack/skills-codex/`, or
+`plugins/estack/skills-cursor/`.
 
 The old bundled skill suite was removed. Add only the skill that is needed now.
 
@@ -14,21 +15,21 @@ The old bundled skill suite was removed. Add only the skill that is needed now.
 4. Run `scripts/refresh.sh`.
 5. Push `main`.
 
-The refresh script validates a mirrored Claude package, builds the Codex
-package, then updates each local install. Claude installs the tracked source
-plugin; Codex installs its generated host package. In Codex, use Force Reload
-Skills or start a new thread. Restart Claude Code for its refreshed plugin
-install to apply.
+The refresh script builds each host package, then updates each available local
+install. Claude installs the tracked source plugin; Codex installs its generated
+host package; Cursor uses a local symlink to its generated portable plugin. In
+Codex, use Force Reload Skills or start a new thread. Restart Claude Code for its
+refreshed plugin install to apply. In Cursor, run `Developer: Reload Window`.
 
 ## Command reference
 
-| Action | Claude Code | Codex |
-|---|---|---|
-| Add the marketplace | `claude plugin marketplace add eugene-kim/estack` | `codex plugin marketplace add eugene-kim/estack` |
-| Install the plugin | `claude plugin install estack@estack` | `codex plugin add estack@estack` |
-| List installed / marketplaces | `claude plugin list` / `claude plugin marketplace list` | `codex plugin list` / `codex plugin marketplace list` |
-| Update released install | `claude plugin marketplace update estack` then `claude plugin update estack` | `codex plugin marketplace upgrade estack` then `codex plugin add estack@estack` |
-| Local refresh | `./scripts/refresh.sh` | `./scripts/refresh.sh` |
+| Action | Claude Code | Codex | Cursor |
+|---|---|---|---|
+| Add the marketplace | `claude plugin marketplace add eugene-kim/estack` | `codex plugin marketplace add eugene-kim/estack` | Use Customize for published plugins |
+| Install the plugin | `claude plugin install estack@estack` | `codex plugin add estack@estack` | Local install is handled by refresh |
+| List installed / marketplaces | `claude plugin list` / `claude plugin marketplace list` | `codex plugin list` / `codex plugin marketplace list` | Open Customize |
+| Update released install | `claude plugin marketplace update estack` then `claude plugin update estack` | `codex plugin marketplace upgrade estack` then `codex plugin add estack@estack` | Reload after refresh |
+| Local refresh | `./scripts/refresh.sh` | `./scripts/refresh.sh` | `./scripts/refresh.sh` |
 
 ## Finding the source clone
 

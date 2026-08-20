@@ -1,6 +1,6 @@
 # estack
 
-estack is a personal Claude Code and Codex plugin scaffold.
+estack is a personal Claude Code, Codex, and Cursor plugin scaffold.
 
 The previous bundled skill suite has been removed. New skills are added only
 when a real need appears, then installed through the same plugin refresh flow.
@@ -10,14 +10,16 @@ when a real need appears, then installed through the same plugin refresh flow.
 - `plugins/estack/skills/` contains shared skills.
 - `plugins/estack/skills-claude/` contains Claude Code-only skills.
 - `plugins/estack/skills-codex/` contains Codex-only skills.
+- `plugins/estack/skills-cursor/` contains Cursor-only skills.
 - `plugins/estack/claude/` contains Claude Code-only hooks and scripts.
-- `scripts/build-plugins.sh` mirrors the tracked Claude plugin for validation and
-  composes the ignored Codex package.
-- `scripts/refresh.sh` builds and refreshes the plugin install for both tools.
+- `plugins/estack/cursor/` contains the portable Cursor plugin manifest.
+- `scripts/build-plugins.sh` composes the host packages under `.generated/`.
+- `scripts/refresh.sh` builds and refreshes each installed host.
 - `scripts/install-codex.sh` installs or refreshes the Codex plugin and cleans
   old estack-owned personal skill symlinks.
+- `scripts/install-cursor.sh` installs the Cursor package as a native local plugin.
 - `scripts/install-home-instructions.sh` surfaces estack's global instructions
-  to Claude Code and Codex.
+  to Claude Code and Codex. Cursor reads repository `AGENTS.md` files natively.
 
 ## Add a skill
 
@@ -44,7 +46,7 @@ git push origin main
 ```
 
 In Codex, use Force Reload Skills or start a new thread. Restart Claude Code for
-its refreshed plugin install to apply.
+its refreshed plugin install to apply. In Cursor, run `Developer: Reload Window`.
 
 ## Current skills
 

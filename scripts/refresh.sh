@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Refresh estack in both tools so Claude Code and Codex pick up the latest
+# Refresh estack in supported tools so Claude Code, Codex, and Cursor pick up the latest
 # committed plugin version.
 #
 # Claude Code installs estack as a cached snapshot, so it needs an explicit
@@ -28,6 +28,17 @@ if command -v codex >/dev/null 2>&1 && codex --version >/dev/null 2>&1; then
   "$REPO_DIR/scripts/install-codex.sh"
 else
   echo "Codex: 'codex' CLI missing or not runnable; skipped." >&2
+fi
+
+# --- Cursor: install the composed package as a native local Agent Plugin ---
+echo
+if command -v cursor >/dev/null 2>&1 \
+  || command -v cursor-agent >/dev/null 2>&1 \
+  || [[ -d /Applications/Cursor.app ]] \
+  || [[ -d "$HOME/Applications/Cursor.app" ]]; then
+  "$REPO_DIR/scripts/install-cursor.sh"
+else
+  echo "Cursor: app and CLI not found; skipped."
 fi
 
 # --- Home instructions: per-app override files (live symlink / generated) ---
