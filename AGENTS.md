@@ -25,12 +25,21 @@ Keep plugin and refresh machinery working:
 - `.agents/plugins/marketplace.json`
 - `scripts/build-plugins.sh`
 - `scripts/refresh.sh`
+- `scripts/sync.sh`
 - `scripts/install-codex.sh`
 - `scripts/install-cursor.sh`
 - `scripts/install-home-instructions.sh`
 
 `scripts/build-plugins.sh` composes host-specific packages under `.generated/`.
 All hosts install a plugin named `estack`. Never edit generated packages.
+
+`scripts/sync.sh` is the unattended half: it fast-forwards this clone to
+`origin/main` and reruns `scripts/refresh.sh` when either the clone or the
+installed snapshot has drifted, then records the outcome for the `SessionStart`
+hook in `plugins/estack/claude/scripts/report-sync-state.py` to report. It
+depends on `refresh.sh` keeping its exit status meaningful and on the location
+of Claude Code's installed-plugin record, so changes to either can break it
+silently. Its schedule is machine-local and not checked in; see `UPDATING.md`.
 
 ## Adding skills
 

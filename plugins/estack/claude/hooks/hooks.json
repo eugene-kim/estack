@@ -13,6 +13,18 @@
             ]
           }
         ]
+      },
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/claude/scripts/report-sync-state.py"
+            ]
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [
