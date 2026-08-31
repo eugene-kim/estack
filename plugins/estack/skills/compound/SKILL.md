@@ -11,6 +11,8 @@ When the platform provides a task or thread renaming tool, prefix the current ti
 
 ## Confirmation
 
+Assess the full span of relevant development since the most recent compounding pass, or the whole effort when there was no earlier pass. Treat the event that prompted compounding as one signal, not the boundary of the review.
+
 Inspect the relevant context and first decide whether a durable change is warranted. Inspect the work and the discussion around it, including PR comments and review threads when they exist. A no-change result is valid when the lesson is already encoded, existing feedback makes recovery clear, the event was a one-off mistake, or an edit would add process without reducing recurrence. If a change is warranted, propose what should improve, why, and where. Present the proposal to the user and wait for explicit confirmation before editing files or making any other changes. Invoking this skill is not itself approval to implement the proposal.
 
 ## Approach
