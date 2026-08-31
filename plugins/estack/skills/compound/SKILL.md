@@ -7,6 +7,8 @@ description: Use when the user wants to improve the system based on something le
 
 Use what you learned to improve the system.
 
+When the platform provides a task or thread renaming tool, prefix the current title with `Compounding - `. Preserve the existing title, do not add the prefix twice, and continue without renaming when the capability is unavailable.
+
 ## Confirmation
 
 Inspect the relevant context and first decide whether a durable change is warranted. Inspect the work and the discussion around it, including PR comments and review threads when they exist. A no-change result is valid when the lesson is already encoded, existing feedback makes recovery clear, the event was a one-off mistake, or an edit would add process without reducing recurrence. If a change is warranted, propose what should improve, why, and where. Present the proposal to the user and wait for explicit confirmation before editing files or making any other changes. Invoking this skill is not itself approval to implement the proposal.
