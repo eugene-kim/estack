@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Remind Me
 
+Before applying this skill, read `.estack/skills/remind-me.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Bring the user up to speed in the conversation. Do not create a separate
 artifact unless the user asks for one.
 

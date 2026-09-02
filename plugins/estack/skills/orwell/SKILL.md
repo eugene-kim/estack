@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Orwell
 
+Before applying this skill, read `.estack/skills/orwell.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Edit text against George Orwell's six rules from "Politics and the English Language":
 
 1. Never use a metaphor, simile, or other figure of speech you often see in print.

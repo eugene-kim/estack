@@ -48,6 +48,14 @@ git push origin main
 In Codex, use Force Reload Skills or start a new thread. Restart Claude Code for
 its refreshed plugin install to apply. In Cursor, run `Developer: Reload Window`.
 
+## Repository-specific guidance
+
+A repository can extend a shared estack skill with
+`.estack/skills/<skill-name>.md`. For example, `.estack/skills/review.md` can
+name required integration suites, while `.estack/skills/create-pr.md` can
+define project-specific labels or publishing rules. General repository
+guidance belongs in `AGENTS.md`.
+
 ## Current skills
 
 - `estack:explain` creates a rich, printable HTML explanation of a code change, concept, architecture, PRD, or plan.

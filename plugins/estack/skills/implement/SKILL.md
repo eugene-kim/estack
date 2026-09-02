@@ -5,6 +5,8 @@ description: Use when the user wants an agent to implement an agreed software ch
 
 # Implement
 
+Before applying this skill, read `.estack/skills/implement.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Implement the requested software change with tight scope and clear verification.
 
 ## Approach

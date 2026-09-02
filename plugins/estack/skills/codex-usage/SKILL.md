@@ -5,6 +5,8 @@ description: Show the current Codex account usage, remaining allowance, reset ti
 
 # Codex Usage
 
+Before applying this skill, read `.estack/skills/codex-usage.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Run the bundled `scripts/codex-usage.ts` with Bun, resolving it relative to this `SKILL.md`:
 
 ```bash

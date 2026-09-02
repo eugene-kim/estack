@@ -5,6 +5,8 @@ description: Use when the user wants to improve the system based on something le
 
 # Compound
 
+Before applying this skill, read `.estack/skills/compound.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Use what you learned to improve the system.
 
 When the platform provides a task or thread renaming tool, prefix the current title with `Compounding - `. Preserve the existing title, do not add the prefix twice, and continue without renaming when the capability is unavailable.

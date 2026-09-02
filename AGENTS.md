@@ -54,6 +54,11 @@ prefix is needed.
 Keep the skill focused. Do not recreate the old bundled suite unless the user asks
 for a specific skill because the need has come up again.
 
+Repositories can extend a shared skill with
+`.estack/skills/<skill-name>.md`. Each shared skill must read its matching file
+when it exists. Keep general repository guidance in `AGENTS.md`; use an estack
+overlay only for guidance specific to that workflow.
+
 ## Skill writing style
 
 Write skills as lightweight judgment aids, not rigid menus of allowed outputs.

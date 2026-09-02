@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Dev
 
+Before applying this skill, read `.estack/skills/dev.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Run the software development cycle end to end, using the phase skills as guides. Treat each independently reviewable increment as its own PR lifecycle when that improves review or merge timing.
 
 Keep `estack:dev` as the orchestration guide throughout the cycle. Invoke and read each phase skill when entering that phase; do not preload every phase skill. After the phase, use the current state and phase log to choose what comes next. When delegating phase work, tell the agent to invoke the relevant phase skill.

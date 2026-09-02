@@ -5,6 +5,8 @@ description: Cut AI tells from any writing. Must always apply.
 
 # Unslop
 
+Before applying this skill, read `.estack/skills/unslop.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Edit text to remove AI patterns and add human voice.
 
 ## Process

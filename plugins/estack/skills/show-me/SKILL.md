@@ -5,6 +5,8 @@ description: Help the user understand the current topic visually with concise di
 
 # Show Me
 
+Before applying this skill, read `.estack/skills/show-me.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Help the user understand the current topic visually. Skip the preamble, keep prose brief, and choose the smallest view that makes the key point clear.
 
 - Show logic or an algorithm as pseudocode:

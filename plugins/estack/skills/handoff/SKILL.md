@@ -7,6 +7,8 @@ disable-model-invocation: true
 
 # Handoff
 
+Before applying this skill, read `.estack/skills/handoff.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save it to the temporary directory of the user's OS, not the current workspace.
 
 Include a "suggested skills" section in the document that suggests skills the next agent should invoke.

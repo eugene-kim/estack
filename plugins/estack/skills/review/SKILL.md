@@ -5,6 +5,8 @@ description: Use when the user asks for a code review, pre-merge review, regress
 
 # Review
 
+Before applying this skill, read `.estack/skills/review.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Review the actual diff for bugs, regressions, missing tests, and scope drift. Prefer the pull request as the review surface when one exists; otherwise review the local change and state why no PR exists.
 
 ## Approach

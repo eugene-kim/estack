@@ -5,6 +5,8 @@ description: Use when writing a comment on a pull request or merge request — a
 
 # Writing pull request comments
 
+Before applying this skill, read `.estack/skills/pull-request-comment.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 ## Write the comment directly
 
 If you already have longer analysis of the problem, do not compress it into a

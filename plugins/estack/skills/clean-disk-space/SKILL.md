@@ -5,6 +5,8 @@ description: Audit disk usage and propose safe, material cleanup across developm
 
 # Clean disk space
 
+Before applying this skill, read `.estack/skills/clean-disk-space.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Audit first. Measure free space, find meaningful candidates, and present a proposal. Delete nothing until the user explicitly approves named targets.
 
 ## Audit

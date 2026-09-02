@@ -5,6 +5,8 @@ description: Use when the user asks to simplify, refine, clean up, or improve re
 
 # Simplify
 
+Before applying this skill, read `.estack/skills/simplify.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Refine code without changing what it does.
 
 ## Approach

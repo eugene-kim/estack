@@ -5,6 +5,8 @@ description: Use when the user wants to create, publish, or draft a pull request
 
 # Create PR
 
+Before applying this skill, read `.estack/skills/create-pr.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Create a pull request that helps reviewers understand the change quickly.
 
 ## Approach

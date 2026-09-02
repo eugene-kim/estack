@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Clean worktrees
 
+Before applying this skill, read `.estack/skills/clean-worktrees.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
 Audit Git worktrees and help the user remove stale ones safely. Default to audit-only. Remove a worktree only when the user explicitly requests removal after seeing the classification.
 
 ## Discover
