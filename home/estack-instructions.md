@@ -2,10 +2,16 @@
 
 estack is set up on this machine.
 
+The source of truth is the Git repository at https://github.com/eugene-kim/estack.
+Eugene controls it, so changes go there as ordinary commits on `main`. On
+Eugene's Mac laptop the clone is at `/Users/euge/code/estack`. The installed
+plugin copies that `refresh.sh` produces are replaced on every refresh, so an
+edit made there is lost; edit the clone, commit, push, and refresh.
+
 ## Finding the estack clone
 
-Do not assume estack lives at a fixed path. Different machines may install the
-clone in different locations.
+On another machine, do not assume estack lives at a fixed path. Different
+machines may install the clone in different locations.
 
 When editing estack skills, first locate the source clone. Each tool records the
 clone path when `refresh.sh` registers it as a local marketplace. Read that
