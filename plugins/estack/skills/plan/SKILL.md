@@ -22,7 +22,7 @@ Turn agreed requirements into a concrete, testable engineering plan.
 - Choose implementation slices, PR boundaries, and user feedback points independently based on what each boundary should accomplish. Align them when useful, but do not force a one-to-one relationship.
 - Consider observable vertical slices when exercising real behavior early would reduce risk. Use horizontal sequencing when dependencies or the nature of the work call for it. Split work only when the benefit outweighs the overhead.
 - Identify where the real implementation should be exercised during delivery. Default to having the agent verify it and continue. Plan a user checkpoint only when trying or viewing a coherent state could materially affect later decisions; prefer a committed, reviewable state when practical.
-- Include a verification step in every plan. Say what checks, tests, inspections, or manual validation would give confidence that the change works.
+- Include a verification step in every plan. Say what checks, tests, inspections, or manual validation would give confidence that the change works. Name a real invocation of every new command or entry point against its actual target, not only its tests: a script whose network or listing path is unreachable from unit tests can pass review having never run.
 - For larger or riskier tasks, have agent(s) adversarially review the plan before implementation. Choose review scope based on task risk, ask them to look for incorrect assumptions, missed requirements, overreach, sequencing problems, and missing verification, then iterate on the plan.
 
 ## Output
