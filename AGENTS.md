@@ -33,6 +33,12 @@ Keep plugin and refresh machinery working:
 `scripts/build-plugins.sh` composes host-specific packages under `.generated/`.
 All hosts install a plugin named `estack`. Never edit generated packages.
 
+Install estack through one discovery path per host. Use the provider plugin
+when the runtime supports plugins. Direct user-skill installation is a fallback
+for a runtime that cannot load the plugin, and it must not coexist with the
+provider plugin. Each provider installer owns cleanup of its prior direct
+fallbacks before it installs the plugin.
+
 `scripts/sync.sh` is the unattended half: it fast-forwards this clone to
 `origin/main` and reruns `scripts/refresh.sh` when either the clone or the
 installed snapshot has drifted, then records the outcome for the `SessionStart`

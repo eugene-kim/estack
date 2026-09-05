@@ -16,7 +16,7 @@ when a real need appears, then installed through the same plugin refresh flow.
 - `scripts/build-plugins.sh` composes the host packages under `.generated/`.
 - `scripts/refresh.sh` builds and refreshes each installed host.
 - `scripts/install-codex.sh` installs or refreshes the Codex plugin and cleans
-  old estack-owned personal skill symlinks.
+  old estack-owned personal and direct-fallback skill symlinks.
 - `scripts/install-cursor.sh` installs the Cursor package as a native local plugin.
 - `scripts/install-home-instructions.sh` surfaces estack's global instructions
   to Claude Code and Codex. Cursor reads repository `AGENTS.md` files natively.
@@ -47,6 +47,10 @@ git push origin main
 
 In Codex, use Force Reload Skills or start a new thread. Restart Claude Code for
 its refreshed plugin install to apply. In Cursor, run `Developer: Reload Window`.
+
+Each provider must expose estack through one discovery path. Provider plugins
+are the normal installation. Direct user skills are only a fallback for a
+runtime that cannot load its provider plugin.
 
 ## Repository-specific guidance
 

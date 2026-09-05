@@ -11,6 +11,7 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SHARED_SRC="$REPO_DIR/plugins/estack/skills"
 CODEX_SRC="$REPO_DIR/plugins/estack/skills-codex"
 LEGACY_DST="${CODEX_SKILLS_DIR:-$HOME/.agents/skills}"
+LEGACY_CLOUD_CACHE="${ESTACK_LEGACY_CLOUD_CACHE:-$HOME/.cache/pd-alpha-cloud}"
 PLUGIN="estack"
 MARKETPLACE="estack"
 
@@ -42,6 +43,21 @@ cleanup_legacy_links() {
         removed=$((removed + 1))
       fi
     done
+  done
+
+  # The Codex Cloud fallback uses prefixed links into a revisioned cache. A
+  # persistent home can retain those links after the plugin becomes
+  # available, which makes Codex load both copies.
+  for target in "$LEGACY_DST"/estack-*; do
+    [ -L "$target" ] || continue
+    link_target="$(readlink "$target")"
+    case "$link_target" in
+      "$LEGACY_CLOUD_CACHE"/estack-skills-*/*)
+        rm "$target"
+        echo "removed legacy link: $target"
+        removed=$((removed + 1))
+        ;;
+    esac
   done
 
   if [ "$removed" -eq 0 ]; then
