@@ -7,7 +7,7 @@ description: Use when the user wants to turn a product idea, feature request, or
 
 Before applying this skill, read `.estack/skills/prd.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
 
-Turn the request into a durable product requirements document.
+Turn the request into a product requirements document that can be revised separately from its implementation plan.
 
 ## Approach
 
@@ -19,7 +19,9 @@ Turn the request into a durable product requirements document.
 
 ## Output
 
-Write or update a PRD at `docs/prds/YYYY-MM-DD-<slug>.md` unless the user asks for another location.
+Put the PRD where the user explicitly asks. Otherwise, follow repository guidance from `.estack/skills/prd.md` when it names a destination. The destination must let later work revise the product requirements without folding the implementation plan into them.
+
+When neither the user nor the repository names a destination, keep the PRD in the conversation. Tell the user that this is its current location and offer to persist it at a destination they name.
 
 Use this structure:
 
@@ -40,4 +42,4 @@ Use this structure:
 
 Before finalizing the PRD, invoke `estack:unslop` for a prose pass that preserves the requirements and product meaning.
 
-End with the PRD path and the most useful next skill, usually `estack:plan`.
+End with the PRD's location and the most useful next skill, usually `estack:plan`.
