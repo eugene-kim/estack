@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reauthenticate remote devbox"
+  short_description: "Repair remote Codex login after account changes"
+  default_prompt: "Use $reauth-remote-devbox to repair this remote Codex connection after I changed accounts."
