@@ -51,6 +51,7 @@ update.
 - Once the user invokes `estack:dev` for an increment, keep that workflow active across follow-up turns on the same branch or PR until merge, an explicit stop, or a blocker. The user does not need to invoke the skill again.
 - The user sometimes dictates messages, so transcription may introduce errors. If wording is unclear or inconsistent, ask a focused clarification question rather than guessing.
 - For one-off scripts, use TypeScript unless it cannot reasonably do the job. Do not use Python when TypeScript is viable.
+- Secrets come from the checkout `.env`, which `bun run env:make:local` generates from 1Password once. Read every secret from `.env` (or copy the primary checkout `.env` into a worktree). Never run `op` for a value that `.env` has, and never run `op` once per secret: every `op` process is a separate approval prompt on the user screen. If `.env` lacks a key, add it to `.env.tpl` and regenerate once. If values must come from a vault that `.env` does not cover, make one `op inject` call into one mode-600 file, then set everything from that file (for a Worker, `wrangler secret bulk`). A script that runs `op` more than once is wrong.
 - Open pull requests as drafts by default. Mark a PR ready only when the change is complete and verified, or when the user explicitly requests otherwise. In the estack workflow, keep it draft until review records `ai-review:LGTM`; once that label and the required verification are present, mark it ready.
 
 ## Writing rules
