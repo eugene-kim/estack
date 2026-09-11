@@ -12,6 +12,7 @@ Review the actual diff for bugs, regressions, missing tests, and scope drift. Pr
 ## Approach
 
 - Inspect the diff and the surrounding code needed to understand behavior.
+- For a PR or MR, compare the author with the authenticated platform user from platform account metadata, never a local Git name or email. If the authenticated user created it, draft comments are optional and explicit instructions control draft or published comments. If someone else created it, default to unpublished draft comments unless the user explicitly asks otherwise. Write every draft review comment with `estack:pull-request-comment`.
 - Invoke `estack:simplify` when recently modified code would benefit from behavior-preserving cleanup. Keep that work within the review scope.
 - Use adversarial review with separate agent(s). Choose their number and focus based on the size, complexity, and risk of the change, then synthesize their findings instead of treating any single pass as authoritative.
 - Whenever you run more than one reviewer, give one seat to another model family. Same-model reviewers share blind spots: across two separate panels, the cross-model seat was the only one to catch a stale-statistics error. From Codex, use `estack:claude-agent`; from Claude Code, use `estack:codex-agent`. If the external CLI is unavailable or out of usage, continue with independent reviewers in the current platform and say the cross-model seat went unfilled.
