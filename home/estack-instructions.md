@@ -52,6 +52,7 @@ update.
 - The user sometimes dictates messages, so transcription may introduce errors. If wording is unclear or inconsistent, ask a focused clarification question rather than guessing.
 - For one-off scripts, use TypeScript unless it cannot reasonably do the job. Do not use Python when TypeScript is viable.
 - Secrets come from the checkout `.env`, which `bun run env:make:local` generates from 1Password once. Read every secret from `.env` (or copy the primary checkout `.env` into a worktree). Never run `op` for a value that `.env` has, and never run `op` once per secret: every `op` process is a separate approval prompt on the user screen. If `.env` lacks a key, add it to `.env.tpl` and regenerate once. If values must come from a vault that `.env` does not cover, make one `op inject` call into one mode-600 file, then set everything from that file (for a Worker, `wrangler secret bulk`). A script that runs `op` more than once is wrong.
+- Report a task's status only after a fresh read from the task tracker. Never reuse a status from memory, a conversation summary, or an earlier message because the user can change it at any time. If a delegated claim reports a before-status other than `Ready`, restore that status, stop, and report the mismatch to the lead instead of proceeding.
 - Open pull requests as ready for review. In the estack workflow, a missing `ai-review:LGTM` remains active work owned by the PR manager.
 
 ## Writing rules
