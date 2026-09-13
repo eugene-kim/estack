@@ -61,7 +61,7 @@ repo="$( {
   sed -n '/"estack"/,/}/s/.*"path": "\(.*\)".*/\1/p' ~/.claude/plugins/known_marketplaces.json
   sed -n '/^\[marketplaces\.estack\]/,/^\[/s/^source = "\(.*\)"/\1/p' ~/.codex/config.toml
   readlink ~/.cursor/plugins/local/estack
-} 2>/dev/null | head -1 )"
+} 2>/dev/null | head -1 || true )"
 repo="$(git -C "${repo:?no estack marketplace record found}" rev-parse --show-toplevel)"
 ESTACK_SKIP_REMOTE_SYNC=1 "$repo/scripts/sync.sh"
 REMOTE_SCRIPT

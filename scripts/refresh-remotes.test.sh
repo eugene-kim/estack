@@ -16,7 +16,7 @@ git -C "$TEST_ROOT/repo" push origin main >/dev/null 2>&1
 
 cat >"$TEST_ROOT/ssh" <<'EOF'
 #!/usr/bin/env bash
-cat >>"$SSH_STDIN_LOG"
+cat >"$SSH_STDIN_LOG"
 printf '%s\n' "$*" >>"$SSH_ARGS_LOG"
 [[ $* != *unavailable* ]]
 EOF
@@ -46,6 +46,18 @@ grep -Fq 'box-b bash -s' "$SSH_ARGS_LOG"
 grep -Fq "skipped invalid SSH destination 'invalid/host'" "$TEST_ROOT/error"
 grep -Fq 'completed with 2 failure(s)' "$TEST_ROOT/error"
 grep -Fq "ESTACK_SKIP_REMOTE_SYNC=1 \"\$repo/scripts/sync.sh\"" "$SSH_STDIN_LOG"
+
+mkdir -p "$TEST_ROOT/remote-home/.claude/plugins" "$TEST_ROOT/remote-repo/scripts"
+cat >"$TEST_ROOT/remote-home/.claude/plugins/known_marketplaces.json" <<EOF
+{"estack": {"path": "$TEST_ROOT/remote-repo"}}
+EOF
+cat >"$TEST_ROOT/remote-repo/scripts/sync.sh" <<'EOF'
+#!/usr/bin/env bash
+[[ ${ESTACK_SKIP_REMOTE_SYNC:-0} == 1 ]]
+EOF
+chmod +x "$TEST_ROOT/remote-repo/scripts/sync.sh"
+git -C "$TEST_ROOT/remote-repo" init >/dev/null
+HOME="$TEST_ROOT/remote-home" bash "$SSH_STDIN_LOG"
 
 : >"$SSH_ARGS_LOG"
 ESTACK_SKIP_REMOTE_SYNC=1 \
