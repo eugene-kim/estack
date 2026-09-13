@@ -58,3 +58,6 @@ if command -v claude >/dev/null 2>&1; then
 else
   echo "Claude Code: 'claude' not on PATH; skipped."
 fi
+
+# --- Configured remote hosts: pull committed updates and refresh there ---
+"$REPO_DIR/scripts/refresh-remotes.sh"

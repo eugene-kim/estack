@@ -12,14 +12,20 @@ The old bundled skill suite was removed. Add only the skill that is needed now.
 1. Create or edit the skill in the matching source directory.
 2. Validate the skill shape.
 3. Commit the source change.
-4. Run `scripts/refresh.sh`.
-5. Push `main`.
+4. Push `main`.
+5. Run `scripts/refresh.sh`.
 
 The refresh script builds each host package, then updates each available local
 install. Claude installs the tracked source plugin; Codex installs its generated
 host package; Cursor uses a local symlink to its generated portable plugin. In
 Codex, use Force Reload Skills or start a new thread. Restart Claude Code for its
 refreshed plugin install to apply. In Cursor, run `Developer: Reload Window`.
+
+When the ignored checkout `.env` sets `ESTACK_SYNC_HOSTS` to space-separated
+SSH destinations, the refresh script also runs `scripts/sync.sh` in each
+remote host's registered estack clone. Push before refreshing so those hosts
+can fetch the current commit. Remote failures are reported without undoing the
+completed local refresh.
 
 ## Command reference
 

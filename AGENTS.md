@@ -25,6 +25,7 @@ Keep plugin and refresh machinery working:
 - `.agents/plugins/marketplace.json`
 - `scripts/build-plugins.sh`
 - `scripts/refresh.sh`
+- `scripts/refresh-remotes.sh`
 - `scripts/sync.sh`
 - `scripts/install-codex.sh`
 - `scripts/install-cursor.sh`
@@ -92,6 +93,6 @@ for the work rather than exhaustive lists.
 ## Default landing flow
 
 This repo is managed by one person. When the user asks for a change and is happy
-with the result, commit it, run `scripts/refresh.sh`, and push `main` by default.
+with the result, commit it, push `main`, and run `scripts/refresh.sh` by default.
 Skip that only when the user explicitly asks to hold the diff locally, use a
 branch or PR, or avoid refreshing.

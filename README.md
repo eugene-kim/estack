@@ -15,6 +15,8 @@ when a real need appears, then installed through the same plugin refresh flow.
 - `plugins/estack/cursor/` contains the portable Cursor plugin manifest.
 - `scripts/build-plugins.sh` composes the host packages under `.generated/`.
 - `scripts/refresh.sh` builds and refreshes each installed host.
+- `scripts/refresh-remotes.sh` synchronizes configured remote hosts after a
+  local refresh.
 - `scripts/install-codex.sh` installs or refreshes the Codex plugin and cleans
   old estack-owned personal and direct-fallback skill symlinks.
 - `scripts/install-cursor.sh` installs the Cursor package as a native local plugin.
@@ -41,8 +43,8 @@ After editing:
 ```bash
 git add .
 git commit -m "Add <skill-name> skill"
-./scripts/refresh.sh
 git push origin main
+./scripts/refresh.sh
 ```
 
 In Codex, use Force Reload Skills or start a new thread. Restart Claude Code for
@@ -90,10 +92,23 @@ git pull
 ./scripts/refresh.sh
 ```
 
+To synchronize associated development hosts after each local refresh, copy
+`.env.example` to the ignored `.env` file and set space-separated SSH
+destinations:
+
+```bash
+ESTACK_SYNC_HOSTS="ti-devbox another-devbox"
+```
+
+The local checkout must match `origin/main`. Each remote host locates its own
+estack clone from its plugin marketplace records, then runs `scripts/sync.sh` to
+pull and refresh that installation. An unavailable host does not undo the
+completed local refresh.
+
 ## Notes
 
 This repo is managed by one person. If the user asks for a change and is happy
-with it, commit it, run `scripts/refresh.sh`, and push `main` by default.
+with it, commit it, push `main`, and run `scripts/refresh.sh` by default.
 
 The plugin should remain usable even with no skills installed.
 
