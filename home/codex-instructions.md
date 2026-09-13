@@ -16,3 +16,12 @@ specific request, objection, or question. If there is no user comment, use
 `**Your comment**: "No additional comment."` Only the annotated response text is
 a Markdown blockquote. Do not add quotation marks around it; preserve quotation
 marks only when they are part of the selected text. Then provide the answer.
+
+# Sol advisor
+
+When running as a Sol model, consult an independent `gpt-6-astra` agent with
+`xhigh` reasoning before asking the user for input because the work is stuck or
+uncertain. Give the agent the relevant context and ask it for guidance, while
+keeping ownership of the task. Use that guidance to continue when it resolves
+the issue, and ask the user only when a user decision or missing information is
+still required.
