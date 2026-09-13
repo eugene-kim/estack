@@ -63,7 +63,24 @@ repo="$( {
   readlink ~/.cursor/plugins/local/estack
 } 2>/dev/null | head -1 || true )"
 repo="$(git -C "${repo:?no estack marketplace record found}" rev-parse --show-toplevel)"
-ESTACK_SKIP_REMOTE_SYNC=1 "$repo/scripts/sync.sh"
+
+# Older sync scripts require Claude Code and stop before pulling. Bring a clean,
+# non-diverged clone forward once so it understands the Codex-only remote mode.
+if ! grep -q 'ESTACK_SYNC_REQUIRE_CLAUDE' "$repo/scripts/sync.sh"; then
+  cd "$repo"
+  [[ -z $(git status --porcelain) ]]
+  git fetch --quiet origin main
+  read -r ahead behind <<<"$(git rev-list --count --left-right HEAD...FETCH_HEAD)"
+  [[ $ahead -eq 0 ]]
+  if [[ $behind -gt 0 ]]; then
+    git pull --quiet --ff-only origin main
+  fi
+fi
+
+ESTACK_SKIP_REMOTE_SYNC=1 \
+ESTACK_SYNC_REQUIRE_CLAUDE=0 \
+ESTACK_SYNC_STRICT=1 \
+  "$repo/scripts/sync.sh"
 REMOTE_SCRIPT
   then
     echo "Remote refresh: $host is synchronized."

@@ -25,7 +25,9 @@ When the ignored checkout `.env` sets `ESTACK_SYNC_HOSTS` to space-separated
 SSH destinations, the refresh script also runs `scripts/sync.sh` in each
 remote host's registered estack clone. Push before refreshing so those hosts
 can fetch the current commit. Remote failures are reported without undoing the
-completed local refresh.
+completed local refresh. Remote propagation can refresh Codex on a host that
+does not have Claude Code; scheduled `sync.sh` runs keep their default Claude
+Code requirement.
 
 ## Command reference
 

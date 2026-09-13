@@ -29,6 +29,8 @@ REFRESH_CMD="${ESTACK_SYNC_REFRESH_CMD:-$REPO_DIR/scripts/refresh.sh}"
 FETCH_TIMEOUT="${ESTACK_SYNC_FETCH_TIMEOUT:-120}"
 REFRESH_TIMEOUT="${ESTACK_SYNC_REFRESH_TIMEOUT:-900}"
 CLAUDE_PROBE_TIMEOUT="${ESTACK_SYNC_CLAUDE_PROBE_TIMEOUT:-60}"
+REQUIRE_CLAUDE="${ESTACK_SYNC_REQUIRE_CLAUDE:-1}"
+STRICT="${ESTACK_SYNC_STRICT:-0}"
 
 DRY_RUN=0
 
@@ -132,6 +134,9 @@ finish() {
   local outcome=$1 detail=$2
   log "outcome=$outcome $detail"
   write_state "$outcome" "$detail"
+  if [[ $STRICT == 1 && $outcome != updated && $outcome != refreshed && $outcome != up-to-date ]]; then
+    exit 1
+  fi
   exit 0
 }
 
@@ -318,7 +323,9 @@ if [[ $DRY_RUN -eq 1 ]]; then
   else
     log "dry-run: would run $REFRESH_CMD only (installed ${INSTALLED_SHA:-unknown} != HEAD $HEAD_BEFORE)"
   fi
-  if claude_runnable; then
+  if [[ $REQUIRE_CLAUDE != 1 ]]; then
+    log "dry-run: Claude Code is optional for this run"
+  elif claude_runnable; then
     log "dry-run: 'claude' resolves and is runnable"
   else
     log "dry-run: WARNING 'claude' is missing or not runnable; a real run would record error-no-claude"
@@ -331,7 +338,7 @@ fi
 # Refresh reinstalls into both hosts, so assert the Claude binary before moving
 # any git state: a run that pulls and then silently skips half the reinstall is
 # worse than one that pulls nothing.
-if ! claude_runnable; then
+if [[ $REQUIRE_CLAUDE == 1 ]] && ! claude_runnable; then
   finish "error-no-claude" \
     "no runnable 'claude' executable on PATH ($(command -v claude 2>/dev/null || echo 'not found')); refusing to run refresh.sh, which would silently skip its Claude Code half"
 fi

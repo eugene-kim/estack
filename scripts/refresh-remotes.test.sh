@@ -45,7 +45,8 @@ grep -Fq 'unavailable bash -s' "$SSH_ARGS_LOG"
 grep -Fq 'box-b bash -s' "$SSH_ARGS_LOG"
 grep -Fq "skipped invalid SSH destination 'invalid/host'" "$TEST_ROOT/error"
 grep -Fq 'completed with 2 failure(s)' "$TEST_ROOT/error"
-grep -Fq "ESTACK_SKIP_REMOTE_SYNC=1 \"\$repo/scripts/sync.sh\"" "$SSH_STDIN_LOG"
+grep -Fq 'ESTACK_SYNC_REQUIRE_CLAUDE=0' "$SSH_STDIN_LOG"
+grep -Fq 'ESTACK_SYNC_STRICT=1' "$SSH_STDIN_LOG"
 
 mkdir -p "$TEST_ROOT/remote-home/.claude/plugins" "$TEST_ROOT/remote-repo/scripts"
 cat >"$TEST_ROOT/remote-home/.claude/plugins/known_marketplaces.json" <<EOF
@@ -53,7 +54,10 @@ cat >"$TEST_ROOT/remote-home/.claude/plugins/known_marketplaces.json" <<EOF
 EOF
 cat >"$TEST_ROOT/remote-repo/scripts/sync.sh" <<'EOF'
 #!/usr/bin/env bash
+# ESTACK_SYNC_REQUIRE_CLAUDE
 [[ ${ESTACK_SKIP_REMOTE_SYNC:-0} == 1 ]]
+[[ ${ESTACK_SYNC_REQUIRE_CLAUDE:-1} == 0 ]]
+[[ ${ESTACK_SYNC_STRICT:-0} == 1 ]]
 EOF
 chmod +x "$TEST_ROOT/remote-repo/scripts/sync.sh"
 git -C "$TEST_ROOT/remote-repo" init >/dev/null
