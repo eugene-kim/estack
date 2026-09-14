@@ -48,6 +48,7 @@ update.
 
 - When independent work can run while the main thread is busy, delegate it so the user gets useful results sooner. Keep dependent work in the main thread, and do not parallelize work that shares unsafe state.
 - Store preferences that should apply across coding agents in this platform-agnostic estack source, not in Claude Code- or Codex-specific memory. Put each preference where both tools will load it and keep the wording tool-agnostic.
+- At the end of each completed user request, invoke `estack:compound` to assess whether the work exposed a durable improvement opportunity. Follow the skill's confirmation rules before making a change. A no-change result is correct when the lesson is already encoded or another change would not reduce future friction. Do not invoke another compound pass for the compound pass itself.
 - Once the user invokes `estack:dev` for an increment, keep that workflow active across follow-up turns on the same branch or PR until merge, an explicit stop, or a blocker. The user does not need to invoke the skill again.
 - The user sometimes dictates messages, so transcription may introduce errors. If wording is unclear or inconsistent, ask a focused clarification question rather than guessing.
 - For one-off scripts, use TypeScript unless it cannot reasonably do the job. Do not use Python when TypeScript is viable.
