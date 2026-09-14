@@ -21,7 +21,7 @@ Move an existing pull request toward merge readiness.
 - Debug CI from logs and reproduced failures, not guesses.
 - A check's conclusion is not its log. Retries can rescue a test that fails every first attempt, an advisory job can fail without touching the summary, and a superseded run's verdict can linger on the wrong head. Before reporting a check green, or a failure as real, read the current head's log at the attempt level.
 - Keep fixes scoped to the failing check or review thread.
-- Update the PR description or notes when the change history needs to be understandable.
+- Keep the PR description current with the final diff using the focused style in `estack:create-pr`: short TL;DR, changes, validation, and material limits. Preserve necessary complexity without accumulating a history of the work.
 - When a PR with a published HTML explainer changes materially, update and revalidate the explainer, republish it, and replace its existing link in the PR. Do not leave stale and current explainer links together.
 - Loop until the PR is merge-ready or needs a user decision. Let `estack:dev` enforce its review-cycle limit when it coordinates the workflow.
 

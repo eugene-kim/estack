@@ -19,17 +19,13 @@ Create a pull request that helps reviewers understand the change quickly.
 
 ## PR description
 
-Write the description for a human reviewer. Include:
+Write for a human reviewer who has not read the conversation. Start with a short TL;DR that states the problem and resulting behavior. Follow with concise changes and validation, plus material risks or limits when present.
 
-- Summary of what changed and why.
-- When merging the PR should close an issue, use the platform's closing syntax, such as `Closes #123` on GitHub. Use a passive reference only when the issue should remain open.
-- Key review framing: important schema, signature, migration, API, data model, config, dependency, generated-code, or behavior changes when present.
-- Review guide: suggest a useful file-reading order, starting with the files that explain the intent or main behavior.
-- Attention map: call out files that deserve close review, and distinguish supportive, mechanical, generated, or test-only files that can be skimmed.
-- Verification: checks, tests, manual validation, screenshots, logs, or reasons verification could not run.
-- Risks, rollout notes, follow-ups, or open questions when relevant.
+Keep the description focused on the final diff. Preserve necessary complexity, tradeoffs, migration details, and evidence. Cut repetition, process history, and background that does not help the reviewer assess the change. Do not impose a word limit or fill sections just because a template offers them.
 
-Let the review guide scale with the diff. A tiny change may need one sentence; a broad change may need grouped file paths and context for each group.
+Add a file-reading order or call out areas needing close review only when that helps with the diff. A simple change may need just a few sentences; a complex change can need substantially more detail.
+
+When merging should close an issue, use the platform's closing syntax, such as `Closes #123` on GitHub. Use a passive reference only when the issue should remain open.
 
 Before publishing the PR description, invoke `estack:unslop` for a prose pass that preserves technical accuracy and reviewer guidance.
 
