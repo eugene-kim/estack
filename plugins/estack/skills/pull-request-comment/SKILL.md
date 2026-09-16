@@ -126,3 +126,11 @@ Keep the number; cut the sentence explaining what the number implies.
   on a false premise, that is the finding — say so and show why.
 - Judge pushback on the merits. Sometimes a refusal is correct, and saying so
   plainly is worth more than pressing.
+
+## Updating GitLab draft comments
+
+When editing an inline draft, send its full existing `position` alongside the
+edited text. A text-only update can clear its diff location, leaving GitLab to
+count the pending comment without displaying it. After updating, make a separate
+GET request to verify both the text and position. The update response alone is
+insufficient.
