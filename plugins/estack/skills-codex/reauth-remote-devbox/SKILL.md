@@ -1,6 +1,6 @@
 ---
 name: reauth-remote-devbox
-description: Repair Codex authentication on a remote development machine after the user changes ChatGPT accounts or workspaces, especially when a new login succeeds but remote or resumed tasks report an invalid token. Use for Codex Desktop remote connections; use ordinary Codex login guidance for local-only authentication.
+description: Repair Codex or MCP plugin authentication on a remote development machine. Use after the user changes ChatGPT accounts or workspaces, when remote tasks report an invalid token, or when a plugin is enabled but reports AuthRequired or Not logged in. Use for Codex Desktop remote connections; use ordinary Codex login guidance for local-only authentication.
 ---
 
 # Reauthenticate a remote devbox
@@ -30,6 +30,25 @@ The ChatGPT Desktop session and the remote CLI must use the account and workspac
 If the remote login is wrong, run `codex logout`, then `codex login --device-auth` on the remote machine. Have the user complete the device flow with the intended account and workspace. Use another documented login method only when device authentication is unavailable or the user chose that method.
 
 Do not delete credential files by hand, inspect token contents, print process environments, or copy credentials between machines unless the user explicitly requests the documented headless-machine fallback.
+
+## Authenticate an MCP plugin
+
+MCP OAuth credentials belong to the machine that runs Codex. A plugin authenticated on the laptop can still show `Not logged in` on a remote devbox.
+
+On the devbox, check the server and start its login:
+
+```bash
+codex mcp list
+codex mcp login <server>
+```
+
+Keep the login command running. Its generated `redirect_uri` names a localhost callback port. Use that port rather than assuming a fixed value.
+
+On Eugene's laptop, run `devfwd <callback-port>` in a separate terminal and keep it running. `devfwd` is a laptop-only helper; do not try to run it on the devbox. Then open the latest authorization URL in the laptop browser.
+
+Close callback tabs from earlier attempts before retrying. An old URL can reach the new listener with stale OAuth state and fail with `Authorization state not found`. A browser page that says authentication completed is not sufficient proof. The devbox command must report success, and `codex mcp list` must show `OAuth` for the server.
+
+After login, make one small read-only plugin call. If the task still has no tools for that plugin, reload the task or start a new one so Codex can discover them.
 
 ## Restart the stale connection
 
