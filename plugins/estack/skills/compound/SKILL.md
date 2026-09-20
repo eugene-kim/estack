@@ -9,7 +9,7 @@ Before applying this skill, read `.estack/skills/compound.md` from the repositor
 
 Use what you learned to improve the system.
 
-In a task-specific thread, use the platform's renaming tool to prefix the current title with `Compounding - `. Preserve the existing title and do not add the prefix twice. Keep the title unchanged in standing or long-running coordination threads, such as a chief-of-staff or intake thread, because their identity should remain stable. Continue without renaming when the capability is unavailable.
+In a task-specific thread, use the platform's renaming tool to append ` - Compounding` to the current title. Preserve the existing title and do not add the suffix twice. Keep the title unchanged in standing or long-running coordination threads, such as a chief-of-staff or intake thread, because their identity should remain stable. Continue without renaming when the capability is unavailable.
 
 ## Confirmation
 
