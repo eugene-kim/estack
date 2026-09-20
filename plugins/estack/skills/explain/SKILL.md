@@ -16,6 +16,8 @@ Output a single self-contained HTML file that includes CSS and JavaScript. Make 
 
 Put the file in a global place on the user's computer outside of the code repo. The filename must always start with today's date in `YYYY-MM-DD-` format so files stay time-sorted and out of version control.
 
+Deliver the HTML through a method the user can open from their client. Use a filesystem path only when the client can access that filesystem.
+
 Example:
 
 ```text
