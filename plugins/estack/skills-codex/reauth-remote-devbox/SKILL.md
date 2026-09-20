@@ -64,4 +64,12 @@ Retry the task the user was trying to resume. If practical within the user's req
 - If new tasks work but the old task still fails, the old task likely belongs to the prior account or workspace. Local token repair cannot transfer task ownership. Use the prior account to continue it, or start replacement work under the new account.
 - If all remote tasks fail, verify the Desktop account and workspace again, inspect the replacement process start times, and collect only relevant redacted app-server error lines. Do not expose tokens or unrelated task content.
 
-Finish with the remote host, the user-confirmed account and workspace, whether processes were restarted, and which task types now work. State clearly when an old task remains bound to the previous account.
+After the remote connection works, restart the laptop's Codex status daemon:
+
+```bash
+~/.local/bin/cdxstatus restart
+```
+
+Run this on Eugene's laptop, not on the devbox. The SwiftBar limits widget uses this daemon, which can retain the OAuth token from before the account change. `cdxstatus start` is insufficient when the daemon is already running. Run the installed SwiftBar plugin once or refresh SwiftBar and confirm that it displays limits without `token_revoked` or another authentication error.
+
+Finish with the remote host, the user-confirmed account and workspace, whether the remote processes and local status daemon were restarted, and which task types now work. State clearly when an old task remains bound to the previous account.
