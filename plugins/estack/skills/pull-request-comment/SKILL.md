@@ -127,10 +127,20 @@ Keep the number; cut the sentence explaining what the number implies.
 - Judge pushback on the merits. Sometimes a refusal is correct, and saying so
   plainly is worth more than pressing.
 
-## Updating GitLab draft comments
+## Creating and updating GitLab draft comments
 
-When editing an inline draft, send its full existing `position` alongside the
-edited text. A text-only update can clear its diff location, leaving GitLab to
-count the pending comment without displaying it. After updating, make a separate
-GET request to verify both the text and position. The update response alone is
-insufficient.
+For an inline draft on a modified file, send a complete `position`: `base_sha`,
+`start_sha`, `head_sha`, `position_type`, `old_path`, `new_path`, and the relevant
+`old_line` or `new_line`. Send both paths even when they are identical. GitLab can
+accept a position with `old_path: null`, count the pending comment, and then fail
+to display it in the review.
+
+When editing an inline draft, fetch its position first and send the complete
+position alongside the edited text. Do not copy an incomplete position back. If
+a required field is missing, create a replacement draft on a line in the current
+diff with a complete position. Verify the replacement before deleting the
+invisible draft.
+
+After creating or updating a draft, make a separate GET request and verify the
+text, both paths, all three SHAs, and the line. The create or update response
+alone is insufficient.
