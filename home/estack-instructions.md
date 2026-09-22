@@ -56,6 +56,7 @@ update.
 - Secrets come from the checkout `.env`, which `bun run env:make:local` generates from 1Password once. Read every secret from `.env` (or copy the primary checkout `.env` into a worktree). Never run `op` for a value that `.env` has, and never run `op` once per secret: every `op` process is a separate approval prompt on the user screen. If `.env` lacks a key, add it to `.env.tpl` and regenerate once. If values must come from a vault that `.env` does not cover, make one `op inject` call into one mode-600 file, then set everything from that file (for a Worker, `wrangler secret bulk`). A script that runs `op` more than once is wrong.
 - Report a task's status only after a fresh read from the task tracker. Never reuse a status from memory, a conversation summary, or an earlier message because the user can change it at any time. If a delegated claim reports a before-status other than `Ready`, restore that status, stop, and report the mismatch to the lead instead of proceeding.
 - Open pull requests as ready for review. In the estack workflow, a missing `ai-review:LGTM` remains active work owned by the PR manager.
+- When proposing an edit to guidance prose, such as a skill, an `AGENTS.md` or `CLAUDE.md`, a repo `.estack/skills/*.md` override, or these instructions, show the exact text to be added, changed, or removed, verbatim and in place, and wait for approval before writing it. A summary or paraphrase is not enough; the phrasing is the decision.
 
 ## Writing rules
 

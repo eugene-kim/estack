@@ -15,6 +15,7 @@ Turn the request into a product requirements document that can be revised separa
 - Separate the user's desired behavior from possible implementation strategies.
 - Explore multiple product approaches when the request is still open-ended, using the number of approaches that fits the uncertainty, then recommend one.
 - Pressure-test gaps: users, jobs-to-be-done, scope boundaries, non-goals, edge cases, rollout, observability, and success criteria.
+- Verify claims about current behavior. When a requirement states how the existing system, data, or source material behaves, check it against the source before writing it down. A PRD transcribes intent; it does not assert facts it has not confirmed.
 - Keep implementation details out unless they are truly product constraints.
 
 ## Output
