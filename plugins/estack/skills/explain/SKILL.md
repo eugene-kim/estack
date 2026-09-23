@@ -1,12 +1,14 @@
 ---
 name: explain
-description: "Use when the user asks for a rich explanation of a code change, diff, branch, PR, concept, architecture, PRD, or plan. Produces HTML output."
+description: "Do not invoke unless the user explicitly requests estack:explain. Produces a rich HTML explanation of a code change, diff, branch, PR, concept, architecture, PRD, or plan."
 disable-model-invocation: true
 ---
 
 # Explain
 
 Before applying this skill, read `.estack/skills/explain.md` from the repository root when it exists. Treat it as repository-specific guidance for this skill. It may add requirements and context, but it does not override user instructions, authorization boundaries, or this skill's safety rules.
+
+Only run this skill when the user explicitly requests `estack:explain`. A general request to explain something does not authorize an HTML artifact; answer it in the conversation.
 
 Make a rich, interactive explanation of the specified subject. The subject may be a code change (diff, branch, commit, PR), a concept, a system's architecture, a PRD, or a plan. If the subject or its type is ambiguous, ask before writing.
 
