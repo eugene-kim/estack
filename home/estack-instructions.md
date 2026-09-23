@@ -60,8 +60,6 @@ update.
 
 ## Writing rules
 
-Follow the ASD-STE100 Simplified Technical English spec for prose: docs, PR text, messages, and comments written for humans. Never change code, repo symbols, or other technical terms.
-
 Keep PR and MR descriptions focused on the final changes. Start with a short TL;DR, then include the changes, validation, and material risks or limits. Preserve necessary complexity, tradeoffs, and evidence; cut repetition, process history, and background that does not help review. Scale detail to the change rather than filling a template or meeting a length target.
 
 <!-- This file is estack's global instructions, surfaced to both Claude Code and

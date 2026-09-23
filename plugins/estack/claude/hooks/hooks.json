@@ -26,20 +26,6 @@
           }
         ]
       }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "printf",
-            "args": [
-              "%s\\n",
-              "Use plain, direct language. Represent the subject's inherent complexity faithfully, but do not add complexity through jargon, structure, or wording. Preserve important details, evidence, and caveats."
-            ]
-          }
-        ]
-      }
     ]
   }
 }
