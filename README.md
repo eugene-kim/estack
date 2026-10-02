@@ -64,7 +64,6 @@ guidance belongs in `AGENTS.md`.
 
 ## Current skills
 
-- `estack:explain` creates a rich, printable HTML explanation of a code change, concept, architecture, PRD, or plan.
 - `estack:bundle-context` creates a self-contained temporary context bundle for an external model, reviewer, or fresh agent.
 - `estack:prd` turns a product idea or feature request into a concise PRD.
 - `estack:plan` turns requirements into a grounded engineering plan.
