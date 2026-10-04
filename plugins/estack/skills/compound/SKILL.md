@@ -9,8 +9,6 @@ Before applying this skill, read `.estack/skills/compound.md` from the repositor
 
 Use what you learned to improve the system.
 
-In a task-specific thread, use the platform's renaming tool to append ` - Compounding` to the current title. Preserve the existing title and do not add the suffix twice. Keep the title unchanged in standing or long-running coordination threads, such as a chief-of-staff or intake thread, because their identity should remain stable. Continue without renaming when the capability is unavailable.
-
 ## Confirmation
 
 Assess the full span of relevant development since the most recent compounding pass, or the whole effort when there was no earlier pass. Treat the event that prompted compounding as one signal, not the boundary of the review.
