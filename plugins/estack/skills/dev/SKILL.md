@@ -1,7 +1,6 @@
 ---
 name: dev
-description: Use when the user wants an autonomous software development cycle from requirements through plan, development, review, PR management, and reflection.
-disable-model-invocation: true
+description: Use only when the user explicitly asks for the dev skill, by running /estack:dev or by telling you to use it (including a brief that relays that request). It runs an autonomous software development cycle from requirements through plan, development, review, PR management, and reflection. Do not start it on your own for general development work.
 ---
 
 # Dev
