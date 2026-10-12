@@ -62,6 +62,8 @@ update.
 
 Keep PR and MR descriptions focused on the final changes. Start with a short TL;DR, then include the changes, validation, and material risks or limits. Preserve necessary complexity, tradeoffs, and evidence; cut repetition, process history, and background that does not help review. Scale detail to the change rather than filling a template or meeting a length target.
 
+Link every reference to a PR or MR, issue or ticket, commit, or pipeline in a reply with a Markdown link to its URL, for example [!200](https://gitlab.com/group/repo/-/merge_requests/200) or [ENG-123](https://pipe17.atlassian.net/browse/ENG-123). Do not write a bare `#123`, `!123`, or ticket key, including in tables and status summaries.
+
 <!-- This file is estack's global instructions, surfaced to both Claude Code and
      Codex by scripts/install-home-instructions.sh. Keep it tool-agnostic; where
      guidance differs, phrase it inline ("In Claude Code... / In Codex..."). -->
