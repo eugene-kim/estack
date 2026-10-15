@@ -18,11 +18,16 @@ injected. The Claude overlay adds the Fable frame, which
 `inject-fable-orchestration.py` already injects, and guidance on `spawn_task`
 chips, a tool the cloud sessions this hook was written for did not have.
 
+HTML comments are stripped before the text is emitted, because Claude Code
+strips them from the imported file in a local session and the file's trailing
+comment is a note for maintainers.
+
 Any error (unreadable file, empty text) results in a silent exit 0.
 """
 
 import json
 import os
+import re
 import sys
 
 
@@ -35,7 +40,7 @@ def main() -> int:
     )
     try:
         with open(instructions_path, encoding="utf-8") as f:
-            instructions = f.read().strip()
+            instructions = re.sub(r"<!--.*?-->", "", f.read(), flags=re.DOTALL).strip()
     except OSError:
         return 0
     if not instructions:
