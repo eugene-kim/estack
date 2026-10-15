@@ -33,6 +33,19 @@
           }
         ]
       }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/claude/scripts/inject-home-instructions.py"
+            ]
+          }
+        ]
+      }
     ]
   }
 }

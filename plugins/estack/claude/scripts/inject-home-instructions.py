@@ -11,6 +11,11 @@ this hook emits the instructions there. Claude Code sets `CLAUDE_CODE_REMOTE`
 to `true` in its cloud sessions, and gating on it keeps local sessions from
 loading the same text twice.
 
+It runs on `SessionStart` for the main conversation and on `SubagentStart` for
+each subagent, since `SessionStart` context reaches only the main conversation
+while a local session's subagents read `~/CLAUDE.local.md` like their parent.
+The output names the event it answers.
+
 The text is bundled beside this script for the same reason as the Fable lead
 frame: the plugin cache holds copied files, so `home/estack-instructions.md`
 links here rather than the other way round. Only the shared instructions are
@@ -22,7 +27,9 @@ HTML comments are stripped before the text is emitted, because Claude Code
 strips them from the imported file in a local session and the file's trailing
 comment is a note for maintainers.
 
-Any error (unreadable file, empty text) results in a silent exit 0.
+In a cloud session a missing or unreadable instructions file is a packaging
+bug, so the hook lets the error exit non-zero. Claude Code records a failed
+hook with its stderr and carries on with the session.
 """
 
 import json
@@ -35,21 +42,17 @@ def main() -> int:
     if os.environ.get("CLAUDE_CODE_REMOTE") != "true":
         return 0
 
+    event = json.load(sys.stdin)
     instructions_path = os.path.join(
         os.path.dirname(os.path.dirname(__file__)), "estack-instructions.md"
     )
-    try:
-        with open(instructions_path, encoding="utf-8") as f:
-            instructions = re.sub(r"<!--.*?-->", "", f.read(), flags=re.DOTALL).strip()
-    except OSError:
-        return 0
-    if not instructions:
-        return 0
+    with open(instructions_path, encoding="utf-8") as f:
+        instructions = re.sub(r"<!--.*?-->", "", f.read(), flags=re.DOTALL).strip()
 
     json.dump(
         {
             "hookSpecificOutput": {
-                "hookEventName": "SessionStart",
+                "hookEventName": event["hook_event_name"],
                 "additionalContext": instructions,
             }
         },
