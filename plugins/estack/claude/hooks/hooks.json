@@ -11,7 +11,12 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/claude/scripts/inject-fable-orchestration.py"
             ]
-          },
+          }
+        ]
+      },
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
           {
             "type": "command",
             "command": "python3",
@@ -36,6 +41,7 @@
     ],
     "SubagentStart": [
       {
+        "matcher": "^(?!(Explore|Plan)$)",
         "hooks": [
           {
             "type": "command",

@@ -11,10 +11,13 @@ this hook emits the instructions there. Claude Code sets `CLAUDE_CODE_REMOTE`
 to `true` in its cloud sessions, and gating on it keeps local sessions from
 loading the same text twice.
 
-It runs on `SessionStart` for the main conversation and on `SubagentStart` for
-each subagent, since `SessionStart` context reaches only the main conversation
-while a local session's subagents read `~/CLAUDE.local.md` like their parent.
-The output names the event it answers.
+It runs on `SessionStart` for the main conversation, including after `/clear`,
+which keeps a local session's `~/CLAUDE.local.md` but drops hook context. It
+also runs on `SubagentStart`, since `SessionStart` context reaches only the
+main conversation while a local session's subagents read `~/CLAUDE.local.md`
+too. The `SubagentStart` matcher skips the built-in Explore and Plan agents,
+which Claude Code starts without instruction files; a custom agent that omits
+them still gets this text. The output names the event it answers.
 
 The text is bundled beside this script for the same reason as the Fable lead
 frame: the plugin cache holds copied files, so `home/estack-instructions.md`
@@ -29,13 +32,20 @@ comment is a note for maintainers.
 
 In a cloud session a missing or unreadable instructions file is a packaging
 bug, so the hook lets the error exit non-zero. Claude Code records a failed
-hook with its stderr and carries on with the session.
+hook with its stderr and carries on with the session. Text over Claude Code's
+cap on one hook's additional context fails the same way, because Claude Code
+would otherwise replace it with a short preview and report the hook as a
+success.
 """
 
 import json
 import os
 import re
 import sys
+
+# Claude Code's limit on the additional context of one hook. Longer output is
+# saved to a file and replaced by a preview that drops most of the text.
+ADDITIONAL_CONTEXT_LIMIT = 10_000
 
 
 def main() -> int:
@@ -48,6 +58,11 @@ def main() -> int:
     )
     with open(instructions_path, encoding="utf-8") as f:
         instructions = re.sub(r"<!--.*?-->", "", f.read(), flags=re.DOTALL).strip()
+    if len(instructions) > ADDITIONAL_CONTEXT_LIMIT:
+        sys.exit(
+            f"{instructions_path} is {len(instructions)} characters, over Claude "
+            f"Code's {ADDITIONAL_CONTEXT_LIMIT}-character limit on hook context"
+        )
 
     json.dump(
         {
