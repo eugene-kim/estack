@@ -46,7 +46,7 @@ When the plan calls for stacked PRs, creating the parent PR starts two tracks im
 
 Creating or updating a PR starts `estack:review` immediately. Every new commit or material PR update invalidates the prior review result. When labels are supported and access permits, set `ai-review:in-progress`; in all cases, start a fresh review before reporting the PR as ready. Do not wait for CI or ask whether to review: CI and review run together, and `estack:manage-pr` brings their results together. An increment is not complete, and the turn must not end, until its review has started. A planned user checkpoint may end the turn before a PR exists when its purpose requires feedback on a prototype or local demonstration.
 
-Use the platform's built-in task tracker for meaningful multi-step work. Track the outcome and each substantial increment or PR with its scope, success conditions, current phase, and PR link when available. Keep it current as work moves between phases; do not create task noise for trivial work.
+Use the platform's built-in task tracker for meaningful multi-step work. When the cycle starts, create a task for each phase it will run: requirements, plan, implement, PR, review, PR management, and compound after merge. When the plan is done, add a task for each implementation step it names, and add tasks whenever implementation or review turns up more work. Track the outcome and each substantial increment or PR with its scope, success conditions, current phase, and PR link when available. Keep the tracker current as work moves between phases, and where the host also shows the user a progress checklist, keep that checklist in step with it. Do not create task noise for trivial work.
 
 Review is a bounded loop:
 
