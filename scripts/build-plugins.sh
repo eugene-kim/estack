@@ -33,6 +33,7 @@ cp -R "$SOURCE/skills-cursor/." "$CURSOR_OUTPUT/skills/"
 cp -R "$SOURCE/claude/hooks/." "$CLAUDE_OUTPUT/claude/hooks/"
 cp "$SOURCE/claude/scripts/"*.py "$CLAUDE_OUTPUT/claude/scripts/"
 cp "$SOURCE/claude/fable-lead.md" "$CLAUDE_OUTPUT/claude/fable-lead.md"
+cp "$SOURCE/claude/estack-instructions.md" "$CLAUDE_OUTPUT/claude/estack-instructions.md"
 
 echo "Built Claude package: $CLAUDE_OUTPUT"
 echo "Built Codex package:  $CODEX_OUTPUT"

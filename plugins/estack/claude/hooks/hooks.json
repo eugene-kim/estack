@@ -15,6 +15,18 @@
         ]
       },
       {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/claude/scripts/inject-home-instructions.py"
+            ]
+          }
+        ]
+      },
+      {
         "matcher": "startup|resume",
         "hooks": [
           {
@@ -22,6 +34,20 @@
             "command": "python3",
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/claude/scripts/report-sync-state.py"
+            ]
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "^(?!(Explore|Plan)$)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/claude/scripts/inject-home-instructions.py"
             ]
           }
         ]
