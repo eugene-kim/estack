@@ -97,6 +97,8 @@ with the result, commit it, push `main`, and run `scripts/refresh.sh` by default
 Skip that only when the user explicitly asks to hold the diff locally, use a
 branch or PR, or avoid refreshing.
 
-When a change goes through a pull request, such as one opened for an
-`estack:dev` review, and the user has approved the change, merge the pull
-request once its review passes. Do not wait to be asked to merge it.
+When a change goes through a pull request, such as one an `estack:dev` cycle
+opens, and the user has approved its text, merge it into `main` once
+`ai-review:LGTM` marks its current head, without waiting to be asked. Text that
+changed after the user approved it needs their approval again. After merging,
+update the clone's `main` and run `scripts/refresh.sh`.
