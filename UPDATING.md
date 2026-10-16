@@ -29,6 +29,19 @@ completed local refresh. Remote propagation can refresh Codex on a host that
 does not have Claude Code; scheduled `sync.sh` runs keep their default Claude
 Code requirement.
 
+## Claude Code cloud sessions
+
+A cloud session starts from its environment's cached filesystem, so the
+refresh flow above does not reach it. The environment installs estack from
+GitHub `main` when the cache is built, and sessions run that commit until the
+cache is rebuilt, so pushing `main` is the whole refresh. The ti repository's
+`docs/runbooks/cloud-session-plugins.md` says when the cache is rebuilt and how
+its `check-estack.sh` hook updates skill files in a session that started behind
+`main`. A cloud session never reads `~/CLAUDE.local.md`, so the plugin's
+`SessionStart` and `SubagentStart` hooks inject
+`plugins/estack/claude/estack-instructions.md` when `CLAUDE_CODE_REMOTE` is
+`true`.
+
 ## Command reference
 
 | Action | Claude Code | Codex | Cursor |
@@ -82,7 +95,8 @@ when there is nothing to say.
 ## Finding the source clone
 
 Use the local marketplace records as described in
-`home/estack-instructions.md`. Plugin caches contain copied files, not links
-back to the clone. Edit the matching source directory under
-`$repo/plugins/estack/`, not generated packages, plugin caches, or loose user
-skill directories.
+`plugins/estack/claude/estack-instructions.md`. `home/estack-instructions.md`
+is a link to it, so edit the file under `plugins/`, not the link. Plugin caches
+contain copied files, not links back to the clone. Edit the matching source
+directory under `$repo/plugins/estack/`, not generated packages, plugin caches,
+or loose user skill directories.

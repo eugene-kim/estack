@@ -11,7 +11,9 @@ when a real need appears, then installed through the same plugin refresh flow.
 - `plugins/estack/skills-claude/` contains Claude Code-only skills.
 - `plugins/estack/skills-codex/` contains Codex-only skills.
 - `plugins/estack/skills-cursor/` contains Cursor-only skills.
-- `plugins/estack/claude/` contains Claude Code-only hooks and scripts.
+- `plugins/estack/claude/` contains Claude Code-only hooks and scripts, plus the
+  text they inject: `fable-lead.md` and the shared `estack-instructions.md`,
+  which `home/estack-instructions.md` links to.
 - `plugins/estack/cursor/` contains the portable Cursor plugin manifest.
 - `scripts/build-plugins.sh` composes the host packages under `.generated/`.
 - `scripts/refresh.sh` builds and refreshes each installed host.
@@ -21,7 +23,8 @@ when a real need appears, then installed through the same plugin refresh flow.
   old estack-owned personal and direct-fallback skill symlinks.
 - `scripts/install-cursor.sh` installs the Cursor package as a native local plugin.
 - `scripts/install-home-instructions.sh` surfaces estack's global instructions
-  to Claude Code and Codex. Cursor reads repository `AGENTS.md` files natively.
+  to Claude Code and Codex. A Claude Code cloud session gets them from the
+  plugin's hooks instead. Cursor reads repository `AGENTS.md` files natively.
 
 ## Add a skill
 
