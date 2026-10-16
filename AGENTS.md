@@ -48,6 +48,12 @@ depends on `refresh.sh` keeping its exit status meaningful and on the location
 of Claude Code's installed-plugin record, so changes to either can break it
 silently. Its schedule is machine-local and not checked in; see `UPDATING.md`.
 
+Verify a change to a Claude Code hook from a real Claude Code process, such as
+a headless `claude -p` run in a temporary home with the plugin installed from
+the branch. Exercise each event and agent the hook should reach, such as
+startup, `/clear`, resume, compaction, and subagents. Running the hook script
+by hand shows what it prints, not which sessions receive it.
+
 ## Adding skills
 
 When asked to add a skill, create `plugins/estack/skills/<skill-name>/SKILL.md`.
@@ -102,3 +108,7 @@ opens, and the user has approved its text, merge it into `main` once
 `ai-review:LGTM` marks its current head, without waiting to be asked. Text that
 changed after the user approved it needs their approval again. After merging,
 update the clone's `main` and run `scripts/refresh.sh`.
+
+Skip `scripts/refresh.sh` in a Claude Code cloud session. Cloud sessions
+install estack from GitHub `main` when their environment cache is built, so a
+refresh there only points that container's plugin at the local clone.

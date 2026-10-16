@@ -33,6 +33,11 @@ the wrong repository. Do not resolve a cached `SKILL.md` with `readlink -f`: the
 plugin caches hold real files, not symlinks into the clone, so that path leads
 out of the repo.
 
+In a Claude Code cloud session the command stops at its guard, because the
+plugin was installed from a GitHub marketplace record, which has no `path`.
+Use the estack checkout the session was given, or clone
+https://github.com/eugene-kim/estack into a scratch directory, and work there.
+
 Edit shared skills under `$repo/plugins/estack/skills/...`, Claude-only skills
 under `$repo/plugins/estack/skills-claude/...`, Codex-only skills under
 `$repo/plugins/estack/skills-codex/...`, and Cursor-only skills under
@@ -42,7 +47,9 @@ copies, or loose user-level copies such as `~/.claude/skills` or
 
 After changing estack skills, commit and push from the clone, then run
 `$repo/scripts/refresh.sh` so Claude Code, Codex, and Cursor pick up the plugin
-update.
+update. A Claude Code cloud session has nothing to refresh. It installs estack
+from GitHub `main` when its environment cache is built, and `refresh.sh` run
+there only rewires that container.
 
 ## Working preferences
 
@@ -64,6 +71,10 @@ Keep PR and MR descriptions focused on the final changes. Start with a short TL;
 
 Link every reference to a PR or MR, issue or ticket, commit, or pipeline in a reply with a Markdown link to its URL, for example [!200](https://gitlab.com/group/repo/-/merge_requests/200) or [ENG-123](https://pipe17.atlassian.net/browse/ENG-123). Do not write a bare `#123`, `!123`, or ticket key, including in tables and status summaries.
 
-<!-- This file is estack's global instructions, surfaced to both Claude Code and
-     Codex by scripts/install-home-instructions.sh. Keep it tool-agnostic; where
-     guidance differs, phrase it inline ("In Claude Code... / In Codex..."). -->
+<!-- This file is estack's global instructions. On a refreshed machine,
+     scripts/install-home-instructions.sh surfaces it to Claude Code and Codex.
+     In a Claude Code cloud session, claude/scripts/inject-home-instructions.py
+     injects it, and it lives in the plugin so the plugin cache carries a copy.
+     That hook strips HTML comments and fails on a file over 10,000 characters.
+     Keep it tool-agnostic; where guidance differs, phrase it inline ("In
+     Claude Code... / In Codex..."). -->
