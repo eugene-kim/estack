@@ -24,7 +24,7 @@ Turn agreed requirements into a concrete, testable engineering plan.
 - Identify where the real implementation should be exercised during delivery. Default to having the agent verify it and continue. Plan a user checkpoint only when trying or viewing a coherent state could materially affect later decisions; prefer a committed, reviewable state when practical.
 - Include a verification step in every plan. Say what checks, tests, inspections, or manual validation would give confidence that the change works. Name a real invocation of every new command or entry point against its actual target, not only its tests: a script whose network or listing path is unreachable from unit tests can pass review having never run.
 - For larger or riskier tasks, have agent(s) adversarially review the plan before implementation. Choose review scope based on task risk, ask them to look for incorrect assumptions, missed requirements, overreach, sequencing problems, and missing verification, then iterate on the plan.
-- When you are an Opus model, have a Fable agent review every plan before implementation. In Claude Code, launch it with the Agent tool and `model: fable` as a fresh agent, since a fork runs on your own model. Give it the plan and the requirements it implements, but not your reasoning, so its read stays independent. Have it look for the problems listed above and return findings, then revise the plan. For larger or riskier work it can be one of the adversarial reviewers. If you cannot launch one, say in the handoff that the plan still needs its Fable review.
+- When you are an Opus model, have a Fable agent review every plan before implementation. In Claude Code, launch it with the Agent tool and `model: fable`. Start it fresh rather than as a `fork`, which inherits your context and ignores `model`. Give it the plan and the requirements it implements, and nothing else from your conversation, so it judges the plan as written. Have it check the plan against the repository, look for the problems listed above, and return findings, then revise the plan. For larger or riskier work it can be one of the adversarial reviewers. If you cannot launch one, as when you are a delegated agent, ask whoever assigned the work for a Fable review before you implement. A Fable lead can do the review itself.
 
 ## Output
 
@@ -56,4 +56,4 @@ Cover this structure:
 
 Before finalizing the plan, invoke `estack:unslop` for a prose pass that preserves the technical meaning, evidence, and verification details.
 
-End with the plan location or summary, adversarial review status for larger or riskier work, the verification step, and the most useful next skill, usually `estack:implement`.
+End with the plan location or summary, adversarial review status for larger or riskier work, Fable review status when you are an Opus model, the verification step, and the most useful next skill, usually `estack:implement`.
