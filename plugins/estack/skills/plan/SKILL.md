@@ -24,6 +24,8 @@ Turn agreed requirements into a concrete, testable engineering plan.
 - Identify where the real implementation should be exercised during delivery. Default to having the agent verify it and continue. Plan a user checkpoint only when trying or viewing a coherent state could materially affect later decisions; prefer a committed, reviewable state when practical.
 - Include a verification step in every plan. Say what checks, tests, inspections, or manual validation would give confidence that the change works. Name a real invocation of every new command or entry point against its actual target, not only its tests: a script whose network or listing path is unreachable from unit tests can pass review having never run.
 - For larger or riskier tasks, have agent(s) adversarially review the plan before implementation. Choose review scope based on task risk, ask them to look for incorrect assumptions, missed requirements, overreach, sequencing problems, and missing verification, then iterate on the plan.
+- When you are an Opus model, have a Fable agent review every plan before you finalize it. In Claude Code, launch it with the Agent tool and `model: fable`. Start it fresh rather than as a `fork`, which inherits your context and ignores `model`. Give it the plan and the requirements it implements, but not your conclusions or another reviewer's findings, so it judges the plan as written. Have it check the plan against the repository, look for the problems listed above, and return findings. Then revise the plan yourself. For larger or riskier work it can be one of the adversarial reviewers.
+- If you are a delegated agent and cannot launch the Fable reviewer, ask whoever assigned the work to launch one as described above before you implement. If you cannot launch one for another reason, say in the handoff that the plan had no Fable review.
 
 ## Output
 
@@ -55,4 +57,4 @@ Cover this structure:
 
 Before finalizing the plan, invoke `estack:unslop` for a prose pass that preserves the technical meaning, evidence, and verification details.
 
-End with the plan location or summary, adversarial review status for larger or riskier work, the verification step, and the most useful next skill, usually `estack:implement`.
+End with the plan location or summary, adversarial review status for larger or riskier work, Fable review status when you are an Opus model, the verification step, and the most useful next skill, usually `estack:implement`.
