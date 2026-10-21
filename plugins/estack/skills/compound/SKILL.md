@@ -17,6 +17,8 @@ Inspect the relevant context and first decide whether a durable change is warran
 
 ## Approach
 
+Look for improvement opportunities in both mistakes and friction encountered during the work, even when the outcome was successful. Prefer improvements in this order: codebase design and structure; static analysis and automated checks, including tests and CI; prose guidance, such as docs, instructions, and skills; human review. Favor changes that make correct work easier and unwanted behavior harder to introduce. Use the earliest layer that can address the underlying issue effectively, and weigh each constraint against the friction it adds.
+
 - Treat compounding broadly: make the relevant artifact better. That can mean fixing outdated documentation, correcting misleading instructions, improving code or tests, tightening a script, updating `AGENTS.md` / `CLAUDE.md`, or changing a skill.
 - Put the lesson where future work will look for it. Use the narrowest natural home: nearby code, comments, docs, tests, or fixtures for local knowledge; repo guidance for cross-cutting workflow; skills for reusable agent behavior; executable checks when enforcement is the clearest expression.
 - Base a compounding change on the earliest branch it truly needs. If it works against the default branch, ship it as a separate default-branch PR instead of appending it to an active stack.
