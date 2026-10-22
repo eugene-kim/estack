@@ -7,18 +7,20 @@ for example in `/home/user` with clones at `/home/user/ti` and
 not its `.claude/skills`, and it builds the skill list once at boot, so no hook
 can register them as skills. What makes a skill trigger is its description
 being in front of the model, so this hook injects each skill's name,
-description, and the absolute path of its `SKILL.md`, and the model reads the
-file when one applies.
+description, and folder, and the model reads the folder's `SKILL.md` when one
+applies. Each folder is given relative to its repository, whose absolute path
+heads its group, and without the `SKILL.md` every folder shares, to keep the
+list under the cap described below.
 
 Claude Code sets `CLAUDE_CODE_PROJECTS_SESSION` to `1` in project threads, and
 the hook does nothing anywhere else: a session started inside a repository
 registers that repository's skills itself. It scans the directories directly
 under `CLAUDE_PROJECT_DIR` that are Git checkouts, and lists the `SKILL.md`
-files in each one's `.claude/skills`. Paths are resolved through symlinks,
+files in each one's `.claude/skills`. Folders are resolved through symlinks,
 because a repository may link `.claude/skills/<name>` to a shared folder and a
 skill's relative paths resolve against the folder it really lives in.
 
-A skill that sets `disable-model-invocation: true` is listed by name and path
+A skill that sets `disable-model-invocation: true` is listed by name and folder
 only, in a separate group. Claude Code keeps such a skill out of the model's
 list and leaves it to the user's slash command, which a project thread does not
 have for these skills, so the user can only ask for it by name.
@@ -97,7 +99,7 @@ def repo_skills(repo: str) -> list[dict]:
             {
                 "name": fields.get("name") or os.path.basename(os.path.dirname(path)),
                 "description": fields.get("description", ""),
-                "path": os.path.realpath(path),
+                "folder": os.path.relpath(os.path.dirname(os.path.realpath(path)), repo),
                 "user_only": fields.get("disable-model-invocation", "").lower() == "true",
             }
         )
@@ -145,23 +147,24 @@ def render(project_dir: str, repos: list, cap: int) -> str:
     """Return the injected text, with each description cut to `cap` characters."""
     lines = [
         f"The repositories under {project_dir} have skills that Claude Code did "
-        "not register in this session, so the Skill tool cannot load them. When "
-        "one fits the task, or a repository's instructions name it, read its "
-        "SKILL.md at the path given and follow it as you would a loaded skill."
+        "not register in this session, so the Skill tool cannot load them. Each "
+        "is listed with its folder, relative to its repository. When one fits the "
+        "task, or a repository's instructions name it, read SKILL.md in its "
+        "folder and follow it as you would a loaded skill."
     ]
     for repo, skills in repos:
         lines += ["", f"{repo}:"]
         for skill in skills:
             if skill["user_only"]:
                 continue
-            line = f"- {skill['name']} ({skill['path']})"
+            line = f"- {skill['name']} ({skill['folder']})"
             if skill["description"]:
                 line += f": {shorten(skill['description'], cap)}"
             lines.append(line)
         user_only = [skill for skill in skills if skill["user_only"]]
         if user_only:
             lines.append("Use these only when the user asks for one by name:")
-            lines += [f"- {skill['name']} ({skill['path']})" for skill in user_only]
+            lines += [f"- {skill['name']} ({skill['folder']})" for skill in user_only]
     return "\n".join(lines)
 
 
