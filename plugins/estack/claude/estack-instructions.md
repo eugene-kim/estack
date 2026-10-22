@@ -64,6 +64,7 @@ there only rewires that container.
 - Report a task's status only after a fresh read from the task tracker. Never reuse a status from memory, a conversation summary, or an earlier message because the user can change it at any time. If a delegated claim reports a before-status other than `Ready`, restore that status, stop, and report the mismatch to the lead instead of proceeding.
 - Open pull requests as ready for review. In the estack workflow, a missing `ai-review:LGTM` remains active work owned by the PR manager.
 - When proposing an edit to guidance prose, such as a skill, an `AGENTS.md` or `CLAUDE.md`, a repo `.estack/skills/*.md` override, or these instructions, show the exact text to be added, changed, or removed, verbatim and in place, and wait for approval before writing it. A summary or paraphrase is not enough; the phrasing is the decision.
+- Keep guidance prose at the generality the user gave it. A closed list of places or cases, such as "in the JSDoc or in a skill", reads as the whole set, so an agent picks from it instead of judging what fits. Name a specific home, case, or list only when the user named it or the set is truly closed; otherwise state the principle and mark any examples as examples. A reviewer finding an item missing from such a list is a reason to drop the list, not to grow it. If you cannot tell whether the specific version helps, show the user both and ask.
 
 ## Writing rules
 
