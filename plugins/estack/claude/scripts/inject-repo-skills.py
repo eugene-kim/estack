@@ -148,9 +148,10 @@ def render(project_dir: str, repos: list, cap: int) -> str:
     lines = [
         f"The repositories under {project_dir} have skills that Claude Code did "
         "not register in this session, so the Skill tool cannot load them. Each "
-        "is listed with its folder, relative to its repository. When one fits the "
-        "task, or a repository's instructions name it, read SKILL.md in its "
-        "folder and follow it as you would a loaded skill."
+        "repository's path heads its list, and each line reads `- name (folder): "
+        "description`, with the folder relative to that repository. When a skill "
+        "fits the task, or a repository's instructions name it, read "
+        "`<repository>/<folder>/SKILL.md` and follow it as you would a loaded skill."
     ]
     for repo, skills in repos:
         lines += ["", f"{repo}:"]
