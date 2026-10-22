@@ -23,6 +23,13 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/claude/scripts/inject-home-instructions.py"
             ]
+          },
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/claude/scripts/inject-repo-skills.py"
+            ]
           }
         ]
       },
@@ -48,6 +55,13 @@
             "command": "python3",
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/claude/scripts/inject-home-instructions.py"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/claude/scripts/inject-repo-skills.py"
             ]
           }
         ]
